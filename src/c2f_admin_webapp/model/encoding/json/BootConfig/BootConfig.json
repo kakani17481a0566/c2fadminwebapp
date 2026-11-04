@@ -1,0 +1,185 @@
+{
+    "Tksp": {
+        "Config": {
+            "Queues": [
+                {
+                    "Module": "evd_HTTP_switch",
+                    "Instance": "01",
+                    "Queue": {
+                        "Exchange": "exc_evd_HTTP_switch",
+                        "Binding": "evd_HTTP_switch",
+                        "Name": "mq_evd_HTTP_switch",
+                        "Ip": "127.0.0.1",
+                        "Port": "5672",
+                        "Username": "guest",
+                        "Password": "guest",
+                        "Ctag": "test",
+                        "Durable": "true",
+                        "Autoack": "true",
+                        "Nowait": "false",
+                        "ExpiryTime": "90000",
+                        "Vhost": "",
+                        "ExchangeType": "direct"
+                    }
+                },
+                {
+                    "Module": "user_mgmt",
+                    "Instance": "01",
+                    "Queue": {
+                        "Exchange": "exc_user_mgmt",
+                        "Key": "user_mgmt",
+                        "Name": "mq_user_mgmt",
+                        "Ip": "127.0.0.1",
+                        "Port": "5672",
+                        "Username": "guest",
+                        "Password": "guest",
+                        "Ctag": "test",
+                        "Durable": "true",
+                        "Autoack": "true",
+                        "Nowait": "false",
+                        "ExpiryTime": "90000",
+                        "Vhost": "",
+                        "ExchangeType": "direct"
+                    }
+                },
+                {
+                    "Module": "voucher_mgmt",
+                    "Instance": "01",
+                    "Queue": {
+                        "Exchange": "exc_voucher_mgmt",
+                        "Key": "voucher_mgmt",
+                        "Queue": "mq_voucher_mgmt",
+                        "Ip": "127.0.0.1",
+                        "Port": "5672",
+                        "Username": "guest",
+                        "Password": "guest",
+                        "Ctag": "test",
+                        "Durable": "true",
+                        "Autoack": "true",
+                        "Nowait": "false",
+                        "ExpiryTime": "90000",
+                        "Vhost": "",
+                        "ExchangeType": "direct"
+                    }
+                }
+            ],
+            "Server": {
+                "ApplicationName": "",
+                "RunMode": "",
+                "IsTCP": "NO",
+                "IsHTTP": "YES",
+                "TCPConfig": {
+                    "IP": "",
+                    "Port": "",
+                    "IsTLS": "",
+                    "PublicKey": "",
+                    "PrivateKey": ""
+                },
+                "HTTPConfig": {
+                    "IsHTTPS": "",
+                    "HTTPPort": "",
+                    "HTTPSPort": "",
+                    "PublicKey": "",
+                    "PrivateKey": "",
+                    "IsSession": "",
+                    "SessionExpiryTime": "",
+                    "URLs": [
+                        {
+                            "ServiceName": "",
+                            "URL": ""
+                        },
+                        {
+                            "ServiceName": "",
+                            "URL": ""
+                        }
+                    ]
+                }
+            },
+            "Logging": {
+                "Type": "TCP/DB/Local",
+                "Level": "ERROR",
+                "Server": {
+                    "IP": "",
+                    "Port": ""
+                },
+                "File": {
+                    "Name": "",
+                    "Size": ""
+                },
+                "Database": {
+                    "IP": "",
+                    "Port": "",
+                    "Name": "",
+                    "Username": "",
+                    "Password": ""
+                }
+            },
+            "Database": [
+                {
+                    "Type": "",
+                    "IP": "",
+                    "Port": "",
+                    "Name": "",
+                    "Username": "",
+                    "Password": ""
+                },
+                {
+                    "Type": "",
+                    "IP": "",
+                    "Port": "",
+                    "Name": "",
+                    "Username": "",
+                    "Password": ""
+                }
+            ],
+			"Partner":{
+				"PartnerConfig":[
+					{
+						"URL": "https://payments.zb.co.zw:8443/billpayment-service/BillPaymentService?wsdl",
+						"ServiceName": "INFOBIP",
+						"TimeOut": "30",
+						"SSLKey": "fnss.crt",
+						"CSRKey": "server.key",
+						"Request": "",
+						"Username": "",
+						"Password": ""
+					},
+					{
+						"URL": "https://payments.zb.co.zw:8443/billpayment-service/BillPaymentService?wsdl",
+						"ServiceName": "INFOBIP",
+						"TimeOut": "30",
+						"SSLKey": "fnss.crt",
+						"CSRKey": "server.key",
+						"Request": "",
+						"Username": "",
+						"Password": ""
+					}
+				]
+			},
+			"State":[
+				{
+					"ServiceName": "",
+					"States": [
+						{
+							"Sequence": "",
+							"Name": "",
+							"Module": "",
+							"ExpectedResponceCode": "",
+							"Success": "",
+							"Failure": ""
+						}	
+					]
+				}
+			],
+			"Keys":{
+				"Dek": "Tekno@687",
+				"Mek": "/key/TeknoTree/public_key.cer",
+				"Mdk": "/key/TeknoTree/private_key.cer"
+			},
+			"Misc":{
+				"EnableDuplicateCheck": "true",
+				"DuplicateCheckTime": "1800"
+			}
+        }
+    }
+}

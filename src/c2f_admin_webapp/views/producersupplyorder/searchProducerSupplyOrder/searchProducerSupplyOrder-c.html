@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>C2F Admin</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="/static/dist/img/logo-s.png" type="image/gif" sizes="16x16">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../static/plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="../../static/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="../../static/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="../../static/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../static/dist/css/adminlte.min.css">
+    <!-- style css -->
+    <link rel="stylesheet" href="../../static/dist/css/style.css">
+    <!-- daterange css -->
+    <link rel="stylesheet" href="../../static/plugins/datepicker/daterangepicker.css">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="../../static/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <link rel="stylesheet" type="text/css" href="../../static/plugins/duDialog-master/duDialog.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="../../static/dist/css/fonts/source-sans-pro.css">
+  </head>
+  <body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+      <!-- Navbar -->
+      <nav   class="main-header navbar navbar-expand navbar-light navbar-green">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+          </li>
+        </ul>
+        <!-- Right navbar links -->
+        <ul class="navbar-nav ml-auto logo">
+          <!-- Notifications Dropdown Menu -->
+          <li class="tablogo"><a href="/Dashboard" class="brand-link navbar-light" style="padding-bottom: 35px;">
+          <img src="/static/dist/img/logo.png" alt="AdminLTE Logo" class="brand-image"
+          style="opacity: .8">
+          
+          <!-- <span class="brand-text font-weight-light">Asset Monitoring</span> -->
+        </a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#">
+              <img src="/static/dist/img/user-icon-jpg-8.jpg" alt="User Avatar" class="img-size-35 mr-3 img-circle">
+            </a>
+            <div class="dropdown-menu dropdown-menu-right">
+              <!-- <a href="/Profile" class="dropdown-item">
+                <i class="fas fa-users mr-2"></i> Profile
+              </a>
+              <div class="dropdown-divider"></div> -->
+              <a href="/ChangePassword" class="dropdown-item">
+                <i class="fas fa-key mr-2"></i> Change Password
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="/Logout" class="dropdown-item">
+                <i class="fas fas fa-arrow-alt-circle-left"></i> Logout
+              </a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+      <!-- /.navbar -->
+      <!-- Main Sidebar Container -->
+      <aside class="main-sidebar elevation-4 sidebar-light-green">
+        <!-- Brand Logo -->
+        <a href="/Dashboard" class="brand-link navbar-light" style="padding-bottom: 35px;">
+          <img src="/static/dist/img/logo.png" alt="AdminLTE Logo" class="brand-image"
+          style="opacity: .8">
+          <!--<img src="/static/dist/img/logo-s.png" alt="AdminLTE Logo" class="brand-image-small"
+          style="opacity: .8">-->
+          <!-- <span class="brand-text font-weight-light">Asset Monitoring</span> -->
+        </a>
+        {{if eq .utype "HOADMIN"}} {{template "default/sidebar.html" .}} {{else if eq .utype "USER"}} {{template "default/userSidebar.html" .}} {{else}} {{template "default/reportSidebar.html" .}} {{end}}
+        
+      </aside>
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper content-bg-color">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <div class="col-sm-6">
+                <h1 class="m-0 text-color-white">Search Supply Order </h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                  <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/Dashboard">Home</a></li>
+                    <li class="breadcrumb-item active">Search Supply Order</li>
+                  </ol>
+                  </div><!-- /.col -->
+                  </div><!-- /.row -->
+                  </div><!-- /.container-fluid -->
+                </div>
+                <!-- /.content-header -->
+                <form action="/ProducerSupplyOrder/SearchProducerSupplyOrder" id="addUsersValidate" method="post">
+                  <!-- Main content -->
+                  <section class="content">
+                    <div class="container-fluid">
+                      <!-- Small boxes (Stat box) -->
+                      <div class="row">
+                        <div class="col-12">
+                          <!-- Default box -->
+                          <div class="card card-bg-color">
+                            <div class="card-header">
+                              <!-- <h3 class="card-title text-color-white">Search Filters</h3> -->
+                              <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                                <i class="fas fa-minus"></i></button>
+                                <!-- <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+                                <i class="fas fa-times"></i></button> -->
+                              </div>
+                            </div>
+                            <div class="card-body">
+                              <div class="row">
+                                <div class="col-sm-4">
+                                  
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label class="text-color-white required">Producer Mobile Number</label>
+                                   <select class="form-control" id="select_producer_name" name="select_producer_name"> <!-- id changed -->
+                                <option value="">-- select --</option>
+                                {{range $key, $val := .Dis.Fields}}
+                                <option value="{{$val.Mobile}}">{{$val.Mobile}}</option>
+                                {{end}}
+                            </select>
+                                  </div>
+                                </div>
+                                <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label class="text-color-white">Order Id </label>
+                                    <input type="text" pattern="[a-zA-Z]+" title="Please enter Alphabets." class="form-control text-ph-backgroud-color" placeholder="Enter Order Id" name="input_product_name" id="input_product_name"/>
+                                  </div>
+                                </div>
+                               
+                              </div>
+                            </div>
+                            <div class="card-footer" style="text-align: center;">
+                              <button type="submit" class="btn" >Search</button>
+                               
+                            </div>
+
+                            
+                            
+                          </div>
+                          <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                      </div>
+                      <div class="card card-bg-color">
+                        <div class="card-header">
+                          <h3 class="card-title text-color-white">Search Result</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                          <table id="nodeTable" class="table table-bordered table-striped">
+                            <thead class="bg-green">
+                              <tr>
+                                <th>Id</th>
+                                <th>Supply Txn ID</th>
+                                <th>Order ID </th>
+                                <th>Product Name</th>
+                                <th>Quantity</th>
+                                <th>Units</th>
+                                <th>Unit Price</th>
+                                <th>Total Price</th>
+                                <th>Status</th>
+                                
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {{range .CustomerData}}
+                              <tr>
+                                <!-- <td>{{.Id}}</td> -->
+                                <td>
+                                  <a class="dropdown-item" href="/ProducerSupplyOrder/ViewProducerSupplyOrder/{{.Id}}"><h5 class="text-red">{{.Id}}</h5></a>
+                                  <td>{{.SupplyTxnID}}</td>
+                                  <td>{{.OrderID }}</td>
+                                  <td>{{.ProductName}}</td>
+                                  <td>{{.Quantity}}</td>
+                                  <td>{{.Units}}</td>
+                                  <td>{{.UnitPrice}}</td>
+                                  <td>{{.Price}}</td>
+                                  <td>{{.Status}}</td>
+                                  
+                                  
+                                </tr>
+                                {{end}}
+                              </tbody>
+                            </table>
+                          </div>
+                          <!-- /.card-body -->
+                        </div>
+                      </div>
+                      <!-- /.card -->
+                      <!-- /.row -->
+                      <!-- Main row -->
+                      <!-- /.row (main row) -->
+                      </div><!-- /.container-fluid -->
+                      
+                    </form>
+                    <!-- /.content -->
+                  </div>
+                  <!-- /.content-wrapper -->
+                  <footer class="main-footer content-bg-color">
+                    <strong>Copyright &copy; 2021.</strong>
+                    All rights reserved.
+                  </footer>
+                  <!-- Control Sidebar -->
+                  <aside class="control-sidebar control-sidebar-dark">
+                    <!-- Control sidebar content goes here -->
+                  </aside>
+                  <!-- /.control-sidebar -->
+                </div>
+                <!-- ./wrapper -->
+                <!-- jQuery -->
+                <script src="../../static/plugins/jquery/jquery.min.js"></script>
+                <!-- jQuery UI 1.11.4 -->
+                <script src="../../static/plugins/jquery-ui/jquery-ui.min.js"></script>
+                <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+                <script>
+                $.widget.bridge('uibutton', $.ui.button)
+                </script>
+                <!-- Bootstrap 4 -->
+                <script src="../../static/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+                <script src="../../static/plugins/moment/moment.min.js"></script>
+                <script src="../../static/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+                <script type="text/javascript" src="../../static/plugins/duDialog-master/duDialog.js"></script>
+                <!-- validation -->
+                <script src="../../static/plugins/jquery-validation/jquery.validate.min.js"></script>
+                <script src="../../static/plugins/jquery-validation/additional-methods.min.js"></script>
+                <!-- AdminLTE App -->
+                <script src="../../static/dist/js/adminlte.js"></script>
+                <script>
+                document.getElementById("producermanagement-menu").className += " menu-open";
+                document.getElementById("producermanagement-active").className += " active";
+                document.getElementById("searchsupplyorder-active").className += " active";
+                </script>
+                <!-- change type -->
+                <script type="text/javascript">
+                var lang = {{.userLang}};
+                $('#input_language').val(lang);
+                </script>
+                <script type="text/javascript">
+                var data = {{.DisplayMessage}};
+                if (data != ""){
+                new duDialog('', data);
+                }
+                </script>
+                <script type="text/javascript">
+                $(document).ready(function () {
+                // alert(language)
+                var validationMsg = {};
+                validationMsg.firstName = "Please enter first name";
+                validationMsg.mobile = "Please enter mobile number";
+                validationMsg.rolename = "Please enter Role Name ";
+                validationMsg.email = "Please enter email ";
+                validationMsg.status="Please select status";
+                validationMsg.select_producer_name="Please select Producer Mobile number";
+                validationMsg.zipcode = "Please enter zipcode";
+                validationMsg.userType = "Please enter user type";
+                validationMsg.language = "Please select language";
+                validationMsg.address1 = "Please enter Address 1";
+                validationMsg.address2 = "Please enter Address 2";
+                validationMsg.city = "Please enter City";
+                $('#addUsersValidate').validate({
+                rules: {
+                input_first_name: {
+                required: true,
+                maxlength: 30
+                },
+               
+                input_zipcode: {
+                required: true,
+                maxlength: 10,
+                number:true
+                },
+                input_status: {
+                required: true,
+                maxlength: 10,
+                },
+                select_producer_name: {
+                required: true,
+                maxlength: 10,
+                },
+                input_mobile: {
+                required: true,
+                maxlength: 10,
+                number:true
+                },
+                select_role_name: {
+                required: true,
+                maxlength: 10
+                },
+                input_email: {
+                required: true,
+                email: true,
+                maxlength: 40
+                },
+                input_address1: {
+                required: true,
+                maxlength: 30
+                },
+                input_address2: {
+                required: true,
+                maxlength: 30
+                },
+                input_city: {
+                required: true,
+                maxlength: 30
+                },
+                input_language: {
+                required: true,
+                maxlength: 20
+                },
+                input_user_type: {
+                required: true,
+                maxlength: 20
+                },
+                },
+                messages: {
+                input_first_name: {
+                required: validationMsg.firstName,
+                },
+                
+                input_mobile:  {
+                required: validationMsg.mobile,
+                },
+                select_role_name: {
+                required: validationMsg.rolename,
+                },
+                input_email: {
+                required: validationMsg.email,
+                },
+                input_address1: {
+                required: validationMsg.address1,
+                },
+                input_address2: {
+                required: validationMsg.address2,
+                },
+                input_city: {
+                required: validationMsg.city,
+                },
+                input_language: {
+                required: validationMsg.language,
+                },
+                 input_zipcode: {
+                required: validationMsg.zipcode,
+                },
+                 input_status: {
+                required: validationMsg.status,
+                },
+                select_producer_name: {
+                required: validationMsg.select_producer_name,
+                },
+                input_user_type: {
+                required: validationMsg.userType,
+                }
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+                },
+                highlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+                }
+                });
+                });
+                </script>
+              </body>
+            </html>

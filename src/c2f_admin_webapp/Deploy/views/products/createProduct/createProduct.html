@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>C2F Admin</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="/static/dist/img/logo-s.png" type="image/gif" sizes="16x16">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../static/plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="../../static/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../static/dist/css/adminlte.min.css">
+    <!-- style css -->
+    <link rel="stylesheet" href="../../static/dist/css/style.css">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="../../static/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <link rel="stylesheet" type="text/css" href="../../static/plugins/duDialog-master/duDialog.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="../../static/dist/css/fonts/source-sans-pro.css">
+  <style>
+
+.navbaricon:hover{
+  
+    background-color: #DCDCDC;
+}
+
+#blah{
+  
+   border: 5px solid #555;
+   display: block;
+  margin-left: 30%;
+ 
+  
+}
+
+    .hidden{
+      display:block;
+    }
+  </style>
+  </head>
+  <body class="hold-transition sidebar-mini layout-fixed">
+  
+  
+    <div class="wrapper">
+      <!-- Navbar -->
+      <nav   class="main-header navbar navbar-expand navbar-light navbar-green">        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+          </li>
+        </ul>
+        <!-- Right navbar links -->
+        <ul class="navbar-nav ml-auto logo">
+          <!-- Notifications Dropdown Menu -->
+          <li class="tablogo"><a href="/Dashboard" class="brand-link navbar-light" style="padding-bottom: 35px;">
+          <img src="/static/dist/img/logo.png" alt="AdminLTE Logo" class="brand-image"
+          style="opacity: .8">
+          
+          <!-- <span class="brand-text font-weight-light">Asset Monitoring</span> -->
+        </a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#">
+              <img src="/static/dist/img/user_icon3.png" alt="User Avatar" class="img-size-35 mr-3 img-circle">
+            </a>
+                <div class="dropdown-menu dropdown-menu-right" style="padding:0 0 0 0!important;">
+            <div id="namecard" style=" background-color:#355E3B;height: 100px;width: 100%; text-align: center; padding: 20px;">
+              
+           <span style="color:#FFFFFF;font-weight:bold; font-size: 120%;"> {{.fullname1}}</span><br>
+          <span style="color:#FFFFFF;font-weight:600">{{.utype}}</span><br>
+          <span style="color:#FFFFFF;font-weight:500">{{.clustername}}</span>
+            </div>
+              <a href="/ChangePassword" class="dropdown-item navbaricon">
+<!--                <i id="change-pwd" class="fas fa-key mr-2"></i> -->
+                <img src="/static/dist/img/change_pwd_icon.png" alt="User Avatar" class="img-size-35 mr-3 img-circle">
+                <span id="change-pwd" style="font-weight:bold"></span>
+              </a>
+<!--                <hr> -->
+<!--              <div class="dropdown-divider"></div>-->
+              <a href="/Logout" class="dropdown-item navbaricon">
+<!--                <i id="lout" class="fas fas fa-arrow-alt-circle-left"></i> -->
+                 <img src="/static/dist/img/logout_icon.png" alt="User Avatar" class="img-size-35 mr-3 img-circle">
+                 <span id="lout" style="font-weight:bold"></span>
+              </a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+      <!-- /.navbar -->
+      <!-- Main Sidebar Container -->
+      <aside class="main-sidebar elevation-4 sidebar-light-=green">
+        <!-- Brand Logo -->
+        <a href="/Dashboard" class="brand-link navbar-light" style="padding-bottom: 35px;">
+          <img src="/static/dist/img/logo.png" alt="AdminLTE Logo" class="brand-image"
+          style="opacity: .8">
+          <!--<img src="/static/dist/img/logo-s.png" alt="AdminLTE Logo" class="brand-image-small"
+          style="opacity: .8">-->
+        <!-- <span class="brand-text font-weight-light">Asset Monitoring</span> -->
+        </a>
+        {{if eq .utype "HOADMIN"}} {{template "default/sidebar.html" .}} {{else if eq .utype "CLUSTERMANAGER"}} {{template "default/clusteradminSidebar.html" .}} {{else}} {{template "default/reportSidebar.html" .}} {{end}}
+        
+      </aside>
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper content-bg-color">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <div class="col-sm-6">
+                <h1 class="cp" class="m-0 text-color-white">Create Product</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                  <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a id="lihome" href="/Dashboard">Home</a></li>
+                    <li id="licp" class="breadcrumb-item active">Create Product</li>
+                  </ol>
+                  </div><!-- /.col -->
+                  </div><!-- /.row -->
+                  </div><!-- /.container-fluid -->
+                </div>
+               
+                <!-- /.content-header -->
+                <form enctype="multipart/form-data" action="/Products/CrateProduct" id="addUsersValidate" method="post">
+                  <!-- Main content -->
+                  <section class="content">
+                    <div class="container-fluid">
+                      <!-- Small boxes (Stat box) -->
+                      <div class="row">
+                        <div class="col-12">
+                          <!-- Default box -->
+                          <div class="card card-bg-color">
+                            <div class="card-header">
+                              <h3 class="cp" class="card-title text-color-white">Create Product</h3>
+                            </div>
+                            <div class="card-body ">
+                              <div class="row">
+                              
+                               <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="cname" class="text-color-white required">Category Name</label>
+                                   <select class="form-control" id="input_category_name" name="input_category_name">
+<!--                                  <datalist id="input_category_name">-->
+                                <option class="select" value="">-- select --</option>
+                                {{range $key, $val := .Dis.Fields1}}
+                                <option value="{{$val.CategoryName}}">{{$val.CategoryName}}</option>
+                                {{end}}
+<!--                                </datalist>-->
+                            </select>
+                                  </div>
+                                </div>
+                                
+                                
+                                  <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="scname" class="text-color-white required">Sub Category Name</label>
+                                   <select class="form-control" id="input_subcategory_name" name="input_subcategory_name">
+<!--                                  <datalist id="input_subcategory_name">-->
+                                <option class="select" value="">-- select --</option>
+                                {{range $key, $val := .Dis1.Fields2}}
+                                <option value="{{$val.SubCategoryName}}">{{$val.SubCategoryName}}</option>
+                                {{end}}
+<!--                                 </datalist>-->
+                            </select>
+                                  </div>
+                                </div>
+                                
+                               <!-- <div class="col-sm-4">
+                                
+                                  <div class="form-group">
+                                    <label class="text-color-white required">Category Name</label>
+                                    <select class="form-control text-ph-backgroud-color" id="input_category_name" name="input_category_name" >
+                                      <option value="">-- Please Select --</option>
+                                      <option value="DAIRY">Dairy</option>
+                                      <option value="Agriculture">Agriculture</option>
+                                      <option value="Farming">Farming</option>
+                                    </select>
+                                  </div>
+                                </div>
+                               --> <!--<div class="col-sm-4">
+                                 
+                                  <div class="form-group">
+                                    <label class="text-color-white required">Sub Category Name</label>
+                                    <select class="form-control text-ph-backgroud-color" id="input_subcategory_name" name="input_subcategory_name" >
+                                      <option value="">-- Please Select --</option>
+                                      <option value="MILK">Milk</option>
+                                      <option value="CURD">Curd</option>
+                                      <option value="GHEE">Ghee</option>
+                                      </select>
+                                  </div>
+                                </div>-->
+                                <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="pname" class="text-color-white required">Product Name</label>
+                                  <input type="text" maxlength="50" onkeypress="return (event.charCode > 64 && 
+event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)" class="form-control text-ph-backgroud-color" placeholder="Enter Product Name" name="input_product_name" id="input_product_name" />
+                                  </div>
+                                </div>
+                                 
+                                
+                                <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="pqty" class="text-color-white required">Product Quantity</label>
+                                    <select class="form-control text-ph-backgroud-color" id="input_product_qty" name="input_product_qty" >
+                                      <option class="plsselect" value="">-- Please Select --</option>
+                                      <option id="lts" value="Lts">Lts</option>
+                                      <option id="gms" value="gms">gms</option>
+<!--                                      <option id="unit" value="Units">Units</option>-->
+                                      <option id="kgbulk" value="kg-bulk">KG-Bulk</option>
+                                      </select>
+                                    
+                                  </div>
+                                </div>
+                                
+                                <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="qtype" class="text-color-white required">Quality Type</label>
+                                    <select class="form-control text-ph-backgroud-color" id="input_QualityType" name="input_QualityType" >
+                                      <option class="plsselect" value="">-- Please Select --</option>
+                                      <option id="fat" value="FATLevel">FATLevel</option>
+                                      <option id="farm" value="Farming Method">FarmingMethod</option>
+                                      <option id="variety" value="Variety">Variety</option>
+                                      </select>
+                                    
+                                  </div>
+                                </div>
+                
+                               
+                                
+                                <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="qm" class="text-color-white required">Quality Measure</label>
+                                    <input type="text" maxlength="10" class="form-control text-ph-backgroud-color" placeholder="Enter Quality Measure" name="input_QualityMeasure" id="input_QualityMeasure" />
+                                  </div>
+                                </div>
+                               <!-- <div class="col-sm-4">
+                                 
+                                  <div class="form-group">
+                                    <label class="text-color-white required">Product Image URL</label>
+                                    <input type="url" class="form-control text-ph-backgroud-color" placeholder="Enter Product Image URL" name="input_product_image" id="input_product_image" />
+                                  </div>
+                                </div>-->
+                                
+<!--                                <div class="col-sm-4">-->
+                                  <!-- text input -->
+                                  <!--<div class="form-group">
+                                    <label id="shelf" class="text-color-white required">Shel Life(in Days)</label>
+                                    <input type="number" maxlength="10" class="form-control text-ph-backgroud-color" placeholder="Enter Shel Life(In Days)" name="input_ShelLife" id="input_ShelLife" />
+                                  </div>-->
+<!--                                </div>-->
+
+<div class="col-sm-4">
+  <!-- text input -->
+  <div class="form-group">
+    <label id="shelf" class="text-color-white required">Shelf Life(in Days / Hours)</label>
+    <div class="input-group">
+      <!-- Input for shelf life value -->
+      <input 
+        type="number" 
+        maxlength="10" 
+        class="form-control text-ph-backgroud-color" 
+        placeholder="Enter Shelf Life(in Days / Hours)" 
+        name="input_ShelLife" 
+        id="input_ShelLife" 
+      />
+
+      <!-- Dropdown for selecting unit (Hour/Day) -->
+      <div class="input-group-append">
+        <select 
+          class="form-control text-ph-backgroud-color" 
+          name="input_ShelLifeUnit" 
+          id="input_ShelLifeUnit"
+        >
+          <option class="plsselect" value="">-- Please Select --</option>
+          <option value="Day">Day(s)</option>
+          <option value="Hour">Hour(s)</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+                                <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="ptype" class="text-color-white required">Package Type</label>
+                                    <select class="form-control text-ph-backgroud-color" id="input_PackageType" name="input_PackageType" >
+                                      <option class="plsselect" value="">-- Please Select --</option>
+                                        <option id="packed" value="Packed">Packed</option>
+                                      <option id="loose" value="Loose">Loose</option>
+<!--                                      <option id="bundled" value="Bundled">Bundled</option>-->
+                                      </select>
+                                  </div>
+                                </div>
+                                <div id="productpackagequantity" class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="pqnty" class="text-color-white required">PackageQty (of units)</label>
+                                    <input type="text" pattern='[\0-9]*' class="form-control text-ph-backgroud-color" placeholder="Enter PackageQty (of units)" name="input_PackageQty" id="input_PackageQty" />
+                                  </div>
+                                </div>
+                                <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="po" class="text-color-white required">Product Origin</label>
+                                    <input type="text" pattern="[a-zA-Z]+" onkeypress="return (event.charCode > 64 && 
+event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)" maxlength="15" class="form-control text-ph-backgroud-color" placeholder="Enter Product Origin" name="input_ProductOrigin" id="input_ProductOrigin" />
+                                  </div>
+                                </div>
+                                
+                                <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="pd" class="text-color-white required">Product Description</label>
+                                    <input type="text" maxlength="25" class="form-control text-ph-backgroud-color" placeholder="Enter Product Description" name="input_product_desc" id="input_product_desc" />
+                                  </div>
+                                </div>
+                                  <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="pstatus" class="text-color-white required">Product Status</label>
+                                    <select class="form-control text-ph-backgroud-color" id="input_product_status" name="input_product_status" >
+                                      <option class="plsselect" value="">-- Please Select --</option>
+                                        <option id="active" value="ACTIVE">Active</option>
+                                      <option id="inactive" value="INACTIVE">InActive</option>
+                                      </select>
+                                  </div>
+                                </div>
+                                
+                                  <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label  id="pdct1" class="text-color-white required">Product Image 1</label>
+                                     <input accept="image/*" id="myFile" type="file" name="myFile" />
+                                    
+                                  </div>
+                                                      <img id="blah" src="#" alt="Product Image" width="200" height="200"/>
+                                </div>
+                               
+                               
+
+                                 
+                                 <div class="col-sm-12">
+                <h4 id="pp" class="m-0 text-color-white">Product Pricing</h4>
+                </div><!-- /.col -->
+                
+                  
+                                 <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="ksp" class="text-color-white required">Krishivala Selling Price</label>
+                                    <input type="number" maxlength="10" class="form-control text-ph-backgroud-color" placeholder="Enter Krishivala Selling Price" name="input_krishivala_selling_price" id="input_krishivala_selling_price" />
+                                  </div>
+                                </div>
+                                <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="kbp" class="text-color-white required">Krishivala Buying Price</label>
+                                    <input type="number" maxlength="10" class="form-control text-ph-backgroud-color" placeholder="Enter Krishivala Buying Price" name="input_krishivala_buying_price" id="input_krishivala_buying_price" />
+                                  </div>
+                                </div>
+                                <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="kmp" class="text-color-white required">Krishivala Market Price</label>
+                                    <input type="number" maxlength="10" class="form-control text-ph-backgroud-color" placeholder="Enter Krishivala Market Price" name="input_krishivala_market_price" id="input_krishivala_market_price" />
+                                  </div>
+                                </div>
+                                
+                                <div class="col-sm-12">
+                <h4 id="gsttax" class="m-0 text-color-white">Product GST & TAX Charges</h4>
+                </div><!-- /.col -->
+                
+                <div class="col-sm-8">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="cn"  class="text-color-white required">Commodity Name</label>
+                                   <select class="form-control" id="input_commodity_name" name="input_commodity_name">
+<!--                                  <datalist id="input_commodity_name">-->
+                                <option class="select" value="">-- select --</option>
+                                {{range $key, $val := .Dis3.Fields3}}
+                                <option value="{{$val.Commodity_Name}}">{{$val.Commodity_Name}}</option>
+                                {{end}}
+<!--                                 </datalist>-->
+                            </select>
+                                  </div>
+                                </div>
+                                
+             
+                
+                  <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                <button  type="button" class="btn" id="btn_verify_mobile">Get GST</button>
+                                                          </div>
+                                </div>
+                
+                               <div id="div1" class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="cgst" class="text-color-white required">Krishivala CGST Charge</label>
+                                    <input type="number" maxlength="10" class="form-control text-ph-backgroud-color" placeholder="Enter Krishivala CGST Charge" name="krishivala_CGST_charge" id="krishivala_CGST_charge" value="" readonly="readonly" />
+                                  </div>
+                                </div>
+                                
+                               
+                                
+                                  <div id="div2" class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="sgst" class="text-color-white required">Krishivala SGST Charge </label>
+                                    <input type="number" maxlength="10" class="form-control text-ph-backgroud-color" placeholder="Enter Krishivala SGST Charge" name="krishivala_SGST_charge" id="krishivala_SGST_charge" value="" readonly="readonly" />
+                                  </div>
+                                </div>
+                               
+                                <div id="div5" class="col-sm-6=4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="hsn" class="text-color-white required">HSN Code </label>
+                                    <input type="text" cmaxlength="10" lass="form-control text-ph-backgroud-color" placeholder="Enter Krishivala OtherTAX Charge" name="hsn_code" id="hsn_code" value="" readonly="readonly"/>
+                                  </div>
+                                </div>
+                                  <div id="div3" class="col-sm-6">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="cess" class="text-color-white required">Krishivala CESS Charge </label>
+                                    <input type="number" maxlength="10" class="form-control text-ph-backgroud-color" placeholder="Enter Krishivala CESS Price" name="krishivala_CESS_charge" id="krishivala_CESS_charge" />
+                                  </div>
+                                </div>
+                                
+                                  <div id="div4" class="col-sm-6">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="other" class="text-color-white required">Krishivala OtherTAX Charge </label>
+                                    <input type="number" maxlength="10" class="form-control text-ph-backgroud-color" placeholder="Enter Krishivala OtherTAX Charge" name="krishivala_OtherTAX_charge" id="krishivala_OtherTAX_charge" />
+                                  </div>
+                                </div>
+                                
+                      
+                                
+                              </div>
+                            </div>
+                            <div class="card-footer" style="text-align: center;">
+                              <button id="submit" type="submit" class="btn">Submit</button>
+                              <a href="/Products/SearchProduct"><button id="back" type="button" class="btn">Back</button></a>
+                            </div>
+                            <!-- /.card-footer-->
+                            <!-- /.card -->
+                          </div>
+                        </div>
+                        <!-- /.card -->
+                        <!-- /.row -->
+                        <!-- Main row -->
+                        <div class="row">
+                        </div>
+                        <!-- /.row (main row) -->
+                        </div><!-- /.container-fluid -->
+                      </section>
+                    </form>
+                    <!-- /.content -->
+                    
+                 
+                  </div>
+                  <!-- /.content-wrapper -->
+                  <footer class="main-footer footer-bg-color">
+                    <strong>Copyright &copy; 2021 .</strong>
+                    All rights reserved.
+                  </footer>
+                  <!-- Control Sidebar -->
+                  <aside class="control-sidebar control-sidebar-dark">
+                    <!-- Control sidebar content goes here -->
+                  </aside>
+                  <!-- /.control-sidebar -->
+                </div>
+                
+                 
+                <!-- ./wrapper -->
+                <!-- jQuery -->
+                <script src="../../static/plugins/jquery/jquery.min.js"></script>
+                <!-- jQuery UI 1.11.4 -->
+                <script src="../../static/plugins/jquery-ui/jquery-ui.min.js"></script>
+                <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+                <script>
+                $.widget.bridge('uibutton', $.ui.button)
+                </script>
+                <!-- Bootstrap 4 -->
+                <script src="../../static/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+                <script src="../../static/plugins/moment/moment.min.js"></script>
+                <script src="../../static/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+                <script type="text/javascript" src="../../static/plugins/duDialog-master/duDialog.js"></script>
+            <!-- validation -->
+                <script src="../../static/plugins/jquery-validation/jquery.validate.min.js"></script>
+                <script src="../../static/plugins/jquery-validation/additional-methods.min.js"></script>
+                <!-- AdminLTE App -->
+                <script src="../../static/dist/js/adminlte.js"></script>
+                <script>
+                document.getElementById("Productmanagement-menu").className += " menu-open";
+                document.getElementById("Productmanagement-active").className += " active";
+                document.getElementById("searchProduct-active").className += " active";
+                </script>
+                <!-- change type -->
+                <script type="text/javascript">
+                var lang = {{.userLang}};
+                $('#input_language').val(lang);
+                </script>
+                <script type="text/javascript">
+                var data = {{.DisplayMessage}};
+                if (data != ""){
+                new duDialog('', data);
+                }
+                </script>
+                <script type="text/javascript">
+                
+                
+                myFile.onchange = evt => {
+                const [file] = myFile.files
+                if (file) {
+                  blah.src = URL.createObjectURL(file)
+                        }
+                    }
+                
+                $("#div1").hide();
+                  $("#div2").hide();
+                   $("#div3").hide();
+                   $("#div4").hide();
+                   $("#div5").hide();
+    
+                $(document).ready(function () {
+                // alert(language)
+                var validationMsg = {};
+                validationMsg.input_QualityType = "Please enter Quality Type";
+                validationMsg.input_QualityMeasure = "Please enter QualityMeasure";
+                validationMsg.input_ShelLife = "Please enter Shel Life";
+                validationMsg.input_PackageType = "Please enter Package Type";
+                validationMsg.input_PackageQty = "Please enter PackageQty";
+                validationMsg.input_ProductOrigin = "Please enter Product Origin";
+                validationMsg.input_PriceType = "Please enter PriceType";
+                validationMsg.input_MarketunitPrice = "Please enter Market unit Price";
+                validationMsg.categoryname = "Please enter category name";
+                validationMsg.input_SKU = "Please enter SKU";
+                validationMsg.input_subcategory_name = "Please enter sub category name";
+                validationMsg.input_product_name = "Please enter product name ";
+                validationMsg.input_product_status="Please select product status";
+                validationMsg.input_product_qty = "Please enter product quantity";
+                validationMsg.input_product_desc = "Please enter product desc";
+                validationMsg.input_product_image = "Please enter product image url";
+                validationMsg.input_krishivala_selling_price="Please enter Krishivala Selling Price"
+                validationMsg.input_krishivala_buying_price="Please enter Krishivala Buying Price"
+                validationMsg.input_krishivala_market_price="Please enter Krishivala Market Price"
+                validationMsg.input_commodity_name="Please select Commodity Name"
+                
+                validationMsg.krishivala_CGST_charge="Please enter Krishivala CGST Charge"
+                validationMsg.krishivala_SGST_charge="Please enter Krishivala SGST Charge"
+                validationMsg.krishivala_CESS_charge="Please enter Krishivala CESS Charge"
+                validationMsg.krishivala_OtherTAX_charge="Please enter Krishivala Other TAX Charge"
+                
+                validationMsg.productimage="Please upload image for product"
+                
+                
+                
+                
+                $('#addUsersValidate').validate({
+                rules: {
+                input_PackageQty: {
+                required: true,                
+                },
+                input_ProductOrigin: {
+                required: true,                
+                },
+                input_PriceType: {
+                required: true,                
+                },
+                input_MarketunitPrice: {
+                required: true,                
+                },
+                input_QualityType: {
+                required: true,
+                
+                },
+                input_QualityMeasure: {
+                required: true,
+                
+                },
+                input_ShelLife: {
+                required: true,
+                
+                },
+                input_PackageType: {
+                required: true,
+                
+                },
+                input_QualityType: {
+                required: true,
+                
+                },
+                
+                input_SKU: {
+                required: true,
+                
+                },
+                input_commodity_name:{
+                  required:true
+                },
+                input_category_name: {
+                required: true,
+                maxlength: 30
+                },
+               
+                input_subcategory_name: {
+                required: true,
+                maxlength: 30
+                },
+                input_product_status: {
+                required: true,
+                maxlength: 10,
+                },
+                input_product_image: {
+                required: true,
+               
+                },
+                select_role_name: {
+                required: true,
+                maxlength: 10
+                },
+                input_product_name: {
+                required: true,
+                maxlength: 40
+                },
+                input_product_desc: {
+                required: true,
+                maxlength: 50
+                },
+                 input_krishivala_selling_price: {
+                required: true,
+                maxlength: 20
+                },
+                krishivala_CGST_charge: {
+                required: true,
+                maxlength: 20
+                },
+                krishivala_SGST_charge: {
+                required: true,
+                maxlength: 20
+                },
+                krishivala_CESS_charge: {
+                required: true,
+                maxlength: 20
+                },
+                krishivala_OtherTAX_charge: {
+                required: true,
+                maxlength: 20
+                },
+                input_krishivala_buying_price:{
+                  required:true,
+                  maxlength:20
+                },
+                input_krishivala_market_price:{
+                  required:true,
+                  maxlength:20
+                },
+                input_product_qty: {
+                required: true,
+                maxlength: 20
+                },
+                myFile: {
+                  required:true,  
+                },
+                },
+                messages: {
+                input_PackageQty: {
+                required: validationMsg.input_PackageQty,                
+                },
+                input_ProductOrigin: {
+                required: validationMsg.input_ProductOrigin,                
+                },
+                krishivala_CGST_charge: {
+                required: validationMsg.krishivala_CGST_charge,                
+                },
+                krishivala_SGST_charge: {
+                required: validationMsg.krishivala_SGST_charge,                
+                },
+                krishivala_CESS_charge: {
+                required: validationMsg.krishivala_CESS_charge,                
+                },
+                krishivala_OtherTAX_charge: {
+                required: validationMsg.krishivala_OtherTAX_charge,                
+                },
+                input_krishivala_selling_price: {
+                required: validationMsg.input_krishivala_selling_price,               
+                },
+                input_krishivala_buying_price: {
+                required: validationMsg.input_krishivala_buying_price,                
+                },
+                input_krishivala_market_price:{
+                  required: validationMsg.input_krishivala_market_price,
+                },
+                input_QualityType: {
+                required: validationMsg.input_QualityType,
+                },
+                input_QualityMeasure: {
+                required: validationMsg.input_QualityMeasure,
+                },
+                input_ShelLife: {
+                required: validationMsg.input_ShelLife,
+                },
+                input_PackageType: {
+                required: validationMsg.input_PackageType,
+                },
+                input_commodity_name:{
+                  required: validationMsg.input_commodity_name,
+                },
+                input_SKU: {
+                required: validationMsg.input_SKU,
+                },
+                input_SKU: {
+                required: validationMsg.input_SKU,
+                },
+                input_category_name: {
+                required: validationMsg.categoryname,
+                },
+                
+                input_subcategory_name:  {
+                required: validationMsg.input_subcategory_name,
+                },
+                input_product_name: {
+                required: validationMsg.input_product_name,
+                },
+                input_product_qty: {
+                required: validationMsg.input_product_qty,
+                },
+                input_product_status: {
+                required: validationMsg.input_product_status,
+                },
+                 input_product_price: {
+                required: validationMsg.input_product_price,
+                },
+                input_product_image: {
+                required: validationMsg.input_product_image,
+                },
+                input_product_desc: {
+                required: validationMsg.input_product_desc,
+                },
+                myFile: {
+                required: validationMsg.productimage,
+                }
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+                },
+                highlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+                }
+                });
+                });
+                </script>
+                <script>
+                $("#btn_verify_mobile").click(function(){
+                  
+                   if($("#input_commodity_name").val() == '' ){
+            alert("Commodity Name Cannot Be Empty");
+                return false;
+            }
+                 
+           
+            $.ajax({
+                type: "POST",
+                url: "/Products/GetGST",
+                data: $("#addUsersValidate").serialize(),
+                    success:function(data){
+                    $('body').addClass('loaded');
+                  var obj=jQuery.parseJSON(data);
+                    $("#krishivala_CGST_charge").val(obj.KrishivalaCGSTcharge);
+              $("#krishivala_SGST_charge").val(obj.KrishivalaSGSTcharge);
+              $("#hsn_code").val(obj.HSNcode);
+              
+              
+             $("#div1").show();
+             $("#div2").show();
+             $("#div3").show();
+             $("#div4").show();
+            $("#div5").show();
+                        
+                }
+      
+            });
+        });
+                </script>
+                 <script type="text/javascript"> 
+  
+                $(window).on("load", function() 
+                {
+                      var x = {{.language}};
+                      if (x == "EN") 
+                { 
+                    $("#change-pwd").text(" Change Password");
+                    $("#lout").text(" Logout");
+                    $(".cp").text("Create Product");
+                    $("#lihome").text("Home");
+                    $("#licp").text("Create Product");
+                    $("#cname").text("Category Name");
+                    $(".select").text("-- select --");
+                    $("#scname").text("Sub Category Name");
+                    $("#pname").text("Product Name");
+                    $("#input_product_name").attr("placeholder","Enter Product Name");
+                    $("#pqty").text("Product Quantity");
+                    $(".plsselect").text("-- Please Select --");
+                    $("#qtype").text("Quality Type");
+                    $("#qm").text("Quality Measure");
+                    $("#input_QualityMeasure").attr("placeholder","Enter Quality Measure");
+                    $("#shelf").text("Shelf Life(in Days / Hours)");
+                    $("#input_ShelLife").attr("placeholder","Enter Shelf Life(in Days / Hours)");
+                    $("#ptype").text("Package Type");
+                    $("#pqnty").text("PackageQty (of units)");
+                    $("#input_PackageQty").attr("placeholder","Enter PackageQty (of units)  ");
+                    $("#po").text("Product Origin");
+                    $("#input_ProductOrigin").attr("placeholder","Enter Product Origin");
+                    $("#pd").text("Product Description");
+                    $("#input_product_desc").attr("placeholder","Enter Product Description");
+                    $("#pstatus").text("Product Status");
+                    $("#ksp").text("Krishivala Selling Price");
+                    $("#input_krishivala_selling_price").attr("placeholder","Enter Krishivala Selling Price");
+                    $("#kbp").text("Krishivala Buying Price");
+                    $("#input_krishivala_buying_price").attr("placeholder","Enter Krishivala Buying Price");
+                    $("#kmp").text("Krishivala Market Price");
+                    $("#input_krishivala_market_price").attr("placeholder","Enter Krishivala Market Price");
+                    $("#cn").text("Commodity Name");
+                    $("#btn_verify_mobile").text("Get GST");
+                    $("#submit").text("Submit");
+                    $("#back").text("Back");
+                    $("#lts").text("Lts");
+                    $("#gms").text("gms");
+                    $("#unit").text("Units");
+                    $("#fat").text("FATLevel");
+                    $("#farm").text("FarmingMethod");
+                    $("#variety").text("Variety");
+                    $("#packed").text("Packed");
+                    $("#loose").text("Loose");
+                    $("#bundled").text("Bundled");
+                    $("#active").text("Active");
+                    $("#inactive").text("Inactive");
+                    $("#cgst").text("Krishivala CGST Charge");
+                    $("#sgst").text("Krishivala SGST Charge");
+                    $("#hsn").text("HSN Code");
+                    $("#cess").text("Krishivala CESS Charge");
+                    $("#krishivala_CESS_charge").attr("placeholder","Enter Krishivala CESS Charge");
+                    $("#krishivala_OtherTAX_charge").attr("placeholder","Enter Krishivala OtherTAX Charge");
+                    $("#other").text("Krishivala OtherTAX Charge");
+                    $("#pp").text("Product Pricing");
+                    $("#gsttax").text("Product GST & TAX Charges");
+                     $("#pdct1").text("Product Image 1");
+                     $("#kg").text("KG-Bulk");
+                    
+                  }
+                  
+                  else if (x == "TN")  
+                  
+                  {
+                    
+                    
+                    $("#change-pwd").text("పాస్‌వర్డ్ మార్చండి");
+                    $("#lout").text("లాగ్అవుట్");
+                    $(".cp").text("ఉత్పత్తిని సృష్టించండి");
+                    $("#lihome").text("హోమ్");
+                    $("#licp").text("ఉత్పత్తిని సృష్టించండి");
+                    $("#cname").text("వర్గం పేరు");
+                    $(".select").text("-- ఎంచుకోండి --");
+                    $("#scname").text("ఉప వర్గం పేరు");
+                    $("#pname").text("ఉత్పత్తి పేరు");
+                    $("#input_product_name").attr("placeholder","ఉత్పత్తి పేరును నమోదు చేయండి");
+                    $("#pqty").text("ఉత్పత్తి పరిమాణం");
+                    $(".plsselect").text("-- దయచేసి ఎంచుకోండి --");
+                    $("#qtype").text("నాణ్యత రకం");
+                    $("#qm").text("నాణ్యత కొలత");
+                    $("#input_QualityMeasure").attr("placeholder","నాణ్యత కొలతను నమోదు చేయండి");
+                    $("#shelf").text("షెల్ఫ్ లైఫ్ (రోజులు / గంటల్లో)");
+                    $("#input_ShelLife").attr("placeholder","షెల్ఫ్ జీవితాన్ని నమోదు చేయండి (రోజులు / గంటల్లో)");
+                    $("#ptype").text("ప్యాకేజీ రకం");
+                    $("#pqnty").text("ప్యాకేజీ పరిమాణం (యూనిట్ల)");
+                    $("#input_PackageQty").attr("placeholder","ప్యాకేజీ పరిమాణం (యూనిట్‌ల) నమోదు చేయండి");
+                    $("#po").text("ఉత్పత్తి మూలం");
+                    $("#input_ProductOrigin").attr("placeholder","ఉత్పత్తి మూలాన్ని నమోదు చేయండి");
+                    $("#pd").text("ఉత్పత్తి వివరణ");
+                    $("#input_product_desc").attr("placeholder","ఉత్పత్తి వివరణను నమోదు చేయండి");
+                    $("#pstatus").text("ఉత్పత్తి స్థితి");
+                    $("#ksp").text("కృషివాలా విక్రయ ధర");
+                    $("#input_krishivala_selling_price").attr("placeholder","కృషివాలా విక్రయ ధరను నమోదు చేయండి");
+                    $("#kbp").text("కృషివాలా కొనుగోలు ధర");
+                    $("#input_krishivala_buying_price").attr("placeholder","కృషివాలా కొనుగోలు ధరను నమోదు చేయండి");
+                    $("#kmp").text("కృషివాలా మార్కెట్ ధర");
+                    $("#input_krishivala_market_price").attr("placeholder","కృషివాలా మార్కెట్ ధరను నమోదు చేయండి");
+                    $("#cn").text("వస్తువు పేరు");
+                    $("#btn_verify_mobile").text("GST పొందండి");
+                    $("#submit").text("సమర్పించండి");
+                    $("#back").text("వెనుకకు");
+                    $("#lts").text("లీటర్లు");
+                    $("#gms").text("గ్రాములు");
+                    $("#unit").text("యూనిట్లు");
+                    $("#fat").text("కొవ్వు స్థాయి");
+                    $("#farm").text("వ్యవసాయ విధానం");
+                    $("#variety").text("వెరైటీ");
+                    $("#packed").text("ప్యాక్ చేయబడింది");
+                    $("#loose").text("వదులుగా");
+                    $("#bundled").text("బండిల్ చేయబడింది");
+                    $("#active").text("చురుకుగా");
+                    $("#inactive").text("నిష్క్రియ");
+                    $("#cgst").text("కృషివాలా CGST ఛార్జ్");
+                    $("#sgst").text("కృషివాలా SGST ఛార్జ్");
+                    $("#hsn").text("HSN కోడ్");
+                    $("#cess").text("కృషివాలా సెస్ ఛార్జీ");
+                    $("#krishivala_CESS_charge").attr("placeholder","కృషివాలా సెస్ ఛార్జీని నమోదు చేయండి");
+                    $("#krishivala_OtherTAX_charge").attr("placeholder","కృషివాలా అదర్‌టాక్స్ ఛార్జీని నమోదు చేయండి");
+                    $("#other").text("కృషివాలా అదర్‌టాక్స్ ఛార్జ్");
+                    $("#pp").text("ఉత్పత్తి ధర");
+                    $("#gsttax").text("ఉత్పత్తి GST & పన్ను ఛార్జీలు");
+                    $("#pdct1").text("ఉత్పత్తి చిత్రం 1");
+                    $("#kgbulk").text("KG-బల్క్");
+                     
+                    }
+                    });
+                    
+              </script>
+               <script type="text/javascript">
+             
+              
+              $(document).ready(function(){
+                
+                
+             
+                
+                
+                
+                $('#input_product_qty').on('change', function() {
+                  if ( this.value == "kg-bulk")
+                    {
+                      //console.log(this.value);
+                   //     $("#productpackagequantity").hide();
+                  
+                  
+                  document.getElementById("input_PackageQty").value = "1";
+                  document.getElementById("input_PackageQty").readOnly = true;
+                  
+                     }
+                    else{
+                      
+                  document.getElementById("input_PackageQty").value = "";
+                  document.getElementById("input_PackageQty").readOnly = false;
+                        
+                        //console.log(this.value);
+                   //     $("#productpackagequantity").show();
+                   }
+                   });
+                  });
+              
+              </script>
+              </body>
+            </html>

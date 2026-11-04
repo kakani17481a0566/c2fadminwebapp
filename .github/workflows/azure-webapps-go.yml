@@ -1,0 +1,43 @@
+name: Build and Deploy C2F Admin Web App to Azure
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Go 1.23
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.23'
+
+      - name: Build Go Application
+        run: |
+          cd src/c2f_admin_webapp
+          go mod download
+          env GOOS=linux GOARCH=amd64 go build -o c2f_admin_webapp .
+          chmod +x c2f_admin_webapp run.sh
+
+      - name: Prepare Deployment Artifacts
+        run: |
+          mkdir -p build
+          cp src/c2f_admin_webapp/c2f_admin_webapp build/
+          cp src/c2f_admin_webapp/run.sh build/
+          cp -r src/c2f_admin_webapp/conf build/
+          cp -r src/c2f_admin_webapp/views build/
+          cp -r src/c2f_admin_webapp/static build/
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'c2f-admin-app'
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
+          package: './build'

@@ -1,0 +1,31 @@
+# Binaries and compiled objects
+bin/
+pkg/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+/src/c2f_admin_webapp/c2f_admin_webapp
+test_build.exe
+
+# Large archives and external downloads
+*.tar.gz
+*.zip
+*.7z
+
+# Secrets & Service Account Keys
+*firebase*.json
+*adminsdk*.json
+service-account*.json
+
+# Redis dumps and logs
+*.rdb
+*.log
+tmp/
+
+# OS and IDE files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

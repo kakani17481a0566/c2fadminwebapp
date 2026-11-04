@@ -1,0 +1,27 @@
+{
+	"Source": {
+		"Name": ""
+	},
+	"ServiceDetails": {
+		"Name": "",
+		"Operator": "",
+		"Denomination": "",
+		"Qty": "",
+		"FileName": "",
+		"FilePath": "",
+		"FTPSite": "",
+		"FTPUsername": "",
+		"FTPPassword": ""
+	},
+	"Response": {
+		"Code": "",
+		"Message": "",
+		"Status": "",
+		"Parameter": [
+			{
+				"Name": "",
+				"Value": ""
+			}
+		]
+	}
+}

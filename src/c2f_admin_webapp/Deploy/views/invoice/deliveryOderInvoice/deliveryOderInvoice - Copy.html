@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>C2F Admin</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="/static/dist/img/logo-s.png" type="image/gif" sizes="16x16">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../static/plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="../../static/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../static/dist/css/adminlte.min.css">
+    <!-- style css -->
+    <link rel="stylesheet" href="../../static/dist/css/style.css">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="../../static/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <link rel="stylesheet" type="text/css" href="../../static/plugins/duDialog-master/duDialog.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="../../static/dist/css/fonts/source-sans-pro.css">
+  </head>
+  <body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+      <!-- Navbar -->
+      <nav   class="main-header navbar navbar-expand navbar-light navbar-green">        <!-- Left navbar links -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+      </ul>
+      <!-- Right navbar links -->
+      <ul class="navbar-nav ml-auto">
+        <!-- Notifications Dropdown Menu -->
+        <li class="nav-item dropdown">
+          <a class="nav-link" data-toggle="dropdown" href="#">
+            <img src="/static/dist/img/user-icon-jpg-8.jpg" alt="User Avatar" class="img-size-35 mr-3 img-circle">
+          </a>
+          <div class="dropdown-menu dropdown-menu-right">
+            <!-- <a href="/Profile" class="dropdown-item">
+              <i class="fas fa-users mr-2"></i> Profile
+            </a>
+            <div class="dropdown-divider"></div> -->
+            <a href="/ChangePassword" class="dropdown-item">
+              <i class="fas fa-key mr-2"></i> Change Password
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="/Logout" class="dropdown-item">
+              <i class="fas fas fa-arrow-alt-circle-left"></i> Logout
+            </a>
+          </div>
+        </li>
+      </ul>
+    </nav>
+    <!-- /.navbar -->
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar elevation-4 sidebar-light-green">
+      <!-- Brand Logo -->
+      <a href="/Dashboard" class="brand-link navbar-light" style="padding-bottom: 35px;">
+        <img src="/static/dist/img/logo.png" alt="AdminLTE Logo" class="brand-image"
+          style="opacity: .8">
+          <!--<img src="/static/dist/img/logo-s.png" alt="AdminLTE Logo" class="brand-image-small"
+          style="opacity: .8">-->
+        <!-- <span class="brand-text font-weight-light">Asset Monitoring</span> -->
+      </a>
+      {{if eq .utype "HOADMIN"}} {{template "default/sidebar.html" .}} {{else if eq .utype "USER"}} {{template "default/userSidebar.html" .}} {{else}} {{template "default/reportSidebar.html" .}} {{end}}
+      
+    </aside>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper content-bg-color">
+      <!-- Content Header (Page header) -->
+      <div class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1 class="m-0 text-color-white">View Delivery Order Details</h1>
+              </div><!-- /.col -->
+              <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                  <li class="breadcrumb-item"><a href="/Dashboard">Home</a></li>
+                  <li class="breadcrumb-item active">View Delivery Order Details</li>
+                </ol>
+                </div><!-- /.col -->
+                </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+              </div>
+              <!-- /.content-header -->
+              <form action="/Invoice/DeliveryOrderInvoice" id="addUsersValidate" method="post">
+                <!-- Main content -->
+                <section class="invoice content">
+                 <div class="row" id="printablediv">
+            <div class="col-md-9">
+          <div class="box box-indigo">
+            <div class="box-footer">
+              <div class="row">
+                <div class="col-md-12">
+                  <h5 class="color-indigo">Order Total Amount {{.TotalAmount}}</h5>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <span class="primary-color label-name">Order ID No.</span><br>
+                  <span class="primary-color label-value"><b>{{.OrderID}}</b></span><br>
+                  
+                </div>
+                <div class="col-md-6 text-right">
+                  <span class="primary-color label-name">Amount</span><br>
+                  <span class="primary-color label-value"><b>{{.TotalAmount}}</b></span><br>
+                  <span class="primary-color label-value-date"><span class="badge bg-green">{{.Status}}</span></span>
+                </div>
+              </div>
+              <hr class="custom-hr">
+              <div class="row">
+                <div class="col-md-12">
+                  <fieldset class="custom-fieldset">
+                    <legend class="custom-legend">Order Details</legend>
+                      <div class="row" style="padding-left: 10px;padding-right: 10px;">
+                        <div class="col-md-7">
+                          <span class="detail-label">Order ID</span>
+                        </div>
+                        <div class="col-md-5 text-right">
+                          <span class="detail-label-value">{{.OrderID}}</span>
+                        </div>
+                      </div>
+                      <div class="row" style="padding-left: 10px;padding-right: 10px;">
+                        <div class="col-md-7">
+                          <span class="detail-label">Order Date</span>
+                        </div>
+                        <div class="col-md-5 text-right">
+                          <span class="detail-label-value">{{.OrderDate}}</span>
+                        </div>
+                      </div>
+          
+                      <div class="row" style="padding-left: 10px;padding-right: 10px;">
+                        <div class="col-md-7">
+                          <span class="detail-label">Delivery Date</span>
+                        </div>
+                        <div class="col-md-5 text-right">
+                          <span class="detail-label-value">{{.DF}}-{{.DT}}</span>
+                        </div>
+                      </div>
+                      <div class="row" style="padding-left: 10px;padding-right: 10px;">
+                        <div class="col-md-7">
+                          <span class="detail-label">Delivery Time</span>
+                        </div>
+                        <div class="col-md-5 text-right">
+                          <span class="detail-label-value">{{.DeliveryTime}}</span>
+                        </div>
+                      </div>
+                      <div class="row" style="padding-left: 10px;padding-right: 10px;">
+                        <div class="col-md-7">
+                          <span class="detail-label">Order Type</span>
+                        </div>
+                        <div class="col-md-5 text-right">
+                          <span class="detail-label-value">{{.OrderType}}</span>
+                        </div>
+                      </div>
+                      <div class="row" style="padding-left: 10px;padding-right: 10px;">
+                        <div class="col-md-7">
+                          <span class="detail-label">Repeat Order</span>
+                        </div>
+                        <div class="col-md-5 text-right">
+                          <span class="detail-label-value">{{.RepeatOrder}}</span>
+                        </div>
+                      </div>
+                      <div class="row" style="padding-left: 10px;padding-right: 10px;">
+                        <div class="col-md-7">
+                          <span class="detail-label">Cluster Name</span>
+                        </div>
+                        <div class="col-md-5 text-right">
+                          <span class="detail-label-value">{{.ClusterName}}</span>
+                        </div>
+                      </div>
+                      
+          <br>
+                  </fieldset>
+                  <fieldset class="custom-fieldset margin-top">
+                    <legend class="custom-legend">Product Details</legend>
+                      <div class="row" style="padding-left: 10px;padding-right: 10px;">
+                        <div class="col-md-7">
+                          <span class="detail-label">Category Name</span>
+                        </div>
+                        <div class="col-md-5 text-right">
+                          <span class="detail-label-value"> {{.CategoryName}}</span>
+                        </div>
+                      </div>
+                      <div class="row" style="padding-left: 10px;padding-right: 10px;">
+                        <div class="col-md-7">
+                          <span class="detail-label">Subcategory Name</span>
+                        </div>
+                        <div class="col-md-5 text-right">
+                          <span class="detail-label-value">{{.SubcategoryName}}</span>
+                        </div>
+                      </div>
+                      <div class="row" style="padding-left: 10px;padding-right: 10px;">
+                        <div class="col-md-7">
+                          <span class="detail-label">Product Name</span>
+                        </div>
+                        <div class="col-md-5 text-right">
+                          <span class="detail-label-value">{{.ProductName}}</span>
+                        </div>
+                      </div>
+                      <div class="row" style="padding-left: 10px;padding-right: 10px;">
+                        <div class="col-md-7">
+                          <span class="detail-label">Product Qty</span>
+                        </div>
+                        <div class="col-md-5 text-right">
+                          <span class="detail-label-value">{{.ProductQty}}</span>
+                        </div>
+                      </div>
+                      
+                      <div class="row" style="padding-left: 10px;padding-right: 10px;">
+                        <div class="col-md-7">
+                          <span class="detail-label">Product Price</span>
+                        </div>
+                        <div class="col-md-5 text-right">
+                          <span class="detail-label-value">{{.ProductPrice}}</span>
+                        </div>
+                      </div>
+                      
+                       <div class="row" style="padding-left: 10px;padding-right: 10px;">
+                        <div class="col-md-7">
+                          <span class="detail-label">Product Units</span>
+                        </div>
+                        <div class="col-md-5 text-right">
+                          <span class="detail-label-value">{{.ProductUnits}}</span>
+                        </div>
+                      </div>
+                      
+                      
+          <br>
+                  </fieldset>
+                  
+                  <fieldset class="custom-fieldset margin-top">
+                    <legend class="custom-legend">Customer Details</legend>
+                      <div class="row" style="padding-left: 10px;padding-right: 10px;">
+                        <div class="col-md-7">
+                          <span class="detail-label">Customer Name</span>
+                        </div>
+                        <div class="col-md-5 text-right">
+                          <span class="detail-label-value"> {{.CustomerName}}</span>
+                        </div>
+                      </div>
+                      <div class="row" style="padding-left: 10px;padding-right: 10px;">
+                        <div class="col-md-7">
+                          <span class="detail-label">Address 1 </span>
+                        </div>
+                        <div class="col-md-5 text-right">
+                          <span class="detail-label-value">{{.Address1}}</span>
+                        </div>
+                      </div>
+                      <div class="row" style="padding-left: 10px;padding-right: 10px;">
+                        <div class="col-md-7">
+                          <span class="detail-label">Address 2</span>
+                        </div>
+                        <div class="col-md-5 text-right">
+                          <span class="detail-label-value">{{.Address2}}</span>
+                        </div>
+                      </div>
+                      <div class="row" style="padding-left: 10px;padding-right: 10px;">
+                        <div class="col-md-7">
+                          <span class="detail-label">City</span>
+                        </div>
+                        <div class="col-md-5 text-right">
+                          <span class="detail-label-value">{{.City}}</span>
+                        </div>
+                      </div>
+                      
+                      <div class="row" style="padding-left: 10px;padding-right: 10px;">
+                        <div class="col-md-7">
+                          <span class="detail-label">Zipcode</span>
+                        </div>
+                        <div class="col-md-5 text-right">
+                          <span class="detail-label-value">{{.Zipcode}}</span>
+                        </div>
+                      </div>
+                      
+                       <div class="row" style="padding-left: 10px;padding-right: 10px;">
+                        <div class="col-md-7">
+                          <span class="detail-label">Mobile</span>
+                        </div>
+                        <div class="col-md-5 text-right">
+                          <span class="detail-label-value">{{.Mobile}}</span>
+                        </div>
+                      </div>
+                      
+                       <div class="row" style="padding-left: 10px;padding-right: 10px;">
+                        <div class="col-md-7">
+                          <span class="detail-label">Email</span>
+                        </div>
+                        <div class="col-md-5 text-right">
+                          <span class="detail-label-value">{{.Email}}</span>
+                        </div>
+                      </div>
+                      
+                       
+                      
+                      
+          <br>
+                  </fieldset>
+                 <div class="col-md-12">
+              <button class="btn btn-custom" style="background-color: #228B22" onclick="javascript:printDiv('printablediv')"><i class="fa fa-print fa-fw " ></i> Send to Print</button><br><br>
+            </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>    </section>
+                  </form>
+                  <!-- /.content -->
+                </div>
+                <!-- /.content-wrapper -->
+                <footer class="main-footer footer-bg-color">
+                  <strong>Copyright &copy; 2021.</strong>
+                  All rights reserved.
+                </footer>
+                <!-- Control Sidebar -->
+                <aside class="control-sidebar control-sidebar-dark">
+                  <!-- Control sidebar content goes here -->
+                </aside>
+                <!-- /.control-sidebar -->
+              </div>
+              <!-- ./wrapper -->
+              <!-- jQuery -->
+              <script src="../../static/plugins/jquery/jquery.min.js"></script>
+              <!-- jQuery UI 1.11.4 -->
+              <script src="../../static/plugins/jquery-ui/jquery-ui.min.js"></script>
+              <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+              <script>
+              $.widget.bridge('uibutton', $.ui.button)
+              </script>
+              <!-- Bootstrap 4 -->
+              <script src="../../static/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+              <script src="../../static/plugins/moment/moment.min.js"></script>
+              <script src="../../static/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+              <script type="text/javascript" src="../../static/plugins/duDialog-master/duDialog.js"></script>
+              <!-- validation -->
+              <script src="../../static/plugins/jquery-validation/jquery.validate.min.js"></script>
+              <script src="../../static/plugins/jquery-validation/additional-methods.min.js"></script>
+              <!-- AdminLTE App -->
+              <script src="../../static/dist/js/adminlte.js"></script>
+              <script>
+              document.getElementById("usermanagement-menu").className += " menu-open";
+              document.getElementById("usermanagement-active").className += " active";
+              document.getElementById("searchuser-active").className += " active";
+              </script>
+              <!-- change type -->
+              <script type="text/javascript">
+              var data = {{.DisplayMessage}};
+              if (data != ""){
+              new duDialog('', data);
+              }
+              </script>
+               <script>
+      $.widget.bridge('uibutton', $.ui.button);
+    function printPage()
+    {
+      var ua = window.navigator.userAgent;
+    var msie = ua.indexOf ("MSIE ");
+    var iframe = parent.document.getElementById('iFrameLandingPage');
+
+    if (msie > 0) {
+        iframe.contentWindow.document.execCommand('print', false, null);
+    } else {
+        iframe.contentWindow.print();
+    }
+    }
+    </script>
+  <script language="javascript" type="text/javascript">
+        function printDiv(divID) {
+            //Get the HTML of div
+            var divElements = document.getElementById(divID).innerHTML;
+            //Get the HTML of whole page
+            var oldPage = document.body.innerHTML;
+
+            //Reset the page's HTML with div's HTML only
+            document.body.innerHTML = 
+              "<html><head><title></title></head><body>" + 
+              divElements + "</body>";
+
+            //Print Page
+            window.print();
+
+            //Restore orignal HTML
+            document.body.innerHTML = oldPage;
+
+          
+        }
+    </script>
+   
+            </body>
+          </html>

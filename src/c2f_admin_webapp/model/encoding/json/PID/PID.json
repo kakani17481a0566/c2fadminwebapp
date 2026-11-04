@@ -1,0 +1,18 @@
+{
+    "LoginPassword": "",
+	"NewLoginPassword": "",
+    "DeviceValidationOTP": "",
+    "RegistrtionOTP": "",
+    "TransactionOTP": "",
+    "TransactionPassowrd": "",
+	"NewTransactionPassowrd": "",
+    "Voucher": [
+        {
+            "Partner": "",
+            "Denomination": "",
+            "Code": "",
+            "SerialNumber": "",
+            "ExpiryDate": ""
+        }
+    ]
+}

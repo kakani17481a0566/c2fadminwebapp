@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>C2F Admin</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="/static/dist/img/logo-s.png" type="image/gif" sizes="16x16">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../static/plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="../../static/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../static/dist/css/adminlte.min.css">
+    <!-- style css -->
+    <link rel="stylesheet" href="../../static/dist/css/style.css">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="../../static/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <link rel="stylesheet" type="text/css" href="../../static/plugins/duDialog-master/duDialog.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="../../static/dist/css/fonts/source-sans-pro.css">
+    
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="desciption" content="Mapmyindia Place Picker Plugin">
+    <script src="https://apis.mapmyindia.com/advancedmaps/v1/{{.maptoken}}/map_load?v=1.5"></script>
+    <script src="https://apis.mapmyindia.com/advancedmaps/api/{{.maptoken}}/map_sdk_plugins"></script>
+    <style>
+     .hidden{
+      display:none;
+    }
+        body{margin: 0}
+        #map{
+            width: 100%; height: 80vh;margin:0;padding: 0;
+        }
+       .zoom1 {
+  transition: transform .2s; /* Animation */
+}
+.zoom1:hover {
+  -ms-transform: scale(1.2); /* IE 9 */
+  -webkit-transform: scale(1.2); /* Safari 3-8 */
+  transform: scale(1.2); 
+}
+
+.navbaricon:hover{
+  
+    background-color: #DCDCDC;
+}
+.dropdown-menu{
+    padding:0 0 0 0!important
+    
+}
+    </style>
+  </head>
+  <body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+      <!-- Navbar -->
+      <nav   class="main-header navbar navbar-expand navbar-light navbar-green">        <!-- Left navbar links -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+      </ul>
+      <!-- Right navbar links -->
+      <ul class="navbar-nav ml-auto">
+        <!-- Notifications Dropdown Menu -->
+        <li class="nav-item dropdown">
+          <a class="nav-link" data-toggle="dropdown" href="#">
+            <img src="/static/dist/img/user_icon3.png" alt="User Avatar" class="img-size-35 mr-3 img-circle">
+          </a>
+          <div class="dropdown-menu dropdown-menu-right">
+           
+<div id="namecard" style=" background-color:#355E3B;height: 100px;width: 100%; text-align: center; padding: 20px;">
+              
+           <span style="color:#FFFFFF;font-weight:bold; font-size: 120%;"> {{.fullname1}}</span><br>
+        
+     
+           <span style="color:#FFFFFF;font-weight:500">{{.utype}}</span>
+            </div>
+              <a href="/ChangePassword" class="dropdown-item navbaricon">
+<!--                <i id="change-pwd" class="fas fa-key mr-2"></i> -->
+                <img src="/static/dist/img/change_pwd_icon.png" alt="User Avatar" class="img-size-35 mr-3 img-circle">
+                <span id="change-pwd" style="font-weight:bold"></span>
+              </a>
+<!--                <hr> -->
+<!--              <div class="dropdown-divider"></div>-->
+              <a href="/Logout" class="dropdown-item navbaricon">
+<!--                <i id="lout" class="fas fas fa-arrow-alt-circle-left"></i> -->
+                 <img src="/static/dist/img/logout_icon.png" alt="User Avatar" class="img-size-35 mr-3 img-circle">
+                 <span id="lout" style="font-weight:bold"></span>
+              </a>
+          </div>
+        </li>
+      </ul>
+    </nav>
+    <!-- /.navbar -->
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar elevation-4 sidebar-light-green">
+      <!-- Brand Logo -->
+      <a href="/Dashboard" class="brand-link navbar-light" style="padding-bottom: 35px;">
+        <img src="/static/dist/img/logo.png" alt="AdminLTE Logo" class="brand-image"
+          style="opacity: .8">
+          <!--<img src="/static/dist/img/logo-s.png" alt="AdminLTE Logo" class="brand-image-small"
+          style="opacity: .8">-->
+        <!-- <span class="brand-text font-weight-light">Asset Monitoring</span> -->
+      </a>
+      {{if eq .utype "HOADMIN"}} {{template "default/sidebar.html" .}} {{else if eq .utype "CLUSTERMANAGER"}} {{template "default/clusteradminSidebar.html" .}} {{else if eq .utype "CLUSTEREXECUTIVE"}} {{template "default/clusterexecutiveSidebar.html" .}} {{else}} {{template "default/reportSidebar.html" .}} {{end}}
+      
+    </aside>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper content-bg-color">
+      <!-- Content Header (Page header) -->
+      <div class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1 id="uc" class="m-0 text-color-white">Update Cluster</h1>
+              </div><!-- /.col -->
+              <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                  <li class="breadcrumb-item"><a id="lihome" href="/Dashboard">Home</a></li>
+                  <li id="liuc" class="breadcrumb-item active">Update Cluster</li>
+                </ol>
+                </div><!-- /.col -->
+                </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+              </div>
+              <!-- /.content-header -->
+              <form action="/Clusters/UpdateCluster/{{.Id}}" id="addUsersValidate" method="post">
+                <!-- Main content -->
+                <section class="content">
+                  <div class="container-fluid">
+                    <!-- Small boxes (Stat box) -->
+                    <div class="row">
+                      <div class="col-12">
+                        <!-- Default box -->
+                        <div class="card card-bg-color">
+                          <div class="card-header">
+                            <h3 class="card-title text-color-white">Update Cluster</h3>
+                          </div>
+                          <div class="card-body ">
+                            <div class="row">
+                              <div class="col-sm-4">
+                                <!-- text input -->
+                                <div class="form-group">
+                                  <label id="name" class="text-color-white">Cluster Name</label>
+                                  <input type="text" onkeypress="return (event.charCode > 64 && 
+event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)" class="form-control text-ph-backgroud-color" placeholder="Enter Cluster Name" name="input_cluster_name" id="input_cluster_name" value="{{.ClusterName}}" readonly  />
+                                </div>
+                              </div>
+                              <div class="col-sm-4">
+                                <!-- text input -->
+                                <div class="form-group">
+                                  <label id="identity" class="text-color-white required">Identity</label>
+                                  <input type="text" title="Please enter Alphabets." class="form-control text-ph-backgroud-color" placeholder="Enter Pin code" name="input_identity" id="input_identity" value="{{.Identity}}"/>
+                                </div>
+                              </div>
+                              <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="loc" class="text-color-white required">Location Type</label>
+                                    <select id="locationtype" class="form-control text-ph-backgroud-color" id="input_location_type" name="input_location_type" >
+                                      <option class="plsselect" value="">-- Please Select --</option>
+                                     <!-- <option id="gmap" value="Gmap URL">Gmap URL</option>
+                                      <option id="geo" value="Geo Co ordinates">Geo Co ordinates</option>-->
+                                      <option id="mapmyindiacode" value="MapMyIndia">MapMyIndia Code</option>
+                                    </select>
+                                  </div>
+                                  <!-- button To get mapmyindia Coordinates-->
+                                   <div>
+                                 <button id="getmapmyindia" onclick="myFunction()" type="button" class="btn">Get MapMyIndia Coordinates</button>
+                                  </div>
+                                </div>
+                              <div class="col-sm-4">
+                                <!-- text input -->
+                                <div class="form-group">
+                                  <label id="locinfo" class="text-color-white required">Location Info</label>
+                                  <input type="text" title="Please enter Alphabets." class="form-control text-ph-backgroud-color" placeholder="Enter Location" name="input_location" id="input_location" value="{{.Location}}" />
+                                </div>
+                              </div>
+                              
+                              <div class="col-sm-4">
+                                <!-- text input -->
+                                <div class="form-group">
+                                  <label id="pin" class="text-color-white required">Pin Code</label>
+                                  <input type="number" title="Please enter 6 digits numbers." onKeyPress="if(this.value.length==6) return false;" class="form-control text-ph-backgroud-color" placeholder="Enter Pin code" name="input_zipcode" id="input_zipcode" value="{{.Zipcode}}"/>
+                                </div>
+                              </div>
+                              
+                               <div class="col-sm-4">
+                                <!-- text input -->
+                                <div class="form-group">
+                                  <label id="add" class="text-color-white required">Communication Address</label>
+                                  <input type="text" title="Please enter Alphabets." maxlength="80" class="form-control text-ph-backgroud-color" placeholder="Enter Pin code" name="input_address" id="input_address" value="{{.Address}}"/>
+                                </div>
+                              </div>
+                              
+                                 <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="cptype" class="text-color-white required">Cluster Partner Type</label>
+                                    <select class="form-control text-ph-backgroud-color" id="input_clusterpartner_type" name="input_clusterpartner_type" >
+                                      <!-- <option value="">-- Please Select --</option> -->
+                                      <option id="sub" value="SUBTYPE">Subtype</option>
+                                      <option id="part" value="PARTNER">Partner</option>
+                                    
+                                    </select>
+                                  </div>
+                                </div>
+                                
+                                
+                                  <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="gstin" class="text-color-white required">Clutser GSTIN</label>
+                                    <input type="text" maxlength="15" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" class="form-control text-ph-backgroud-color" placeholder="Enter GSTIN code" name="input_gstin" id="input_gstin"  value="{{.GSTIN}}"/>
+                                  </div>
+                                </div>
+                             
+                              
+                               <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="ctype" class="text-color-white required">Cluster Type</label>
+                                    <select class="form-control text-ph-backgroud-color" id="input_cluster_type" name="input_cluster_type" >
+                                      <option class="plsselect" value="">-- Please Select --</option>
+                                      <option id="phy" value="Physical">Physical</option>
+                                      <option id="log" value="Logical">Logical</option>
+                                      
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="subtype" class="text-color-white required">Cluster SubType</label>
+                                    <select class="form-control text-ph-backgroud-color" id="input_cluster_subtype" name="input_cluster_subtype" >
+                                      <option class="plsselect" value="">-- Please Select --</option>
+                                      <option id="shop" value="Shop">Shop</option>
+                                      <option id="rv" value="Registered vehicle">Registered vehicle</option>
+                                      <option id="cart" value="Pushcart">Pushcart</option>
+                                      
+                                    </select>
+                                  </div>
+                                  
+                                  </div>
+                              
+                              <div class="col-sm-4">
+                                <!-- text input -->
+                                <div class="form-group">
+                                  <label id="status" class="text-color-white required"> Status</label>
+                                  <select class="form-control text-ph-backgroud-color" id="input_status" name="input_status" >
+                                    <option class="plsselect" value="">-- Please Select --</option>
+                                    <option id="active" value="ACTIVE">ACTIVE</option>
+                                    <option id="inactive" value="INACTIVE">INACTIVE</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="card-footer" style="text-align: center;">
+                            <button id="submit" type="submit" class="btn">Submit</button>
+                             <a href="/Clusters/SearchCluster"><button id="back" type="button" class="btn">Back</button></a>
+                          </div>
+                          <!-- /.card-footer-->
+                          <!-- /.card -->
+                        </div>
+                      </div>
+                      <!-- /.card -->
+                      <!-- /.row -->
+                      <!-- Main row -->
+                      <div class="row">
+                      </div>
+                      <!-- /.row (main row) -->
+                      </div><!-- /.container-fluid -->
+                      
+                    </section>
+                  </form>
+                  <!-- div To show map -->
+                       <div id="map"></div> 
+                  <!-- /.content -->
+                </div>
+                <!-- /.content-wrapper -->
+                <footer class="main-footer footer-bg-color">
+                  <strong>Copyright &copy; 2021.</strong>
+                  All rights reserved.
+                </footer>
+                <!-- Control Sidebar -->
+                <aside class="control-sidebar control-sidebar-dark">
+                  <!-- Control sidebar content goes here -->
+                </aside>
+                <!-- /.control-sidebar -->
+              </div>
+              <!-- ./wrapper -->
+              <!-- jQuery -->
+              <script src="../../static/plugins/jquery/jquery.min.js"></script>
+              <!-- jQuery UI 1.11.4 -->
+              <script src="../../static/plugins/jquery-ui/jquery-ui.min.js"></script>
+              <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+              <script>
+              $.widget.bridge('uibutton', $.ui.button)
+              </script>
+              <!-- Bootstrap 4 -->
+              <script src="../../static/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+              <script src="../../static/plugins/moment/moment.min.js"></script>
+              <script src="../../static/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+              <script type="text/javascript" src="../../static/plugins/duDialog-master/duDialog.js"></script>
+              <!-- validation -->
+              <script src="../../static/plugins/jquery-validation/jquery.validate.min.js"></script>
+              <script src="../../static/plugins/jquery-validation/additional-methods.min.js"></script>
+              <!-- AdminLTE App -->
+              <script src="../../static/dist/js/adminlte.js"></script>
+              <script>
+              document.getElementById("clustermanagement-menu").className += " menu-open";
+              document.getElementById("clustermanagement-active").className += " active";
+              document.getElementById("searchcluster-active").className += " active";
+              </script>
+              <!-- change type -->
+              <script type="text/javascript">
+              var utype = {{.UserType}};
+              $('#input_user_type').val(utype);
+              </script>
+              <script type="text/javascript">
+              var ustatus = {{.UStatus}};
+              $('#input_user_status').val(ustatus);
+              </script>
+              <script type="text/javascript">
+              var data = {{.DisplayMessage}};
+              if (data != ""){
+              new duDialog('', data);
+              }
+              </script>
+              <script type="text/javascript">
+                $(document).ready(function () {
+                // alert(language)
+                var validationMsg = {};
+                validationMsg.input_cluster_name = "Please enter cluster name";
+                validationMsg.input_zipcode = "Please enter pincode";
+                validationMsg.input_cluster_type = "Please enter cluster type";
+                validationMsg.input_identity = "Please enter Identity";
+                validationMsg.input_status="Please select status";
+                validationMsg.select_Customer="Please select Customer";
+                validationMsg.input_location="Please enter location";
+                validationMsg.input_Delivery_Time = "Please Select Delivery Time";
+                validationMsg.input_delivery_date = "Please select delivery date";
+                validationMsg.input_repeat_order = "Please select repeat order";
+                validationMsg.input_cluster_subtype = "Please select cluster subtype";
+                validationMsg.input_location_type = "Please select location type";
+                validationMsg.city = "Please enter City";
+                validationMsg.input_location_type="Select location Type";
+                validationMsg.input_address="Please enter communication address";
+                validationMsg.input_clusterpartner_type="Please select cluster partner type";
+                validationMsg.input_gstin="Please enter GSTIN";
+                //input_gstin
+                $('#addUsersValidate').validate({
+                rules: {
+                input_cluster_name: {
+                required: true,
+                maxlength: 30                
+                },
+                input_gstin: {
+                required: true,
+                maxlength: 15
+                },
+                input_zipcode: {
+                required: true,
+                minlength: 6,
+                maxlength: 6,
+                number:true
+                },
+                input_address: {
+                required: true,
+                maxlength: 80,
+                },
+                input_status: {
+                required: true,
+                maxlength: 10,
+                },
+                input_location_type: {
+                required: true,
+                maxlength: 10,
+                },
+                input_clusterpartner_type: {
+                required: true,
+                maxlength: 10,
+                },
+                input_CommunicationAddress: {
+                required: true,
+                maxlength: 80,
+                },
+                input_cluster_type: {
+                required: true,
+                },
+                input_location_type:{
+                  required:true,
+                },
+                input_mobile: {
+                required: true,
+                maxlength: 10,
+                number:true
+                },
+                select_Customer: {
+                required: true,
+                maxlength: 10
+                },
+                input_location: {
+                required: true,
+                maxlength: 80
+                },
+                input_Delivery_Time: {
+                required: true,
+                maxlength: 10
+                },
+                input_delivery_date: {
+                required: true,
+                maxlength: 10
+                },
+                input_identity: {
+                required: true,
+                maxlength: 30
+                },
+                input_cluster_subtype: {
+                required: true,
+                maxlength: 10
+                },
+                },
+                messages: {
+                input_identity: {
+                required: validationMsg.input_identity,
+                },
+                input_address: {
+                required: validationMsg.input_address,
+                },
+                input_gstin: {
+                required: validationMsg.input_gstin,
+                },
+                input_clusterpartner_type: {
+                required: validationMsg.input_clusterpartner_type,
+                },
+                input_cluster_name: {
+                required: validationMsg.input_cluster_name,
+                },
+                input_location: {
+                required: validationMsg.input_location,
+                },
+                input_location_type: {
+                required: validationMsg.input_location_type,
+                },
+                input_zipcode: {
+                required: validationMsg.input_zipcode,
+                },
+                input_status: {
+                required: validationMsg.input_status,
+                },
+                input_cluster_type: {
+                required: validationMsg.input_cluster_type,
+                },
+                input_location_type:{
+                  required:validationMsg.input_location_type,
+                },
+                input_cluster_subtype: {
+                required: validationMsg.input_cluster_subtype,
+                },                
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+                },
+                highlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+                }
+                });
+                });
+                </script>
+                
+                <script>
+$(document).ready(function() {
+    // Function to validate the pincode and toggle submit button
+    function validatePincode() {
+        var pincode = $('#input_zipcode').val();
+
+        // Validate pincode
+        var isPincodeValid = pincode.length === 6 && /^\d{6}$/.test(pincode);
+
+        // Debugging logs
+        console.log('Pincode:', pincode, 'Valid:', isPincodeValid);
+
+        // Enable or disable the submit button based on pincode validation
+        if (isPincodeValid) {
+            $('#submit').prop('disabled', false); // Enable Submit button
+        } else {
+            $('#submit').prop('disabled', true); // Disable Submit button
+        }
+    }
+
+    // Initial check
+    validatePincode();
+
+    // Bind events to pincode input to validate on change
+    $('#input_zipcode').on('input', function() {
+        validatePincode();
+    });
+
+    // Existing validation and other JavaScript code
+});
+</script>
+
+
+                <script type="text/javascript"> 
+  
+                $(window).on("load", function() 
+                {
+                      var x = {{.language}};
+                      if (x == "EN") 
+                { 
+                    $("#change-pwd").text(" Change Password");
+                    $("#lout").text(" Logout");
+                    $("#uc").text("Update Clusters");
+                    $("#lihome").text("Home");
+                    $("#liuc").text("Update Clusters");
+                    $("#name").text("Cluster Name");
+                    $("#identity").text("Identity");
+                    $("#locinfo").text("Location Info");
+                    $("#input_location").attr("placeholder","Enter Location ");
+                    $("#pin").text("Pin Code");
+                    $("#input_zipcode").attr("placeholder","Enter Pin Code");
+                    $("#add").text("Communication Address");
+                    $("#input_address").attr("placeholder","Enter Communication Address");
+                    $("#cptype").text("Cluster Partner Type");
+                    $("#sub").text("Subtype");
+                    $("#part").text("Partner");
+                    $("#gstin").text("Cluster GSTIN");
+                    $("#input_gstin").attr("placeholder","Enter Cluster GSTIN");
+                    $("#ctype").text("Cluster Type");
+                     $(".plsselect").text("-- Please Select --");
+                    $("#phy").text("Physical");
+                    $("#log").text("Logical");
+                    $("#subtype").text("Cluster Sub Type");
+                    $("#shop").text("Shop");
+                    $("#rv").text("Registered Vehicle");
+                    $("#cart").text("Pushcart");
+                    $("#status").text("Status");
+                    $("#active").text("Active");
+                    $("#inactive").text("InActive");
+                    $("#submit").text("Submit");
+                    $("#back").text("Back");
+                    $("#loc").text("Location Type");
+                    
+                    $("#gmap").text("Gmap URL");
+                    $("#geo").text("Geo Co ordinates");
+                    $("#mapmyindiacode").text("MapMyIndia Code");
+                    $("#getmapmyindia").text("Get MapMyIndia Coordinates");
+                    }
+                  
+                  else if (x == "TN")  
+                  
+                  {
+                    
+                    $("#change-pwd").text("పాస్‌వర్డ్ మార్చండి");
+                    $("#lout").text("లాగ్అవుట్");
+                    $("#uc").text("క్లస్టర్‌లను నవీకరించండి");
+                    $("#lihome").text("హోమ్");
+                    $("#liuc").text("క్లస్టర్‌లను నవీకరించండి");
+                    $("#name").text("క్లస్టర్ పేరు");
+                    $("#identity").text("గుర్తింపు");
+                    $("#locinfo").text("స్థాన సమాచారం");
+                    $("#input_location").attr("placeholder","స్థానాన్ని నమోదు చేయండి ");
+                    $("#pin").text("పిన్ కోడ్");
+                    $("#input_zipcode").attr("placeholder","పిన్ కోడ్‌ని నమోదు చేయండి");
+                    $("#add").text("కమ్యూనికేషన్ చిరునామా");
+                    $("#input_address").attr("placeholder","కమ్యూనికేషన్ చిరునామాను నమోదు చేయండి");
+                    $("#cptype").text("క్లస్టర్ భాగస్వామి రకం");
+                    $("#sub").text("ఉప రకం");
+                    $("#part").text("భాగస్వామి");
+                    $("#gstin").text("క్లస్టర్ GSTIN");
+                    $(".plsselect").text("-- దయచేసి ఎంచుకోండి --");
+                    $("#input_gstin").attr("placeholder","క్లస్టర్ GSTINని నమోదు చేయండి");
+                    $("#ctype").text("క్లస్టర్ రకం");
+                    $("#phy").text("భౌతిక");
+                    $("#log").text("లాజికల్");
+                    $("#subtype").text("క్లస్టర్ ఉప రకం");
+                    $("#shop").text("అంగడి");
+                    $("#rv").text("రిజిస్టర్డ్ వాహనం");
+                    $("#cart").text("పుష్కరిణి");
+                    $("#status").text("స్థితి");
+                    $("#active").text("చురుకుగా");
+                    $("#inactive").text("క్రియారహితం");
+                    $("#submit").text("సమర్పించండి");
+                    $("#back").text("వెనుకకు");
+                    $("#loc").text("స్థాన రకం");
+                   
+                    $("#gmap").text("Google మ్యాప్ URL");
+                    $("#geo").text("జియో కో ఆర్డినేట్స్");
+                    $("#mapmyindiacode").text("మ్యాప్ మై ఇండియా కోడ్");
+                    $("#getmapmyindia").text("మ్యాప్ మైఇండియా కోఆర్డినేట్‌లను పొందండి");
+                    
+                     }
+                    });
+                    
+              </script>
+              
+                            <script type="text/javascript">
+              
+              $(document).ready(function(){
+                $("#locationtype").change(function(){
+                  var name = $("#locationtype").val();
+                  $(".hidden").hide();
+                  $("."+name).show();  
+                  })
+              })
+              
+              </script>
+              <script>
+              
+                                
+               function myFunction() {
+                
+                console.log("mapmyindia button clicked");
+                
+                document.getElementById('map').style.display = "block";
+                  /*Map Initialization*/
+          var map = new MapmyIndia.Map('map', {center: [28.62, 77.09], zoom: 15, search: false});
+             
+              /*Place Picker plugin initialization*/
+           var options={
+                map:map,
+                callback:callback_method
+               /*
+                location:{lat:28.8787,lng:77.08888},//to open that location on map on initailization
+                closeBtn:true,
+                closeBtn_callback:closeBtn_callback,
+                search:true,
+                topText:'Location Search',
+                pinImage:'pin.png', //custom pin image
+                pinHeight:40
+                */
+            };
+            var picker= new MapmyIndia.placePicker(options);
+            function callback_method(data) {
+                console.log(data);
+      
+                
+                var locationinfo = data.lat+","+data.lng;
+                console.log("locationinfo is "+locationinfo);
+                document.getElementById("input_location").value = locationinfo;
+                 document.getElementById('map').style.display = "none";
+                
+            
+                
+                
+               
+                //history.back()
+                
+             }   
+             /*methods
+              * 
+              picker.remove();
+              picker.getLocation();
+              picker.setLocation({lat:28.8787,lng:77.787877});
+              * 
+              */
+                
+               
+              
+                }
+              </script>
+            </body>
+          </html>

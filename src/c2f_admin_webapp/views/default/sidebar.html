@@ -1,0 +1,867 @@
+<style>
+
+.zoom1 {
+  transition: transform .2s; /* Animation */
+}
+.zoom1:hover {
+  -ms-transform: scale(1.2); /* IE 9 */
+  -webkit-transform: scale(1.2); /* Safari 3-8 */
+  transform: scale(1.2); 
+}
+
+
+
+  </style>
+<!-- Sidebar -->
+<div class="sidebar">
+  <nav class="mt-2">
+    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+      <!-- Add icons to the links using the .nav-icon class
+      with font-awesome or any other icon font library -->
+      <li class="nav-item has-treeview">
+        <a href="/Dashboard" id="dashboard-active" class="nav-link ">
+          <i class="nav-icon fas fa-tachometer-alt"></i>
+          <p id="db">
+            Dashboard
+          </p>
+        </a>
+      </li>
+      <li id="usermanagement-menu" class="nav-item has-treeview ">
+        <a href="#" id="usermanagement-active" class="nav-link">
+          <i class="nav-icon fas fa-user-friends"></i>
+          <p id="um">
+            User Management      </p>
+            <i class="right fas fa-angle-left"></i>
+    
+        </a>
+        <ul class="nav nav-treeview">
+          <li class="nav-item zoom1">
+            <a href="/SysUser/SearchsysUser" id="searchsysuser-active" class="nav-link">
+              <i class="left fas fa-caret-right"></i><p id="su">Search User</p>
+            </a>
+          </li>
+         
+        </ul>
+      </li>
+      
+     
+      
+       <li id="systemmanagement-menu" class="nav-item has-treeview ">
+        <a href="#" id="systemmanagement-active" class="nav-link ">
+          <i class="nav-icon fas fa-cogs"></i>
+          <p id="sconf">
+            System Configurations       </p>
+            <i class="right fas fa-angle-left"></i>
+   
+        </a>
+        <ul class="nav nav-treeview">
+         <li class="nav-item zoom1">
+            <a href="/Category/SearchCategory" id="category-active" class="nav-link ">
+              <i class="left fas fa-caret-right"></i><p id="scat">Set Category</p>
+            </a>
+          </li>
+          
+            <li class="nav-item zoom1">
+            <a href="/SubCategory/SearchSubCategory" id="subcategory-active" class="nav-link ">
+              <i class="left fas fa-caret-right"></i><p id="ssc">Set Sub-Category</p>
+            </a>
+          </li>
+         
+          <li class="nav-item zoom1">
+            <a href="/Roles/SearchRole" id="roleManagement-active" class="nav-link ">
+              <i class="left fas fa-caret-right"></i><p id="rm">Role Management</p>
+            </a>
+          </li>
+          <li class="nav-item zoom1">
+            <a href="/ProductProducerClusters/ProductProducerClusterSearch" id="productProducerCluster-active" class="nav-link ">
+              <i class="left fas fa-caret-right"></i><p id="ppcm">Product-Producer-Cluster Map</p>
+            </a>
+          </li>
+          
+           <li class="nav-item zoom1">
+            <a href="/PushNotification" id="pushNotification-active" class="nav-link ">
+              <i class="left fas fa-caret-right"></i><p id="pn">Push Notification</p>
+            </a>
+          </li>
+          
+          <li class="nav-item zoom1">
+            <a href="/Ownerinfo/Ownerinfo" id="Ownerinfo-active" class="nav-link ">
+              <i class="left fas fa-caret-right"></i><p id="oi">Owner Info</p>
+            </a>
+          </li>
+        </ul>
+      </li>
+      
+      <li id="Productmanagement-menu" class="nav-item has-treeview ">
+        <a href="#" id="Productmanagement-active" class="nav-link ">
+          <i class="nav-icon fas fa fa-seedling"></i>
+          <p id="pdctmgmt">
+            Product Management  </p>
+            <i class="right fas fa-angle-left"></i>
+        
+        </a>
+        <ul class="nav nav-treeview">
+          <li class="nav-item zoom1">
+            <a href="/Products/SearchProduct" id="searchProduct-active" class="nav-link">
+              <i class="left fas fa-caret-right"></i><p id="spdct">Search Product</p>
+            </a>
+          </li>
+          <!--<li class="nav-item">
+            <a href="/BulkCustomer" id="bulkcustomer-active" class="nav-link">
+              <p><i class="left fas fa-caret-right"></i>Bulk Customer Creation</p>
+            </a>
+          </li>-->
+        </ul>
+      </li>
+      
+      
+      <li id="clustermanagement-menu" class="nav-item has-treeview ">
+        <a href="#" id="clustermanagement-active" class="nav-link ">
+          <i class="nav-icon fas fa-project-diagram"></i>
+          <p id="clm">
+            Cluster Management   </p>
+            <i class="right fas fa-angle-left"></i>
+       
+        </a>
+        <ul class="nav nav-treeview">
+          <li class="nav-item zoom1">
+            <a href="/Clusters/SearchCluster" id="searchcluster-active" class="nav-link">
+              <i class="left fas fa-caret-right"></i><p id="sc">Search Clusters</p>
+            </a>
+          </li>
+           <li class="nav-item zoom1">
+            <a href="/ClusterUsers/ClusterSearchUser" id="clusteruser-active" class="nav-link">
+              <i class="left fas fa-caret-right"></i><p id="clusrmap">Cluster-User Map</p>
+            </a>
+          </li>
+           <li class="nav-item zoom1">
+            <a href="/ClusterClusterexecutive/SearchClusterClusterexecutive" id="clusterclusterexecutive-active" class="nav-link">
+              <i class="left fas fa-caret-right"></i><p id="clcexecmap">Cluster-ClusterExecutive Map</p>
+            </a>
+          </li>
+          <li class="nav-item zoom1">
+            <a href="/ClusterProducts/ClusterSearchProduct" id="searchclusterproducts-active" class="nav-link ">
+              <i class="left fas fa-caret-right"></i><p id="clpdctmap">Cluster-Product Map</p>
+            </a>
+          </li>
+          <li class="nav-item zoom1">
+            <a href="/ClusterSupplyexecutive/SearchClusterSupplyexecutive" id="clustersupplyexecutive-active" class="nav-link">
+              <i class="left fas fa-caret-right"></i><p id="csexecmap">Cluster-SupplyExecutive Map</p>
+            </a>
+          </li>
+          <li class="nav-item zoom1">
+            <a href="/ClusterDelivery/ClusterSearchDelivery" id="clusterdelivery-active" class="nav-link">
+              <i class="left fas fa-caret-right"></i><p id="cldelexemap">Cluster-Delivery Executive Map</p>
+            </a>
+          </li>
+          <li class="nav-item zoom1">
+            <a href="/ClusterCollectionagent/ClusterSearchCollectionagent" id="clustercollectionagent-active" class="nav-link">
+              <i class="left fas fa-caret-right"></i><p id="clcollnagmap">Cluster-Collection Agent Map</p>
+            </a>
+          </li>
+            <li class="nav-item zoom1">
+            <a href="/SupplyOrder/OrderToSupplyexecutive" id="orderSupplyExecutiveMap-active" class="nav-link ">
+              <i class="left fas fa-caret-right"></i><p id="ordersupplyexecmap">Order-SupplyExecutive Map</p>
+            </a>
+            </li>
+          
+           <li class="nav-item zoom1">
+            <a href="/DeliveryOrder/SelectDeliveryOder" id="orderDeliveryMap-active" class="nav-link ">
+              <i class="left fas fa-caret-right"></i><p id="orderdelimap">Order-Delivery Map</p>
+            </a>
+            </li>
+            
+             <li class="nav-item zoom1">
+            <a href="/OrderCollectionagent/SelectOrderCollectionagent" id="odercollectionagentmap-active" class="nav-link ">
+              <i class="left fas fa-caret-right"></i><p id="ocamap">Order-CollectionAgent Map</p>
+            </a>
+          </li>
+           
+             <li class="nav-item zoom1">
+            <a href="/ReassignOrder/SearchReassignOrder" id="reassignoder-active" class="nav-link ">
+              <i class="left fas fa-caret-right"></i><p id="udo">Update Delivery Order</p>
+            </a>
+            </li>
+            
+          <li class="nav-item zoom1">
+            <a href="/ChannelPartnerCluster/SearchChannelPartnerCluster" id="channelpartnercluster-active" class="nav-link ">
+              <i class="left fas fa-caret-right"></i><p id="cpcluster">ChannelPartner-Cluster Map</p>
+            </a>
+            </li>
+            
+          <li class="nav-item zoom1">
+            <a href="/ChannelPartnerProduct/SearchChannelPartnerProduct" id="channelpartnerclusterproduct-active" class="nav-link ">
+              <i class="left fas fa-caret-right"></i><p id="cpproduct">ChannelPartner-Product Map</p>
+            </a>
+            </li>
+            
+          <li class="nav-item zoom1">
+            <a href="/ReverseInventory/CreateReverseInventory" id="reverseInventory-active" class="nav-link ">
+              <i class="left fas fa-caret-right"></i><p id="ri">Reverse Inventory</p>
+            </a>
+          </li>
+          <li class="nav-item zoom1">
+            <a href="/LoadMap/SelectLoadMap" id="loadmap-active" class="nav-link ">
+              <i class="left fas fa-caret-right"></i><p id="vnm">View Navigation Map</p>
+            </a>
+          </li>
+          
+          
+         
+          
+           <li id="clusterproductpurchase-menu" class="nav-item has-treeview ">
+            <a href="#" id="clusterproductpurchase-active" class="nav-link ">
+              <i class="left fa fa-angle-double-right"></i><p id="ctocpdct">Cluster to Cluster Product Purchase Order</p>
+            </a>
+            <ul class="nav nav-treeview">
+            <li class="nav-item zoom1">
+            <a href="/PurchaseOrder/SelectPurchaseOrder" id="purchaseorder-active" class="nav-link ">
+              <i class="left fas fa-caret-right"></i><p id="cpdctpo">Cluster Product Purchase Order</p>
+            </a>
+          </li>
+          <li class="nav-item zoom1">
+            <a href="/SuppyProductOrder/SelectSuppyProductOrder" id="supplyproductorder-active" class="nav-link ">
+              <i class="left fas fa-caret-right"></i><p id="spdctpco">Supply Product Purchase Order</p>
+            </a>
+          </li>
+          </ul>
+          </li>
+          <!--<li class="nav-item zoom1">
+            <a href="/BulkCustomer" id="bulkcustomer-active" class="nav-link">
+              <p><i class="left fas fa-caret-right"></i>Bulk Customer Creation</p>
+            </a>
+          </li>-->
+        </ul>
+      </li>
+      
+      
+       
+     <li id="producermanagement-menu" class="nav-item has-treeview ">
+        <a href="#" id="producermanagement-active" class="nav-link ">
+          <i class="nav-icon fab fa-product-hunt"></i>
+          <p id="prodmgmt">
+            Producer Management  </p>
+            <i class="right fas fa-angle-left"></i>
+        
+        </a>
+        <ul class="nav nav-treeview">
+       
+          <li class="nav-item zoom1">
+            <a href="/User/SearchUser" id="searchuser-active" class="nav-link">
+              <i class="left fas fa-caret-right"></i><p id="seprod">Search Producers</p>
+            </a>
+          </li>
+          
+          <li class="nav-item zoom1">
+            <a href="/ProducerSupplyOrder/SearchProducerSupplyOrder" id="searchsupplyorder-active" class="nav-link ">
+              <i class="left fas fa-caret-right"></i><p id="sesupporder">Search Supply Order </p>
+            </a>
+          </li>
+          <!--<li class="nav-item">
+            <a href="/BulkCustomer" id="bulkcustomer-active" class="nav-link">
+              <p><i class="left fas fa-caret-right"></i>Bulk Customer Creation</p>
+            </a>
+          </li>-->
+        </ul>
+      </li>
+      
+      
+    
+      
+      
+      
+      <li id="supplyexecmanagement-menu" class="nav-item has-treeview ">
+        <a href="#" id="supplyexecmanagement-active" class="nav-link ">
+          <i class="nav-icon fas fa fa-shipping-fast"></i>
+          <p id="supplyexecmgmt">
+            Supply Executive Management </p>
+            <i class="right fas fa-angle-left"></i>
+         
+        </a>
+        <ul class="nav nav-treeview">
+       
+          <li class="nav-item zoom1">
+            <a href="/SupplyExecutive/SearchSupplyExecutive" id="searchsupplyexec-active" class="nav-link">
+              <i class="left fas fa-caret-right"></i><p class="searchexec">Search Executive</p>
+            </a>
+          </li>
+          
+          <!--<li class="nav-item">
+            <a href="/BulkCustomer" id="bulkcustomer-active" class="nav-link">
+              <p><i class="left fas fa-caret-right"></i>Bulk Customer Creation</p>
+            </a>
+          </li>-->
+        </ul>
+      </li>
+      
+       <li id="supplymanagement-menu" class="nav-item has-treeview ">
+        <a href="#" id="supplymanagement-active" class="nav-link ">
+          <i class="nav-icon fa fa-shopping-cart"></i>
+          <p id="suppmgmt">
+            Supply Management     </p>
+            <i class="right fas fa-angle-left"></i>
+      
+        </a>
+        <ul class="nav nav-treeview">
+          <li class="nav-item zoom1">
+            <a href="/SupplyForcast/SelectSupplyForcast" id="supplyForecast-active" class="nav-link ">
+              <i class="left fas fa-caret-right"></i><p id="sf">Farmer - Stock in Hand</p>
+            </a>
+          </li>
+          
+          <li class="nav-item zoom1">
+            <a href="/SupplyOrder/SelectSupplyOrder" id="supplyOrder-active" class="nav-link ">
+              <i class="left fas fa-caret-right"></i><p id="sorder">Demand - Stock in Hand</p>
+            </a>
+          </li>
+          
+          <li class="nav-item zoom1">
+            <a href="/CollectSupplyOrder/SearchCollectSupplyOrder" id="collectSupply-active" class="nav-link ">
+              <i class="left fas fa-caret-right"></i><p id="cso">Collect Supply Order </p>
+            </a>
+          </li>
+          
+          
+           <li class="nav-item zoom1">
+            <a href="/CompleteSupplyOrder/SearchCompleteSupplyOrder" id="completeSupply-active" class="nav-link ">
+              <i class="left fas fa-caret-right"></i><p id="compso">Complete Supply Order </p>
+            </a>
+          </li>
+          
+           
+          
+         
+        </ul>
+      </li>
+      
+        <li id="customermanagement-menu" class="nav-item has-treeview ">
+        <a href="#" id="customermanagement-active" class="nav-link ">
+          <i class="nav-icon fa fa-user-circle"></i>
+          <p id="custmgmt">
+            Customer Management    </p>
+            <i class="right fas fa-angle-left"></i>
+       
+        </a>
+        <ul class="nav nav-treeview">
+         <li class="nav-item zoom1">
+            <a href="/Customer/SearchCustomer" id="searchcustomer-active" class="nav-link ">
+              <i class="left fas fa-caret-right"></i><p id="scust">Search Customer </p>
+            </a>
+          </li>
+          
+          <li class="nav-item zoom1">
+            <a href="/CustomerOder/CreateOrder" id="createorder-active" class="nav-link ">
+              <i class="left fas fa-caret-right"></i><p id="porder">Place Order </p>
+            </a>
+          </li>
+         
+        </ul>
+      </li>
+      
+      
+      <li id="surplusmanagement-menu" class="nav-item has-treeview ">
+        <a href="#" id="surplusmanagement-active" class="nav-link ">
+          <i class="nav-icon fa fa-building"></i>
+          <p id="surplusmanagent">
+            Surplus Management    </p>
+            <i class="right fas fa-angle-left"></i>
+       
+        </a>
+        <ul class="nav nav-treeview">
+         <li class="nav-item zoom1">
+            <a href="/ChannelPartnerType/SearchChannelPartnerType" id="searchchanneltype-active" class="nav-link ">
+              <i class="left fas fa-caret-right"></i><p id="scptype">Search Channel Partner Type </p>
+            </a>
+          </li>
+          
+          <li class="nav-item zoom1">
+            <a href="/ChannelPartner/SearchChannelPartner" id="searchchannelpartner-active" class="nav-link ">
+              <i class="left fas fa-caret-right"></i><p id="scpartner">Search Channel Partner </p>
+            </a>
+          </li>
+         
+        </ul>
+      </li>
+      
+      
+      <li id="deliveryexecmanagement-menu" class="nav-item has-treeview ">
+        <a href="#" id="deliveryexecmanagement-active" class="nav-link ">
+          <i class="nav-icon fas fa fa-shipping-fast"></i>
+          <p id="delexecmgmt">
+            Delivery Exec Management </p>
+            <i class="right fas fa-angle-left"></i>
+         
+        </a>
+        <ul class="nav nav-treeview">
+       
+          <li class="nav-item zoom1">
+            <a href="/DeliveryUsers/SearchDeliveryUser" id="searchexec-active" class="nav-link">
+              <i class="left fas fa-caret-right"></i><p class="searchexec">Search Executive</p>
+            </a>
+          </li>
+          <!--<li class="nav-item">
+            <a href="/BulkCustomer" id="bulkcustomer-active" class="nav-link">
+              <p><i class="left fas fa-caret-right"></i>Bulk Customer Creation</p>
+            </a>
+          </li>-->
+        </ul>
+      </li>
+      
+       <li id="deliverymanagement-menu" class="nav-item has-treeview ">
+        <a href="#" id="deliverymanagement-active" class="nav-link ">
+          <i class="nav-icon fas fa-cogs"></i>
+          <p id="delimgmt">
+            Delivery Management  </p>
+            <i class="right fas fa-angle-left"></i>
+        
+        </a>
+        <ul class="nav nav-treeview">
+          <li class="nav-item zoom1">
+            <a href="/CompleteDelivery/SearchDeliveryOrder" id="SeacrhDelivery-active" class="nav-link ">
+              <i class="left fas fa-caret-right"></i><p id="searchdeli">Search Deliverys</p>
+            </a>
+          </li>
+        </ul>
+      </li>
+      
+       <li id="collectionagentmanagement-menu" class="nav-item has-treeview ">
+        <a href="#" id="collectionagentmanagement-active" class="nav-link">
+          <i class="nav-icon fas  fas fa-users"></i>
+          <p id="cam">
+            Collection Agent Management     </p>
+            <i class="right fas fa-angle-left"></i>
+     
+        </a>
+        <ul class="nav nav-treeview">
+          <li class="nav-item zoom1">
+            <a href="/CollectionAgent/SearchcollectionAgent" id="searchcollectionagent-active" class="nav-link">
+              <i class="left fas fa-caret-right"></i><p id="sa">Search Agent</p>
+            </a>
+          </li>
+           <li class="nav-item zoom1">
+            <a href="/CollectPayment/CollectPayment" id="collectpayment-active" class="nav-link">
+              <i class="left fas fa-caret-right"></i><p id="cp">Collect Payment</p>
+            </a>
+          </li>
+         
+        </ul>
+      </li>
+      
+     
+      
+     
+       
+      <li id="Billmanagement-menu" class="nav-item has-treeview ">
+        <a href="#" id="Billmanagement-active" class="nav-link ">
+          <i class="nav-icon fas fa-file-invoice"></i>
+          <p id="bm">
+            Bill Management       </p>
+            <i class="right fas fa-angle-left"></i>
+   
+        </a>
+        <ul class="nav nav-treeview">
+          <li class="nav-item zoom1">
+           <a href="/Bill/SupplyOrderBill" id="ProducerSupplyBill-active" class="nav-link ">
+             
+               <i class="left fas fa-caret-right"></i><p id="psb">Producer Supply Bill</p>
+            </a>
+          </li>
+          
+          <li class="nav-item zoom1">
+           <a href="/Bill/CustomerOrderBill" id="CustomerBill-active" class="nav-link ">
+             
+               <i class="left fas fa-caret-right"></i><p id="cob">Customer Order Bill</p>
+            </a>
+          </li>
+          
+          <li class="nav-item zoom1">
+            <a href="/Bill/ClusterproductpurchaseBill" id="clusterproductpurchasebillmenu-active" class="nav-link ">
+              <i class="left fas fa-caret-right"></i><p id="cluppobill">Cluster Product Purchase Order Bill</p>
+            </a>
+          </li>
+
+          <!--<li class="nav-item">
+            <a href="/BulkCustomer" id="bulkcustomer-active" class="nav-link">
+              <p><i class="left fas fa-caret-right"></i>Bulk Customer Creation</p>
+            </a>
+          </li>-->
+        </ul>
+      </li>
+      
+      <!-- <li id="reconciliation-menu" class="nav-item has-treeview ">
+        <a href="#" id="reconciliation-active" class="nav-link">
+          <i class="nav-icon fas fa-tasks"></i>
+          <p>
+            OFFus Txn Settelement *
+            <i class="right fas fa-angle-left"></i>
+          </p>
+        </a>
+      </li> -->
+      <li id="reports-menu" class="nav-item has-treeview ">
+        <a href="#" id="reports-active" class="nav-link">
+          <i class="nav-icon far far fa-file"></i>
+          <p id="reports">
+            Reports  </p>
+            <i class="right fas fa-angle-left"></i>
+        
+        </a>
+        <ul class="nav nav-treeview">
+          <li class="nav-item zoom1">
+            <a href="/Report/SupplyForcastReport" id="supplyForecastreportmenu-active" class="nav-link ">
+              <i class="left fas fa-caret-right"></i><p id="sfr">Farmer - Stock in Hand Report</p>
+            </a>
+          </li>
+        </ul>
+        <ul class="nav nav-treeview">
+          <li class="nav-item zoom1">
+            <a href="/Report/SupplyOrderReport" id="supplyOrderreportmenu-active" class="nav-link ">
+              <i class="left fas fa-caret-right"></i><p id="sor">Demand - Stock in Hand Report</p>
+            </a>
+          </li>
+        </ul>
+        <ul class="nav nav-treeview">
+        <li class="nav-item zoom1">
+            <a href="/Report/SupplyOrderAssignmentReport" id="supplyOrdeAssignmentrreportmenu-active" class="nav-link ">
+              <i class="left fas fa-caret-right"></i><p id="soar">Supply Order Assignment Report</p>
+            </a>
+          </li>
+           </ul>
+        <ul class="nav nav-treeview">
+          <li class="nav-item zoom1">
+            <a href="/Report/InventoryReport" id="inventoryreportmenu-active" class="nav-link ">
+              <i class="left fas fa-caret-right"></i><p id="ir">Inventory Report</p>
+            </a>
+          </li>
+        </ul>
+        
+        <ul class="nav nav-treeview">
+          <li class="nav-item zoom1">
+            <a href="/Report/CustomerOrderReport" id="customerOrderreportmenu-active" class="nav-link ">
+              <i class="left fas fa-caret-right"></i><p id="cor">Customer Order Report</p>
+            </a>
+          </li>
+        </ul>
+        
+         <ul class="nav nav-treeview">
+          <li class="nav-item zoom1">
+            <a href="/Report/DeliveryReport" id="deliveryreportmenu-active" class="nav-link ">
+              <i class="left fas fa-caret-right"></i><p id="delrep">Delivery Report</p>
+            </a>
+          </li>
+        </ul>
+        <ul class="nav nav-treeview">
+          <li class="nav-item zoom1">
+            <a href="/Report/CollectionAgentReport" id="collectionagentreportmenu-active" class="nav-link ">
+              <i class="left fas fa-caret-right"></i><p id="collagentrep">Collection Agent Report</p>
+            </a>
+          </li>
+        </ul>
+         <ul class="nav nav-treeview">
+          <li class="nav-item zoom1">
+            <a href="/Report/ClusterProductPurchaseReport" id="clusterproductpurchasereportmenu-active" class="nav-link ">
+              <i class="left fas fa-caret-right"></i><p id="clupporep">Cluster Product Purchase Order Report</p>
+            </a>
+          </li>
+          
+        </ul>
+        <ul class="nav nav-treeview">
+         <li class="nav-item zoom1">
+          <a href="/Report/SurplusManagementReport" id="surplusmanagementreportmenu-active" class="nav-link ">
+           <i class="left fas fa-caret-right"></i><p id="smr">Surplus Management Report</p>
+          </a>
+         </li>
+        </ul>
+        
+         <ul class="nav nav-treeview">
+         <li class="nav-item zoom1">
+          <a href="/Report/SurplusTrackingReport" id="surplustrackingreportmenu-active" class="nav-link ">
+           <i class="left fas fa-caret-right"></i><p id="ssreport">Surplus Selection Report</p>
+          </a>
+         </li>
+        </ul>
+        
+         <ul class="nav nav-treeview">
+          <li class="nav-item zoom1">
+            <a href="/Report/AduitReport" id="aduitreportmenu-active" class="nav-link ">
+              <i class="left fas fa-caret-right"></i><p id="auditrep">Audit Report</p>
+            </a>
+          </li>
+        </ul>
+        
+      <li id="analytics-menu" class="nav-item has-treeview ">
+        <a href="#" id="analytics-active" class="nav-link">
+          <i class="nav-icon far fa-chart-bar"></i>
+          <p id="analytics">
+            Analytics</p>
+            <i class="right fas fa-angle-left"></i>
+          
+        </a>
+        <ul class="nav nav-treeview">
+          <li class="nav-item zoom1">
+            <a href="/Analytics" id="viewanalytics-active" class="nav-link ">
+              <i class="left fas fa-caret-right"></i><p id="viewanalytics">View Analytics</p>
+            </a>
+          </li>
+           <li class="nav-item zoom1">
+            <a href="/ClusterWiseData" id="clusterwisedata-active" class="nav-link ">
+              <i class="left fas fa-caret-right"></i><p id="clusterwisedata">Cluster Wise Data</p>
+            </a>
+          </li>
+           <li class="nav-item zoom1">
+            <a href="/Analytics/Forecast/ProducerForecastReport" id="producerforecast-active" class="nav-link ">
+              <i class="left fas fa-caret-right"></i><p id="pfreport">Producer Forecast Report</p>
+            </a>
+          </li>
+          <li class="nav-item zoom1">
+            <a href="/Analytics/Forecast/CustomerForecastReport" id="customerforecast-active" class="nav-link ">
+              <i class="left fas fa-caret-right"></i><p id="cfreport">Customer Forecast Report</p>
+            </a>
+          </li>
+           <li class="nav-item zoom1">
+            <a href="/ForecastDashboard" id="forecastdashboard-active" class="nav-link ">
+              <i class="left fas fa-caret-right"></i><p id="forecastdboard">Forecast Dashboard</p>
+            </a>
+          </li>
+         </ul>
+        
+        
+        
+        
+        <!-- <ul class="nav nav-treeview">
+          <li class="nav-item">
+            <a href="/Report/PositivePay" id="reportpp-active" class="nav-link ">
+              <p><i class="left fas fa-caret-right"></i>PositivePay Report</p>
+            </a>
+          </li>
+        </ul> -->
+        <!-- <ul class="nav nav-treeview">
+          <li class="nav-item">
+            <a href="/Report/SmsReport" id="smsreport-active" class="nav-link ">
+              <p><i class="left fas fa-caret-right"></i>SMS Report</p>
+            </a>
+          </li>
+        </ul> -->
+      </li>
+      
+    <li id="forecast-menu" class="nav-item has-treeview ">
+        <a href="#" id="forecast-active" class="nav-link">
+          
+          <i class="nav-icon fas fa-chart-line"></i>
+          <p id="forecast">
+            Forecast   </p>
+            <i class="right fas fa-angle-left"></i>
+       
+        </a>
+        <ul class="nav nav-treeview">
+          <li class="nav-item zoom1">
+            <a href="/Forecast/CreateProducerForecast" id="forecastproducer-active" class="nav-link ">
+              <i class="left fas fa-caret-right"></i><p id="pforecast">Producer Forecast</p>
+            </a>
+          </li>
+           <li class="nav-item zoom1">
+            <a href="/Forecast/CreateCustomerForecast" id="forecastcustomer-active" class="nav-link ">
+              <i class="left fas fa-caret-right"></i><p id="cforecast">Customer Forecast</p>
+            </a>
+          </li>
+        </ul>
+      </li>
+      
+      <li class="nav-item has-treeview">
+        <a href="/Logout" class="nav-link">
+          <i class="nav-icon fas fa-arrow-alt-circle-left"></i>
+          <p id="logout">
+            Logout
+          </p>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <!-- /.sidebar-menu -->
+</div>
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript"> 
+
+ //var x = {{.language}};
+//alert("USER Language is  "+x);
+
+$(window).on("load", function() 
+{
+  
+  
+  
+    var x = {{.language}};
+    if (x == "EN") 
+{      
+      $("#db").text("Dashboard");
+      $("#um").text("User Management");
+      $("#su").text("Search User");
+      $("#cam").text("Collection Agent Management");
+      $("#sa").text("Search Agent");
+      $("#cp").text("Collect Payment");
+      $("#sconf").text("System Configurations");
+      $("#scat").text("Set Category");
+      $("#ssc").text("Set Sub-Category");
+      $("#rm").text("Role Management");
+      $("#ppcm").text("Product-Producer-Cluster Map");
+      $("#pn").text("Push Notification");
+      $("#oi").text("Owner Info");
+      $("#clm").text("Cluster Management");
+      $("#sc").text("Search Clusters");
+      $("#clusrmap").text("Cluster-User Map");
+      $("#clcexecmap").text("Cluster-ClusterExecutive Map");
+      $("#clcollnagmap").text("Cluster-Collection Agent Map");
+      $("#clpdctmap").text("Cluster-Product Map");
+      $("#cldelexemap").text("Cluster-Delivery Executive Map");
+      $("#orderdelimap").text("Order-Delivery Map");
+      $("#udo").text("Update Delivery Order");
+      $("#ocamap").text("Order-CollectionAgent Map");
+      $("#ri").text("Reverse Inventory");
+      $("#vnm").text("View Navigation Map");
+      $("#ctocpdct").text("Cluster to Cluster Product Purchase Order");
+      $("#porder").text("Purchase Order");
+      $("#cpdctpo").text("Cluster Product Purchase Order");
+      $("#spdctpco").text("Supply Product Purchase Order");
+      $("#pdctmgmt").text("Product Management");
+      $("#spdct").text("Search Product");
+      $("#custmgmt").text("Customer Management");
+      $("#scust").text("Search Customer");
+      $("#porder").text("Place Order");
+      $("#prodmgmt").text("Producer Management");
+      $("#seprod").text("Search Producers");
+      $("#sesupporder").text("Search Supply Order");
+      $("#delexecmgmt").text("Delivery Exec Management");
+      $(".searchexec").text("Search Executive");
+      $("#suppmgmt").text("Supply Management");
+      $("#sf").text("Farmer - Stock in Hand");
+      $("#sorder").text("Demand - Stock in Hand");
+      $("#cso").text("Collect Supply Order");
+      $("#compso").text("Complete Supply Order");
+      $("#delimgmt").text("Delivery Management");
+      $("#searchdeli").text("Search Deliverys");
+      $("#bm").text("Bill Management");
+      $("#psb").text("Producer Supply Bill");
+      $("#cob").text("Customer Order Bill");
+      $("#reports").text("Reports");
+      $("#sfr").text("Farmer - Stock in Hand Report");
+      $("#sor").text("Demand - Stock in Hand Report");
+      $("#ir").text("Inventory Report");
+      $("#cor").text("Customer Order Report");
+      $("#delrep").text("Delivery Report");
+      $("#collagentrep").text("Collection Agent Report");
+      $("#clupporep").text("Cluster Product Purchase Order Report");
+      $("#auditrep").text("Audit Report");
+      $("#analytics").text("Analytics");
+      $("#viewanalytics").text("View Analytics");
+      $("#logout").text("Logout");
+      $("#clusterwisedata").text("Cluster Wise Data");
+      $("#cluppobill").text("Cluster Product Purchase Order Bill");
+      $("#forecast").text("Forecast");
+      $("#pforecast").text("Producer Forecast");
+      $("#cforecast").text("Customer Forecast");
+      $("#pfreport").text("Producer Forecast Report");
+      $("#cfreport").text("Customer Forecast Report");
+      $("#forecastdboard").text("Forecast Dashboard");
+      $("#soar").text("Supply Order Assignment Report");
+      $("#supplyexecmgmt").text("Supply Executive Management");
+      $("#csexecmap").text("Cluster-SupplyExecutive Map");
+      $("#ordersupplyexecmap").text("Order-SupplyExecutive Map");
+      $("#surplusmanagent").text("Surplus Management");
+      $("#scptype").text("Search Channel Partner Type");
+      $("#scpartner").text("Search Channel Partner");
+      $("#cpcluster").text("ChannelPartner-Cluster Map");
+      $("#cpproduct").text("ChannelPartner-Product Map");
+        $("#smr").text("Surplus Management Report");
+        $("#ssreport").text("Surplus Selection Report");
+} 
+
+else if (x == "TN")  
+{
+
+     $("#db").text("డాష్బోర్డ్");
+      $("#um").text("వాడుకరి నిర్వహణ");
+      $("#su").text("శోధన వినియోగదారు");
+      $("#cam").text("కలెక్షన్ ఏజెంట్ నిర్వహణ");
+      $("#sa").text("శోధన ఏజెంట్");
+      $("#cp").text("చెల్లింపును సేకరించండి");
+      $("#sconf").text("సిస్టమ్ కాన్ఫిగరేషన్‌లు");
+      $("#scat").text("వర్గాన్ని సెట్ చేయండి");
+      $("#ssc").text("ఉప-వర్గాన్ని సెట్ చేయండి");
+      $("#rm").text("పాత్ర నిర్వహణ");
+      $("#ppcm").text("ఉత్పత్తి-నిర్మాత-క్లస్టర్ మ్యాప్");
+      $("#pn").text("పుష్ నోటిఫికేషన్");
+      $("#oi").text("యజమాని సమాచారం");
+      $("#clm").text("క్లస్టర్ నిర్వహణ");
+      $("#sc").text("శోధన క్లస్టర్లు");
+      $("#clusrmap").text("క్లస్టర్ వినియోగదారు మ్యాప్");
+      $("#clcexecmap").text("క్లస్టర్-క్లస్టర్ ఎగ్జిక్యూటివ్ మ్యాప్");
+      $("#clcollnagmap").text("క్లస్టర్-కలెక్షన్ ఏజెంట్ మ్యాప్");
+      $("#clpdctmap").text("క్లస్టర్-ఉత్పత్తి మ్యాప్");
+      $("#cldelexemap").text("క్లస్టర్-డెలివరీ ఎగ్జిక్యూటివ్ మ్యాప్");
+      $("#orderdelimap").text("ఆర్డర్-డెలివరీ మ్యాప్");
+      $("#udo").text("డెలివరీ ఆర్డర్‌ని నవీకరించండి");
+      $("#ocamap").text("ఆర్డర్-కలెక్షన్ ఏజెంట్ మ్యాప్");
+      $("#ri").text("రివర్స్ ఇన్వెంటరీ");
+      $("#vnm").text("నావిగేషన్ మ్యాప్‌ని వీక్షించండి");
+      $("#ctocpdct").text("క్లస్టర్ నుండి క్లస్టర్ ఉత్పత్తి కొనుగోలు ఆర్డర్");
+      $("#porder").text("కొనుగోలు ఆర్డర్");
+      $("#cpdctpo").text("క్లస్టర్ ఉత్పత్తి కొనుగోలు ఆర్డర్");
+      $("#spdctpco").text("సరఫరా ఉత్పత్తి కొనుగోలు ఆర్డర్");
+      $("#pdctmgmt").text("ఉత్పత్తి నిర్వహణ");
+      $("#spdct").text("శోధన ఉత్పత్తి");
+      $("#custmgmt").text("కస్టమర్ మేనేజ్‌మెంట్");
+      $("#scust").text("వినియోగదారుని శోధించండి");
+      $("#porder").text("ఆర్డర్ చేయండి");
+      $("#prodmgmt").text("నిర్మాత నిర్వహణ");
+      $("#seprod").text("నిర్మాతలను శోధించండి");
+      $("#sesupporder").text("శోధన సరఫరా ఆర్డర్");
+      $("#delexecmgmt").text("డెలివరీ ఎగ్జిక్యూటివ్ మేనేజ్‌మెంట్");
+      $(".searchexec").text("సెర్చ్ ఎగ్జిక్యూటివ్");
+      $("#suppmgmt").text("సరఫరా నిర్వహణ");
+      $("#sf").text("రైతు - చేతిలో స్టాక్");
+      $("#sorder").text("డిమాండ్ - చేతిలో స్టాక్");
+      $("#cso").text("సరఫరా ఆర్డర్‌ని సేకరించండి");
+      $("#compso").text("పూర్తి సరఫరా ఆర్డర్");
+      $("#delimgmt").text("డెలివరీ నిర్వహణ");
+      $("#searchdeli").text("డెలివరీని శోధించండి");
+      $("#bm").text("బిల్లు నిర్వహణ");
+      $("#psb").text("నిర్మాత సరఫరా బిల్లు");
+      $("#cob").text("కస్టమర్ ఆర్డర్ బిల్లు");
+      $("#reports").text("నివేదికలు");
+      $("#sfr").text("రైతు - స్టాక్ ఇన్ హ్యాండ్ రిపోర్ట్");
+      $("#sor").text("డిమాండ్ - స్టాక్ ఇన్ హ్యాండ్ రిపోర్ట్");
+      $("#ir").text("ఇన్వెంటరీ నివేదిక");
+      $("#cor").text("కస్టమర్ ఆర్డర్ నివేదిక");
+      $("#delrep").text("విడుదల నివేదిక");
+      $("#collagentrep").text("ఏజెంట్ నివేదిక సేకరణ");
+      $("#clupporep").text("క్లస్టర్ ఉత్పత్తి కొనుగోలు ఆర్డర్ నివేదిక");
+      $("#auditrep").text("ఆర్థిక లెక్కల నివేదిక");
+      $("#analytics").text("విశ్లేషణలు");
+      $("#viewanalytics").text("విశ్లేషణలను వీక్షించండి");
+      $("#logout").text("లాగ్ అవుట్ చేయండి");
+      $("#clusterwisedata").text("క్లస్టర్ వైజ్ డేటా");
+      $("#cluppobill").text("క్లస్టర్ ఉత్పత్తి కొనుగోలు ఆర్డర్ బిల్లు");
+      $("#forecast").text("సూచన");
+      $("#pforecast").text("నిర్మాత సూచన");
+      $("#cforecast").text("కస్టమర్ సూచన");
+      $("#pfreport").text("నిర్మాత సూచన నివేదిక");
+      $("#cfreport").text("కస్టమర్ సూచన నివేదిక");
+      
+       $("#forecastdboard").text("సూచన డాష్‌బోర్డ్");
+      $("#soar").text("సప్లై ఆర్డర్ అసైన్‌మెంట్ రిపోర్ట్");
+      $("#supplyexecmgmt").text("సరఫరా కార్యనిర్వాహక నిర్వహణ");
+      $("#csexecmap").text("క్లస్టర్-సప్లై ఎగ్జిక్యూటివ్ మ్యాప్");
+      $("#ordersupplyexecmap").text("ఆర్డర్-సప్లై ఎగ్జిక్యూటివ్ మ్యాప్");
+      $("#surplusmanagent").text("మిగులు నిర్వహణ");
+      $("#scptype").text("ఛానెల్ భాగస్వామి రకాన్ని శోధించండి");
+      $("#scpartner").text("ఛానెల్ భాగస్వామిని శోధించండి");
+      $("#cpcluster").text("ఛానల్ పార్టనర్-క్లస్టర్ మ్యాప్");
+      $("#cpproduct").text("ఛానల్ పార్టనర్-ఉత్పత్తి మ్యాప్");
+      $("#smr").text("మిగులు నిర్వహణ నివేదిక");
+        $("#ssreport").text("మిగులు ఎంపిక నివేదిక");
+        
+    }
+});
+
+
+</script>

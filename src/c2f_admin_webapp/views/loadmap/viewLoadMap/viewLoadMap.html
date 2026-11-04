@@ -1,0 +1,99 @@
+<html>
+ <head>
+        <title>C2F Admin</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="desciption" content="Mapmyindia Direction Plugin">
+    <link rel="icon" href="/static/dist/img/logo-s.png" type="image/gif" sizes="16x16">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../static/plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="../../static/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="../../static/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="../../static/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../static/dist/css/adminlte.min.css">
+    <!-- style css -->
+    <link rel="stylesheet" href="../../static/dist/css/style.css">
+    <!-- daterange css -->
+    <link rel="stylesheet" href="../../static/plugins/datepicker/daterangepicker.css">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="../../static/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="../../static/dist/css/fonts/source-sans-pro.css">
+     <link rel="stylesheet" type="text/css" href="../../static/plugins/duDialog-master/duDialog.css">
+    
+    <link rel="icon" href="/static/dist/img/logo-s.png" type="image/gif" sizes="16x16">
+    <script src="https://apis.mapmyindia.com/advancedmaps/v1/{{.maptoken}}/map_load?v=1.5"></script>
+    <script src="https://apis.mapmyindia.com/advancedmaps/api/{{.maptoken}}/map_sdk_plugins"></script>
+    <style>
+        body{margin: 0}
+        #map{
+            width: 100%; height: 100vh; margin: 0; padding: 0;
+        }
+        #direction{color: #000;max-width: 99%;width:300px;position:absolute;z-index: 999;font-size: 15px;padding:10px;border: 1px solid #ddd;outline: none !important;top:55px;border-radius:10px;margin:2px 4px;}
+    </style>
+     
+    </head>
+    <body>
+        <div id="map"></div>
+        <div id="direction"></div>
+        <script>
+         //For via attribute , object is passed with multiple (key: value) pairs
+
+        const name = {{.customername}};
+        //console.log(name);
+        const latlng = {{.orderlocations}};
+        //console.log(latlng);
+        const length = {{.length}};
+        //console.log(length);
+        
+       
+       //javascript object declaration
+      
+       let viaobject = [];
+        
+        for(let i=0;i<length;i++){
+        viaobject.push({label: name[i],geoposition:latlng[i]});
+        }
+        console.log(viaobject);
+        
+           if(viaobject == ''){
+            alert("No Orders are Assigned !!!");
+            window.location.replace("/LoadMap/SelectLoadMap/");
+            
+          }else{
+            mapsload();
+            
+          }
+          
+       function mapsload(){
+        
+        
+       var map = new MapmyIndia.Map('map', {center:[28.61,77.23], zoom: 5, search: false});
+    
+          /*direction plugin initialization*/
+            var direction_option={
+                map:map,
+             start :{label:{{.ClusterName}},geoposition:{{.ClusterLocation}}},
+               via :viaobject,
+               end :{label:{{.ClusterName}},geoposition:{{.ClusterLocation}}},
+	         callback:function(data){console.log(data);}
+                }
+            var direction_plugin=MapmyIndia.direction(direction_option); 
+             //direction_plugin.remove();
+           }  
+       </script>
+      <script type="text/javascript">
+                var data = {{.DisplayMessage}};
+                if (data != ""){
+                new duDialog('', data);
+                
+                }
+      </script>
+    </body>
+</html>
+             

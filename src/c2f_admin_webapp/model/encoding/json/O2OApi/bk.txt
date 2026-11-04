@@ -1,0 +1,198 @@
+package O2OApi
+
+type Response struct {
+	Code            string
+	Message         string
+	Stores          []*StoreRes
+	DeliveryAddress []*DeliveryAddress
+	Products        []*ProductSubCategory
+	Categories      []*CategoryRes
+	Feedback        []*Feedback
+	Orders          []*Orders
+	Status          string
+	Suggestion      []string
+	Name            string
+	Email           string
+	Mobile          string
+	Dob             string
+	SessionID       string
+	Gender          string
+	Post            string
+	PIN             string
+	District        string
+	State           string
+	Nationlaity     string
+	Locality        string
+	HouseNo         string
+	Landmark        string
+	OrderNumber     string
+	Latitude        float64
+	Longitude       float64
+	StoreImageUrl   string
+}
+
+type StoreRes struct {
+	Address      string    `json:"address"`
+	StoreName    string    `json:"store_name"`
+	City         string    `json:"city"`
+	Url          string    `json:"url"`
+	Rating       string    `json:"rating"`
+	MinimumOrder string    `json:"minimumOrder"`
+	DeliveryTime string    `json:"deliveryTime"`
+	Location     *Location `json:"location"`
+	Description  string    `json:"description"`
+}
+
+type DeliveryAddress struct {
+	Id        string
+	Address   string
+	Locality  string
+	City      string
+	Landmark  string
+	Allow     int
+	Latitude  float64
+	Longitude float64
+}
+
+type Location struct {
+	Latitude  float64 `json:"lat"`
+	Longitude float64 `json:"lon"`
+}
+
+type Orders struct {
+	OrderNumber    string
+	Cart           *Cart
+	OrderTimeStamp string
+	Payment        string
+	CurrentStatus  string
+	Status         *Status
+}
+
+type Status struct {
+	Placed              string
+	PlacedLable         string
+	PlacedDesc          string
+	Received            string
+	ReceivedLable       string
+	ReceivedDesc        string
+	Packed              string
+	PackedLable         string
+	PackedDesc          string
+	OutForDelivery      string
+	OutForDeliveryLable string
+	OutForDeliveryDesc  string
+	Delivered           string
+	DeliveredLable      string
+	DeliveredDesc       string
+}
+
+type Cart struct {
+	ItemsCount      int
+	TotalAmt        string
+	Category        []*Category
+	StoreInfo       *StoreInfo
+	DeliveryAddress *DeliveryAddress
+}
+
+type StoreInfo struct {
+	Address      string  `json:"Address"`
+	ShopName     string  `json:"ShopName"`
+	City         string  `json:"City"`
+	ImageUrl     string  `json:"ImageUrl"`
+	Rating       string  `json:"Rating"`
+	MinimumOrder string  `json:"MinimumOrder"`
+	DeliveryTime string  `json:"DeliveryTime"`
+	Latitude     float64 `json:"Latitude"`
+	Longitude    float64 `json:"Longitude"`
+}
+
+type Category struct {
+	Name                  string
+	ProductSubCategoryRes *[]ProductSubCategoryRes `json:"SubCategories"`
+}
+
+type ProductSubCategoryRes struct {
+	Id       string `json:"Id"`
+	Name     string `json:"Name"`
+	Title    string `json:"Title"`
+	Products *ProductRes
+}
+
+type ProductSubCategory struct {
+	Id       string `json:"Id"`
+	Name     string `json:"Name"`
+	Title    string `json:"Title"`
+	Products []*ProductRes
+}
+
+type Feedback struct {
+	Retailer string `json:"retailer"`
+	Rating   []*Rating
+}
+
+type Rating struct {
+	Value float64 `json:"value"`
+}
+
+type ProductRes struct {
+	Name       string `json:"Name"`
+	ImageURL   string `json:"ImageUrl"`
+	TotalPrice string `json:"TotalPrice"`
+	Desc       string `json:"Desc"`
+	Unit       string `json:"Unit"`
+	Price      string `json:"Price"`
+	Added      string `json:"Added"`
+	Qty        int    `json:"Qty"`
+}
+type CategoryRes struct {
+	Name string `json:"name"`
+	Url  string `json:"url"`
+}
+
+type Request struct {
+	Name      string
+	StoreName string
+
+	Category        string
+	StoreId         string
+	AddressId       string
+	FirstName       string
+	LastName        string
+	Email           string
+	Mobile          string
+	DOB             string
+	Password        string
+	NewPassword     string
+	Post            string
+	District        string
+	PIN             string
+	State           string
+	Province        string
+	City            string
+	Nationality     string
+	ChannelName     string
+	ChannelKey      string
+	OS              string
+	OSVersion       string
+	APPVersion      string
+	IMEI            string
+	IMSI            string
+	PIP             string
+	ServerDateTime  string
+	SessionID       string
+	SessionStatus   string
+	Locality        string
+	HouseNo         string
+	Keyword         string
+	Address         string
+	Landmark        string
+	Latitude        float64
+	Longitude       float64
+	From            int
+	To              int
+	Cart            string
+	OrderNumber     string
+	ContactMobile   string
+	ContactEmail    string
+	DeliveryAddress string
+}

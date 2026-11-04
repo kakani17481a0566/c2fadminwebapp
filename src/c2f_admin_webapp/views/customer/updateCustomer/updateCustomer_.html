@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>C2F Admin</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="/static/dist/img/logo-s.png" type="image/gif" sizes="16x16">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../static/plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="../../static/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../static/dist/css/adminlte.min.css">
+    <!-- style css -->
+    <link rel="stylesheet" href="../../static/dist/css/style.css">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="../../static/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <link rel="stylesheet" type="text/css" href="../../static/plugins/duDialog-master/duDialog.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  </head>
+  <body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+      <!-- Navbar -->
+      <nav   class="main-header navbar navbar-expand navbar-light navbar-green">        <!-- Left navbar links -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+      </ul>
+      <!-- Right navbar links -->
+      <ul class="navbar-nav ml-auto">
+        <!-- Notifications Dropdown Menu -->
+        <li class="nav-item dropdown">
+          <a class="nav-link" data-toggle="dropdown" href="#">
+            <img src="/static/dist/img/user-icon-jpg-8.jpg" alt="User Avatar" class="img-size-35 mr-3 img-circle">
+          </a>
+          <div class="dropdown-menu dropdown-menu-right">
+            <!-- <a href="/Profile" class="dropdown-item">
+              <i class="fas fa-users mr-2"></i> Profile
+            </a>
+            <div class="dropdown-divider"></div> -->
+            <a href="/ChangePassword" class="dropdown-item">
+              <i class="fas fa-key mr-2"></i> Change Password
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="/Logout" class="dropdown-item">
+              <i class="fas fas fa-arrow-alt-circle-left"></i> Logout
+            </a>
+          </div>
+        </li>
+      </ul>
+    </nav>
+    <!-- /.navbar -->
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar elevation-4 sidebar-light-green">
+      <!-- Brand Logo -->
+      <a href="/Dashboard" class="brand-link navbar-light" style="padding-bottom: 35px;">
+        <img src="/static/dist/img/logo.png" alt="AdminLTE Logo" class="brand-image"
+          style="opacity: .8">
+          <img src="/static/dist/img/logo-s.png" alt="AdminLTE Logo" class="brand-image-small"
+          style="opacity: .8">
+        <!-- <span class="brand-text font-weight-light">Asset Monitoring</span> -->
+      </a>
+      {{if eq .utype "HOADMIN"}} {{template "default/sidebar.html" .}} {{else if eq .utype "USER"}} {{template "default/userSidebar.html" .}} {{else}} {{template "default/reportSidebar.html" .}} {{end}}
+      
+    </aside>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper content-bg-color">
+      <!-- Content Header (Page header) -->
+      <div class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1 class="m-0 text-color-white">Update Customer</h1>
+              </div><!-- /.col -->
+              <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                  <li class="breadcrumb-item"><a href="/Dashboard">Home</a></li>
+                  <li class="breadcrumb-item active">Update Customer</li>
+                </ol>
+                </div><!-- /.col -->
+                </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+              </div>
+              <!-- /.content-header -->
+              <form action="/Customer/UpdateCustomer/{{.Id}}" id="addUsersValidate" method="post">
+                <!-- Main content -->
+                <section class="content">
+                  <div class="container-fluid">
+                    <!-- Small boxes (Stat box) -->
+                    <div class="row">
+                      <div class="col-12">
+                        <!-- Default box -->
+                        <div class="card card-bg-color">
+                          <div class="card-header">
+                            <h3 class="card-title text-color-white">Update Customer</h3>
+                          </div>
+                          <div class="card-body ">
+                            <div class="row">
+                              <div class="col-sm-4">
+                                <!-- text input -->
+                                <div class="form-group">
+                                  <label class="text-color-white required">First Name</label>
+                                  <input type="text" pattern="[a-zA-Z]+"
+    title="Please enter Alphabets."  class="form-control text-ph-backgroud-color" placeholder="Enter First Name" name="input_first_name" id="input_first_name" value="{{.FirstName}}" />
+                                </div>
+                              </div>
+                              <div class="col-sm-4">
+                                <!-- text input -->
+                                <div class="form-group">
+                                  <label class="text-color-white">Middle Name</label>
+                                  <input type="text" pattern="[a-zA-Z]+"
+    title="Please enter Alphabets."  class="form-control text-ph-backgroud-color" placeholder="Enter Middle Name" name="input_middle_name" id="input_middle_name" value="{{.MiddleName}}" />
+                                </div>
+                              </div>
+                              
+                              <div class="col-sm-4">
+                                <!-- text input -->
+                                <div class="form-group">
+                                  <label class="text-color-white">Last Name</label>
+                                  <input type="text" pattern="[a-zA-Z]+"
+    title="Please enter Alphabets."  class="form-control text-ph-backgroud-color" placeholder="Enter Last Name" name="input_last_name" id="input_last_name" value="{{.LastName}}"/>
+                                </div>
+                              </div>
+                              <div class="col-sm-4">
+                                <!-- text input -->
+                                <div class="form-group">
+                                  <label class="text-color-white">Email</label>
+                                  <input type="email" class="form-control text-ph-backgroud-color" placeholder="Enter Email" name="input_email" id="input_email" value="{{.Email}}" />
+                                </div>
+                              </div>
+                              <div class="col-sm-4">
+                                <!-- text input -->
+                                <div class="form-group">
+                                  <label class="text-color-white required">Mobile Number</label>         
+                                  <input type="number" pattern="^\d{10}$" title="Please enter 10 digit number" onKeyPress="if(this.value.length==10) return false;" class="form-control text-ph-backgroud-color" placeholder="Enter Mobile Number" name="input_mobile" id="input_mobile" value="{{.Mobile}}"/>
+                                </div>
+                              </div>
+                              
+                                <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label class="text-color-white required">Customer Type</label>
+                                    <select class="form-control text-ph-backgroud-color" id="input_customer_type" name="input_customer_type" >
+                                      <option value="">-- Please Select --</option>
+                                      <option value="RETAILCUSTOMER">Retail Customer</option>
+                                      <option value="RETAILSHOP">Retail Shop</option>
+                                      <option value="FOODPROCESSOR">Food Processor</option>
+                                      
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label class="text-color-white required">Address line1</label>
+                                    <input type="text" pattern="[ A-Za-z0-9_$&+,:;=?@-#|~`'<>.^(){}/\''%!]$" class="form-control text-ph-backgroud-color" placeholder="Enter Address 1" name="input_address1" id="input_address1" value="{{.Address1}}"  />
+                                  </div>
+                                </div>
+                                <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label class="text-color-white required">Address line 2</label>
+                                    <input type="text" pattern="[ A-Za-z0-9_$&+,:;=?@-#|~`'<>.^(){}/\''%!]$" class="form-control text-ph-backgroud-color" placeholder="Enter Address 2" name="input_address2" id="input_address2"  value="{{.Address2}}" />
+                                  </div>
+                                </div>
+                                <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label class="text-color-white required">Village/Tq/District/Town</label>
+                                    <input type="text" pattern="[a-zA-Z]+" title="Please enter Alphabets." class="form-control text-ph-backgroud-color" placeholder="Enter Village/Tq/District/Town" name="input_town" id="input_town" value="{{.Town}}"  />
+                                  </div>
+                                </div>
+                                <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label class="text-color-white required">City</label>
+                                    <input type="text" pattern="[a-zA-Z]+" title="Please enter Alphabets." class="form-control text-ph-backgroud-color" placeholder="Enter City" name="input_city" id="input_city" value="{{.City}}"  />
+                                  </div>
+                                </div>
+                                <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label class="text-color-white required">Pin Code</label>
+                                    <input type="number" pattern="^\d{6}$" title="Please enter 6 digit number" onKeyPress="if(this.value.length==6) return false;" class="form-control text-ph-backgroud-color" placeholder="Enter Pin code" name="input_zipcode" id="input_zipcode"  value="{{.Zipcode}}" />
+                                  </div>
+                                </div>
+                                
+                             
+                                
+                                <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label class="text-color-white ">State</label>
+                                    <input type="text" pattern="[a-zA-Z]+" title="Please enter Alphabets." class="form-control text-ph-backgroud-color" placeholder="Enter State" name="input_state" id="input_state"  value="{{.State}}" />
+                                  </div>
+                                </div>
+                                <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label class="text-color-white required">Language</label>
+                                    <select class="form-control text-ph-backgroud-color" title="Please enter language" id="input_language" name="input_language"  value="{{.Language}}" >
+                                      <option value="">-- Please Select --</option>
+                                      <option value="EN">English</option>
+                                      <option value="EN">Telugu</option>
+                                      
+                                      
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label class="text-color-white required">Location Type</label>
+                                    <select class="form-control text-ph-backgroud-color" id="LocationType" name="LocationType" >
+                                      <!-- <option value="">-- Please Select --</option> -->
+                                      <option value="Gmap URL">Gmap URL</option>
+                                      <option value="Geo Co ordinates">Geo Co ordinates</option>
+                                      <option value="MapMyIndia Code">MapMyIndia Code</option>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label class="text-color-white required">Location Info</label>
+                                    <input type="text" pattern="[a-zA-Z0-9/.,\s]+" class="form-control text-ph-backgroud-color" placeholder="Enter Location Info" name="LocationInfo" id="LocationInfo" value="{{.LocationInfo}}" />
+                                  </div>
+                                </div>
+                              <div class="col-sm-4">
+                                <!-- text input -->
+                                <div class="form-group">
+                                  <label class="text-color-white required">User Status</label>
+                                  <select class="form-control text-ph-backgroud-color" id="input_user_status" name="input_user_status" >
+                                    <option value="">-- Please Select --</option>
+                                    <option value="ACTIVE">ACTIVE</option>
+                                    <option value="INACTIVE">INACTIVE</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="card-footer" style="text-align: center;">
+                            <button type="submit" class="btn">Submit</button>
+                            <a href="/Customer/SearchCustomer"><button type="button" class="btn">Back</button></a>
+                          </div>
+                          <!-- /.card-footer-->
+                          <!-- /.card -->
+                        </div>
+                      </div>
+                      <!-- /.card -->
+                      <!-- /.row -->
+                      <!-- Main row -->
+                      <div class="row">
+                      </div>
+                      <!-- /.row (main row) -->
+                      </div><!-- /.container-fluid -->
+                    </section>
+                  </form>
+                  <!-- /.content -->
+                </div>
+                <!-- /.content-wrapper -->
+                <footer class="main-footer footer-bg-color">
+                  <strong>Copyright &copy; 2021.</strong>
+                  All rights reserved.
+                </footer>
+                <!-- Control Sidebar -->
+                <aside class="control-sidebar control-sidebar-dark">
+                  <!-- Control sidebar content goes here -->
+                </aside>
+                <!-- /.control-sidebar -->
+              </div>
+              <!-- ./wrapper -->
+              <!-- jQuery -->
+              <script src="../../static/plugins/jquery/jquery.min.js"></script>
+              <!-- jQuery UI 1.11.4 -->
+              <script src="../../static/plugins/jquery-ui/jquery-ui.min.js"></script>
+              <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+              <script>
+              $.widget.bridge('uibutton', $.ui.button)
+              </script>
+              <!-- Bootstrap 4 -->
+              <script src="../../static/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+              <script src="../../static/plugins/moment/moment.min.js"></script>
+              <script src="../../static/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+              <script type="text/javascript" src="../../static/plugins/duDialog-master/duDialog.js"></script>
+              <!-- validation -->
+              <script src="../../static/plugins/jquery-validation/jquery.validate.min.js"></script>
+              <script src="../../static/plugins/jquery-validation/additional-methods.min.js"></script>
+              <!-- AdminLTE App -->
+              <script src="../../static/dist/js/adminlte.js"></script>
+              <script>
+                document.getElementById("customermanagement-menu").className += " menu-open";
+                document.getElementById("customermanagement-active").className += " active";
+                document.getElementById("searchcustomer-active").className += " active";
+                </script>
+              <!-- change type -->
+              <script type="text/javascript">
+              var utype = {{.UserType}};
+              $('#input_user_type').val(utype);
+              </script>
+              <script type="text/javascript">
+              var ustatus = {{.UStatus}};
+              $('#input_user_status').val(ustatus);
+              </script>
+              <script type="text/javascript">
+              var data = {{.DisplayMessage}};
+              if (data != ""){
+              new duDialog('', data);
+              }
+              </script>
+              <script type="text/javascript">
+              $(document).ready(function () {
+              // alert(language)
+              var validationMsg = {};
+              validationMsg.firstName = "Please enter first name";
+              // validationMsg.middleName = "Please enter middle";
+              // validationMsg.lastName = "Please enter last name ";
+              validationMsg.mobile = "Please enter mobile number";
+              validationMsg.input_user_status = "Please enter User Status ";
+              validationMsg.email = "Please enter email ";
+              validationMsg.companyName = "Please enter company name";
+              validationMsg.userType = "Please enter user type";
+              validationMsg.language = "Please select language";
+              $('#addUsersValidate').validate({
+              rules: {
+              input_first_name: {
+              required: true,
+              maxlength: 30
+              },
+              // input_middle_name: {
+              // required: true,
+              // maxlength: 30
+              // },
+              // input_last_name: {
+              // required: true,
+              // maxlength: 30
+              // },
+              input_mobile: {
+              required: true,
+              maxlength: 10,
+              number:true
+              },
+              input_email: {
+              required: true,
+              email: true,
+              maxlength: 40
+              },
+              input_user_type: {
+              required: true,
+              maxlength: 20
+              },
+              input_language: {
+              required: true,
+              maxlength: 20
+              },
+              input_user_status: {
+              required: true,
+              maxlength: 20
+              },
+              },
+              messages: {
+              input_first_name: {
+              required: validationMsg.firstName,
+              },
+              // input_middle_name: {
+              // required: validationMsg.middleName,
+              // },
+              // input_last_name:  {
+              // required: validationMsg.lastName,
+              // },
+              input_mobile:  {
+              required: validationMsg.mobile,
+              },
+              input_language:  {
+              required: validationMsg.language,
+              },
+              input_email: {
+              required: validationMsg.email,
+              },
+              input_user_type: {
+              required: validationMsg.userType,
+              },
+              input_user_status: {
+              required: validationMsg.input_user_status,
+              }
+              },
+              errorElement: 'span',
+              errorPlacement: function (error, element) {
+              error.addClass('invalid-feedback');
+              element.closest('.form-group').append(error);
+              },
+              highlight: function (element, errorClass, validClass) {
+              $(element).addClass('is-invalid');
+              },
+              unhighlight: function (element, errorClass, validClass) {
+              $(element).removeClass('is-invalid');
+              }
+              });
+              });
+              </script>
+            </body>
+          </html>

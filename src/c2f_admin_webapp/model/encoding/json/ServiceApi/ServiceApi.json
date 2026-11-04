@@ -1,0 +1,995 @@
+{
+	"Tksp": {
+		"ServiceInterface": {
+			"Name": "",
+			"Type": "",
+			"Version": "",
+			"Channel": {
+				"Name": "",
+				"Type": "",
+				"HostIP": {
+					"Type": "",
+					"Value": ""
+				}
+			},
+			"Device": {
+				"OS": "",
+				"Version": "",
+				"Id": "",
+				"IP": {
+					"Type": "",
+					"Value": ""
+				}
+			},
+			"Response": {
+				"Code": "",
+				"Message": "",
+				"Param": "",
+				"HostCode": "",
+				"HostMessage": "",
+				"Status": ""
+			},
+			"Notification": {
+				"Type": "",
+				"Dest": "",
+				"Message": ""
+			},
+			"TransactionData": {
+				"TimeStamp": "",
+				"RequestID": "",
+				"TransactionNumber": "",
+				"TransactionDescription": "",
+				"ServiceDetail": {
+					"BusinessCategory": "",
+					"Partner": "",
+					"Category": "",
+					"SubCategory": "",
+					"Denomination": "",
+					"Role": "",
+					"Group": "",
+					"Service": ""
+				},
+				"Qty": "",
+				"GLAgent": {
+					"Amount": "",
+					"Fee": "",
+					"Commission": "",
+					"Discount": "",
+					"VAT": "",
+					"STax": "",
+					"SurCharge": "",
+					"TotalAmount": "",
+					"Formulae": "",
+					"LedgerOperation": ""
+				},
+				"GLDistributor": {
+					"Amount": "",
+					"Fee": "",
+					"Commission": "",
+					"Discount": "",
+					"VAT": "",
+					"STax": "",
+					"SurCharge": "",
+					"TotalAmount": "",
+					"Formulae": "",
+					"LedgerOperation": ""
+				},
+				"GLSystem": {
+					"Amount": "",
+					"Fee": "",
+					"Commission": "",
+					"Discount": "",
+					"VAT": "",
+					"STax": "",
+					"SurCharge": "",
+					"TotalAmount": "",
+					"Formulae": "",
+					"LedgerOperation": ""
+				},
+				"GLService": {
+					"Amount": "",
+					"Fee": "",
+					"Commission": "",
+					"Discount": "",
+					"VAT": "",
+					"STax": "",
+					"SurCharge": "",
+					"TotalAmount": "",
+					"Formulae": "",
+					"LedgerOperation": ""
+				},
+				"GLPartnerService": {
+					"Amount": "",
+					"Fee": "",
+					"Commission": "",
+					"Discount": "",
+					"VAT": "",
+					"STax": "",
+					"SurCharge": "",
+					"TotalAmount": "",
+					"Formulae": "",
+					"LedgerOperation": ""
+				},
+				"GLCommission": {
+					"Amount": "",
+					"Fee": "",
+					"Commission": "",
+					"Discount": "",
+					"VAT": "",
+					"STax": "",
+					"SurCharge": "",
+					"TotalAmount": "",
+					"Formulae": "",
+					"LedgerOperation": ""
+				},
+				"GLVAT": {
+					"Amount": "",
+					"Fee": "",
+					"Commission": "",
+					"Discount": "",
+					"VAT": "",
+					"STax": "",
+					"SurCharge": "",
+					"TotalAmount": "",
+					"Formulae": "",
+					"LedgerOperation": ""
+				},
+				"GLFee": {
+					"Amount": "",
+					"Fee": "",
+					"Commission": "",
+					"Discount": "",
+					"VAT": "",
+					"STax": "",
+					"SurCharge": "",
+					"TotalAmount": "",
+					"Formulae": "",
+					"LedgerOperation": ""
+				},
+				"GLDiscount": {
+					"Amount": "",
+					"Fee": "",
+					"Commission": "",
+					"Discount": "",
+					"VAT": "",
+					"STax": "",
+					"SurCharge": "",
+					"TotalAmount": "",
+					"Formulae": "",
+					"LedgerOperation": ""
+				},
+				"GLSTax": {
+					"Amount": "",
+					"Fee": "",
+					"Commission": "",
+					"Discount": "",
+					"VAT": "",
+					"STax": "",
+					"SurCharge": "",
+					"TotalAmount": "",
+					"Formulae": "",
+					"LedgerOperation": ""
+				},
+				"GLSurCharge": {
+					"Amount": "",
+					"Fee": "",
+					"Commission": "",
+					"Discount": "",
+					"VAT": "",
+					"STax": "",
+					"SurCharge": "",
+					"TotalAmount": "",
+					"Formulae": "",
+					"LedgerOperation": ""
+				},
+				"GLCustomer": {
+					"Amount": "",
+					"Fee": "",
+					"Commission": "",
+					"Discount": "",
+					"VAT": "",
+					"STax": "",
+					"SurCharge": "",
+					"TotalAmount": "",
+					"Formulae": "",
+					"LedgerOperation": ""
+				},
+				"GLBeneficiary": {
+					"Amount": "",
+					"Fee": "",
+					"Commission": "",
+					"Discount": "",
+					"VAT": "",
+					"STax": "",
+					"SurCharge": "",
+					"TotalAmount": "",
+					"Formulae": "",
+					"LedgerOperation": ""
+				},
+				"PaymentMode": "",
+				"Currency": "",
+				"CountryCode": "",
+				"CustomerDetails": {
+					"MSISDN": "",
+					"Email": "",
+					"ServiceNo": "",
+					"Name": "",
+					"Address": ""
+				}
+			},
+			"Agent": [{
+				"Username": "",
+				"Type": "",
+				"Status": "",
+				"ParentId": "",
+				"CreateDate": "",
+				"LastUpdate": "",
+				"ClassName": "",
+				"NationalID": "",
+				"Profile": {
+					"FirstName": "",
+					"MiddleName": "",
+					"LastName": "",
+					"DOB": "",
+					"Gender": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				},
+				"Address": [{
+					"Address1": "",
+					"City": "",
+					"Province": "",
+					"Country": "",
+					"Zip": "",
+					"Type": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"Communication": [{
+					"Type": "",
+					"Value": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"Accounts": [{
+					"Number": "",
+					"Balance": "",
+					"LedgerBalance": "",
+					"Type": "",
+					"Status": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"Documents": [{
+					"Type": "",
+					"Value": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"BankDetails": [{
+					"Type": "",
+					"Number": "",
+					"Name": "",
+					"Branch": "",
+					"Code": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}]
+			}],
+			"Distributor": [{
+				"Username": "",
+				"Type": "",
+				"Status": "",
+				"ParentId": "",
+				"CreateDate": "",
+				"LastUpdate": "",
+				"ClassName": "",
+				"NationalID": "",
+				"Profile": {
+					"FirstName": "",
+					"MiddleName": "",
+					"LastName": "",
+					"DOB": "",
+					"Gender": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				},
+				"Address": [{
+					"Address1": "",
+					"City": "",
+					"Province": "",
+					"Country": "",
+					"Zip": "",
+					"Type": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"Communication": [{
+					"Type": "",
+					"Value": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"Accounts": [{
+					"Number": "",
+					"Balance": "",
+					"LedgerBalance": "",
+					"Type": "",
+					"Status": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"Documents": [{
+					"Type": "",
+					"Value": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"BankDetails": [{
+					"Type": "",
+					"Number": "",
+					"Name": "",
+					"Branch": "",
+					"Code": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}]
+			}],
+			"Service": [{
+				"Username": "",
+				"Type": "",
+				"Status": "",
+				"ParentId": "",
+				"CreateDate": "",
+				"LastUpdate": "",
+				"ClassName": "",
+				"NationalID": "",
+				"Profile": {
+					"FirstName": "",
+					"MiddleName": "",
+					"LastName": "",
+					"DOB": "",
+					"Gender": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				},
+				"Address": [{
+					"Address1": "",
+					"City": "",
+					"Province": "",
+					"Country": "",
+					"Zip": "",
+					"Type": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"Communication": [{
+					"Type": "",
+					"Value": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"Accounts": [{
+					"Number": "",
+					"Balance": "",
+					"LedgerBalance": "",
+					"Type": "",
+					"Status": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"Documents": [{
+					"Type": "",
+					"Value": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"BankDetails": [{
+					"Type": "",
+					"Number": "",
+					"Name": "",
+					"Branch": "",
+					"Code": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}]
+			}],
+			"PartnerService": [{
+				"Username": "",
+				"Type": "",
+				"Status": "",
+				"ParentId": "",
+				"CreateDate": "",
+				"LastUpdate": "",
+				"ClassName": "",
+				"NationalID": "",
+				"Profile": {
+					"FirstName": "",
+					"MiddleName": "",
+					"LastName": "",
+					"DOB": "",
+					"Gender": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				},
+				"Address": [{
+					"Address1": "",
+					"City": "",
+					"Province": "",
+					"Country": "",
+					"Zip": "",
+					"Type": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"Communication": [{
+					"Type": "",
+					"Value": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"Accounts": [{
+					"Number": "",
+					"Balance": "",
+					"LedgerBalance": "",
+					"Type": "",
+					"Status": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"Documents": [{
+					"Type": "",
+					"Value": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"BankDetails": [{
+					"Type": "",
+					"Number": "",
+					"Name": "",
+					"Branch": "",
+					"Code": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}]
+			}],
+			"System": [{
+				"Username": "",
+				"Type": "",
+				"Status": "",
+				"ParentId": "",
+				"CreateDate": "",
+				"LastUpdate": "",
+				"ClassName": "",
+				"NationalID": "",
+				"Profile": {
+					"FirstName": "",
+					"MiddleName": "",
+					"LastName": "",
+					"DOB": "",
+					"Gender": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				},
+				"Address": [{
+					"Address1": "",
+					"City": "",
+					"Province": "",
+					"Country": "",
+					"Zip": "",
+					"Type": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"Communication": [{
+					"Type": "",
+					"Value": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"Accounts": [{
+					"Number": "",
+					"Balance": "",
+					"LedgerBalance": "",
+					"Type": "",
+					"Status": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"Documents": [{
+					"Type": "",
+					"Value": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"BankDetails": [{
+					"Type": "",
+					"Number": "",
+					"Name": "",
+					"Branch": "",
+					"Code": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}]
+			}],
+			"Commission": [{
+				"Username": "",
+				"Type": "",
+				"Status": "",
+				"ParentId": "",
+				"CreateDate": "",
+				"LastUpdate": "",
+				"ClassName": "",
+				"NationalID": "",
+				"Profile": {
+					"FirstName": "",
+					"MiddleName": "",
+					"LastName": "",
+					"DOB": "",
+					"Gender": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				},
+				"Address": [{
+					"Address1": "",
+					"City": "",
+					"Province": "",
+					"Country": "",
+					"Zip": "",
+					"Type": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"Communication": [{
+					"Type": "",
+					"Value": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"Accounts": [{
+					"Number": "",
+					"Balance": "",
+					"LedgerBalance": "",
+					"Type": "",
+					"Status": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"Documents": [{
+					"Type": "",
+					"Value": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"BankDetails": [{
+					"Type": "",
+					"Number": "",
+					"Name": "",
+					"Branch": "",
+					"Code": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}]
+			}],
+			"Fee": [{
+				"Username": "",
+				"Type": "",
+				"Status": "",
+				"ParentId": "",
+				"CreateDate": "",
+				"LastUpdate": "",
+				"ClassName": "",
+				"NationalID": "",
+				"Profile": {
+					"FirstName": "",
+					"MiddleName": "",
+					"LastName": "",
+					"DOB": "",
+					"Gender": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				},
+				"Address": [{
+					"Address1": "",
+					"City": "",
+					"Province": "",
+					"Country": "",
+					"Zip": "",
+					"Type": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"Communication": [{
+					"Type": "",
+					"Value": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"Accounts": [{
+					"Number": "",
+					"Balance": "",
+					"LedgerBalance": "",
+					"Type": "",
+					"Status": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"Documents": [{
+					"Type": "",
+					"Value": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"BankDetails": [{
+					"Type": "",
+					"Number": "",
+					"Name": "",
+					"Branch": "",
+					"Code": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}]
+			}],
+			"Discount": [{
+				"Username": "",
+				"Type": "",
+				"Status": "",
+				"ParentId": "",
+				"CreateDate": "",
+				"LastUpdate": "",
+				"ClassName": "",
+				"NationalID": "",
+				"Profile": {
+					"FirstName": "",
+					"MiddleName": "",
+					"LastName": "",
+					"DOB": "",
+					"Gender": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				},
+				"Address": [{
+					"Address1": "",
+					"City": "",
+					"Province": "",
+					"Country": "",
+					"Zip": "",
+					"Type": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"Communication": [{
+					"Type": "",
+					"Value": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"Accounts": [{
+					"Number": "",
+					"Balance": "",
+					"LedgerBalance": "",
+					"Type": "",
+					"Status": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"Documents": [{
+					"Type": "",
+					"Value": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"BankDetails": [{
+					"Type": "",
+					"Number": "",
+					"Name": "",
+					"Branch": "",
+					"Code": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}]
+			}],
+			"VAT": [{
+				"Username": "",
+				"Type": "",
+				"Status": "",
+				"ParentId": "",
+				"CreateDate": "",
+				"LastUpdate": "",
+				"ClassName": "",
+				"NationalID": "",
+				"Profile": {
+					"FirstName": "",
+					"MiddleName": "",
+					"LastName": "",
+					"DOB": "",
+					"Gender": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				},
+				"Address": [{
+					"Address1": "",
+					"City": "",
+					"Province": "",
+					"Country": "",
+					"Zip": "",
+					"Type": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"Communication": [{
+					"Type": "",
+					"Value": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"Accounts": [{
+					"Number": "",
+					"Balance": "",
+					"LedgerBalance": "",
+					"Type": "",
+					"Status": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"Documents": [{
+					"Type": "",
+					"Value": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"BankDetails": [{
+					"Type": "",
+					"Number": "",
+					"Name": "",
+					"Branch": "",
+					"Code": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}]
+			}],
+			"STax": [{
+				"Username": "",
+				"Type": "",
+				"Status": "",
+				"ParentId": "",
+				"CreateDate": "",
+				"LastUpdate": "",
+				"ClassName": "",
+				"NationalID": "",
+				"Profile": {
+					"FirstName": "",
+					"MiddleName": "",
+					"LastName": "",
+					"DOB": "",
+					"Gender": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				},
+				"Address": [{
+					"Address1": "",
+					"City": "",
+					"Province": "",
+					"Country": "",
+					"Zip": "",
+					"Type": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"Communication": [{
+					"Type": "",
+					"Value": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"Accounts": [{
+					"Number": "",
+					"Balance": "",
+					"LedgerBalance": "",
+					"Type": "",
+					"Status": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"Documents": [{
+					"Type": "",
+					"Value": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"BankDetails": [{
+					"Type": "",
+					"Number": "",
+					"Name": "",
+					"Branch": "",
+					"Code": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}]
+			}],
+			"SurCharge": [{
+				"Username": "",
+				"Type": "",
+				"Status": "",
+				"ParentId": "",
+				"CreateDate": "",
+				"LastUpdate": "",
+				"ClassName": "",
+				"NationalID": "",
+				"Profile": {
+					"FirstName": "",
+					"MiddleName": "",
+					"LastName": "",
+					"DOB": "",
+					"Gender": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				},
+				"Address": [{
+					"Address1": "",
+					"City": "",
+					"Province": "",
+					"Country": "",
+					"Zip": "",
+					"Type": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"Communication": [{
+					"Type": "",
+					"Value": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"Accounts": [{
+					"Number": "",
+					"Balance": "",
+					"LedgerBalance": "",
+					"Type": "",
+					"Status": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"Documents": [{
+					"Type": "",
+					"Value": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"BankDetails": [{
+					"Type": "",
+					"Number": "",
+					"Name": "",
+					"Branch": "",
+					"Code": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}]
+			}],
+			"Customer": [{
+				"Username": "",
+				"Type": "",
+				"Status": "",
+				"ParentId": "",
+				"CreateDate": "",
+				"LastUpdate": "",
+				"ClassName": "",
+				"NationalID": "",
+				"Profile": {
+					"FirstName": "",
+					"MiddleName": "",
+					"LastName": "",
+					"DOB": "",
+					"Gender": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				},
+				"Address": [{
+					"Address1": "",
+					"City": "",
+					"Province": "",
+					"Country": "",
+					"Zip": "",
+					"Type": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"Communication": [{
+					"Type": "",
+					"Value": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"Accounts": [{
+					"Number": "",
+					"Balance": "",
+					"LedgerBalance": "",
+					"Type": "",
+					"Status": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"Documents": [{
+					"Type": "",
+					"Value": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"BankDetails": [{
+					"Type": "",
+					"Number": "",
+					"Name": "",
+					"Branch": "",
+					"Code": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}]
+			}],
+			"Beneficiary": [{
+				"Username": "",
+				"Type": "",
+				"Status": "",
+				"ParentId": "",
+				"CreateDate": "",
+				"LastUpdate": "",
+				"ClassName": "",
+				"NationalID": "",
+				"Profile": {
+					"FirstName": "",
+					"MiddleName": "",
+					"LastName": "",
+					"DOB": "",
+					"Gender": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				},
+				"Address": [{
+					"Address1": "",
+					"City": "",
+					"Province": "",
+					"Country": "",
+					"Zip": "",
+					"Type": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"Communication": [{
+					"Type": "",
+					"Value": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"Accounts": [{
+					"Number": "",
+					"Balance": "",
+					"LedgerBalance": "",
+					"Type": "",
+					"Status": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"Documents": [{
+					"Type": "",
+					"Value": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}],
+				"BankDetails": [{
+					"Type": "",
+					"Number": "",
+					"Name": "",
+					"Branch": "",
+					"Code": "",
+					"CreateDate": "",
+					"LastUpdate": ""
+				}]
+			}],
+			"Security": {
+				"Data": "",
+				"Skey": "",
+				"CertificateExpiry": "",
+				"Hmac": ""
+			}
+		}
+	}
+}

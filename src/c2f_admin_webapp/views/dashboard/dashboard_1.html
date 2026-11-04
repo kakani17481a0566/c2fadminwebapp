@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>C2F Admin</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="/static/dist/img/logo-s.png" type="image/gif" sizes="16x16">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../static/plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="../../static/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../static/dist/css/adminlte.min.css">
+    <!-- style css -->
+    <link rel="stylesheet" href="../../static/dist/css/style.css">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="../../static/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="../../static/dist/css/fonts/source-sans-pro.css">
+    
+    
+    
+  </head>
+  <body class="hold-transition sidebar-mini layout-fixed">
+   <marquee style="color:#navbar-green">Welcome to krishivala.cultivating freedom in farming </marquee>
+    <div class="wrapper">
+      <!-- Navbar -->
+      <nav   class="main-header navbar navbar-expand navbar-light navbar-green">
+        <!-- Left navbar links -->
+        <ul  class="navbar-nav">
+          <li class="nav-item">
+            <a  style="color:#ffffff" class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i>
+              <!--  <span style="font-size:180%;">Asset   Monitoring   System</span> -->
+            </a>
+          </li>
+        </ul>
+        <!-- Right navbar links -->
+        <ul class="navbar-nav ml-auto logo">
+         
+          <!-- Notifications Dropdown Menu -->
+          <li class="tablogo"><a href="/Dashboard" class="brand-link navbar-light" style="padding-bottom: 35px;">
+          <img src="/static/dist/img/logo.png" alt="AdminLTE Logo" class="brand-image"
+          style="opacity: .8">
+          
+          <!-- <span class="brand-text font-weight-light">Asset Monitoring</span> -->
+        </a></li>
+          <li class="nav-item dropdown">
+          
+            <a class="nav-link" data-toggle="dropdown" href="#">
+              <img src="/static/dist/img/user-icon-jpg-8.jpg" alt="User Avatar" class="img-size-35 mr-3 img-circle">
+            </a>
+            <div class="dropdown-menu dropdown-menu-right">
+              <!-- <a href="/Profile" class="dropdown-item">
+                <i class="fas fa-users mr-2"></i> Profile
+              </a>
+              <div class="dropdown-divider"></div> -->
+              <a href="/ChangePassword" class="dropdown-item">
+                <i class="fas fa-key mr-2"></i> Change Password
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="/Logout" class="dropdown-item">
+                <i class="fas fas fa-arrow-alt-circle-left"></i> Logout
+              </a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+      <!-- /.navbar -->
+      <!-- Main Sidebar Container -->
+      <aside class="main-sidebar elevation-4 sidebar-light-green">
+        <!-- Brand Logo -->
+        <a href="/Dashboard" class="brand-link navbar-light" style="padding-bottom: 35px;">
+          <img src="/static/dist/img/logo.png" alt="AdminLTE Logo" class="brand-image"
+          style="opacity: .8">
+          <img src="/static/dist/img/logo-s.png" alt="AdminLTE Logo" class="brand-image-small"
+          style="opacity: .8">
+          <!-- <span class="brand-text font-weight-light">Asset Monitoring</span> -->
+        </a>
+        {{if eq .utype "HOADMIN"}} {{template "default/sidebar.html" .}} {{else if eq .utype "CLUSTERADMIN"}} {{template "default/clusteradminSidebar.html" .}} {{else if eq .utype "REPORTS"}} {{template "default/reportSidebar.html" .}}  {{end}}
+        
+      </aside>
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper dashboard-bg-color">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <div class="col-sm-6">
+                <h1 class="m-0 text-color-white">Dashboard</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                  <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/Dashboard">Home</a></li>
+                    <li class="breadcrumb-item active">Dashboard</li>
+                  </ol>
+                  </div><!-- /.col -->
+                  </div><!-- /.row -->
+                  <hr size="2" width="100%" color="black"> 
+                  <h1 class="m-0 text-color-white"> System User Details</h1>
+                <div class="row">
+                    <div class="col-lg-6 col-6">
+                       <div class="small-box bg-info">
+                        <div class="inner">
+                          <h3 style="text-align: center;">{{.admincount}}</h3>
+                          <p style="text-align: center;">Total Admin Counts</p>
+                        </div>
+                        </div>
+                    </div>
+                    </col>
+                    <div class="col-lg-6 col-6">
+                     <div class="small-box bg-warning">
+                        <div class="inner">
+                          <h3 style="text-align: center;">{{.merchantcount}}</h3>
+                          <p style="text-align: center;">Total Cluster Admin Counts</p>
+                        </div>
+                        </div>
+                    </div>
+                    </col>
+                  </div>
+                 
+                  <h1 class="m-0 text-color-white"> User Details</h1>
+                 <div class="row">
+                    <div class="col-lg-6 col-6">
+                       <div class="small-box bg-info">
+                        <div class="inner">
+                          <h3 style="text-align: center;">{{.consumercount}}</h3>
+                          <p style="text-align: center;">Total Producers</p>
+                        </div>
+                        </div>
+                    </div>
+                    </col>
+                    <div class="col-lg-6 col-6">
+                     <div class="small-box bg-warning">
+                        <div class="inner">
+                          <h3 style="text-align: center;">{{.producercount}}</h3>
+                          <p style="text-align: center;">Total Consumers</p>
+                        </div>
+                        </div>
+                    </div>
+                    </col>
+                  </div>
+                  
+                  <h1 class="m-0 text-color-white"> System  Details</h1>
+                  
+                       <div class="row">
+                          <div class="col-lg-6 col-6">
+                             <div >
+                               <div id="piechart" style="width: 600px; height: 400px;"></div>
+                             </div>
+                          </div>
+                           <div class="col-lg-6 col-6">
+                             <div >
+                               <div id="barchart_values" style="width: 600px; height: 400px;"></div>
+                             </div>
+                           </div>
+                      </div>
+                    
+                
+                  
+                    <!--<div class="row">
+                    <div class="col-lg-6 col-6">
+                    <div class="small-box bg-warning">
+                    <div id="piechart" style="width: 700px; height: 500px;"></div>
+                    </div>
+                     <div class="col-lg-6 col-6">
+                    <div class="small-box bg-warning">
+                    <div id="curve_chart" style="width: 700px; height: 500px;"></div>
+                    </div>
+                    </col>
+                      </div>
+                    -->
+                 
+                  <!--<div>
+                   <img src="static/dist/img/home.png"  width="1500" height="500">
+
+                  </div>-->
+                  <!-- <hr size="2" width="100%" color="black"> 
+                   <h1 class="m-0 text-color-white"> PositivePay Details</h1>
+                  
+                   <div class="row">  
+                    <div class="col-lg-12 col-12">
+                       <div class="small-box bg-warning">
+                        <div class="inner">
+                          <h3 style="text-align: center;">{{.tpc}}</h3>
+                           <p style="text-align: center;">Total Cheques</p>
+                        </div>
+                        </div>
+                    </div>
+                  </div> 
+                  
+                   <hr size="2" width="100%" color="black">
+                   <h1 class="m-0 text-color-white"> SMS Details</h1>
+                  
+                   <div class="row">  
+                    <div class="col-lg-12 col-12">
+                       <div class="small-box bg-info">
+                        <div class="inner">
+                          <h3 style="text-align: center;">{{.ts}}</h3>
+                           <p style="text-align: center;">Total SMS</p>
+                        </div>
+                        </div>
+                    </div>
+                  </div> 
+                  </row>-->
+                  </div><!-- /.container-fluid -->
+                </div>
+                <!-- /.row (main row) -->
+                </div><!-- /.container-fluid -->
+              </section>
+              <!-- /.content -->
+            </div>
+            <!-- /.content-wrapper -->
+            <footer class="main-footer dashboard-bg-color">
+              <strong>Copyright &copy; 2021 </strong>
+              All rights reserved.
+            </footer>
+            <!-- Control Sidebar -->
+            <aside class="control-sidebar control-sidebar-dark">
+              <!-- Control sidebar content goes here -->
+            </aside>
+            <!-- /.control-sidebar -->
+          </div>
+          
+          <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+       dataTable = new google.visualization.DataTable();
+
+       var data = google.visualization.arrayToDataTable([
+        ['User Details', 'no of users'],
+          ['Admins ',     {{.admincount}},],
+          ['Cluster Admins',{{.merchantcount}}],
+          ['Producers',  {{.consumercount}}],
+          ['Consumers', {{.producercount}}]
+          ]);
+
+          
+          var options = {
+       
+        width: 600,
+        height: 500,
+        bar: {groupWidth: "95%"},
+        legend: { position: "none" },
+      };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+    
+     <script type="text/javascript">
+    google.charts.load("current", {packages:["corechart"]});
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable([
+        ["Users", "Density", { role: "style" } ],
+        ["Supply orders", {{.supplyordercount}}, "000000"],
+        ["Customer orders",{{.customerorder}}, "green"],
+        ["Clusters", {{.clustercount}}, "gold"],
+        ["Products", {{.productcount}}, "color: blue"]
+      ]);
+
+      var view = new google.visualization.DataView(data);
+      view.setColumns([0, 1,
+                       { calc: "stringify",
+                         sourceColumn: 1,
+                         type: "string",
+                         role: "annotation" },
+                       2]);
+
+      var options = {
+       
+        width: 600,
+        height: 500,
+        bar: {groupWidth: "95%"},
+        legend: { position: "none" },
+      };
+      var chart = new google.visualization.BarChart(document.getElementById("barchart_values"));
+      chart.draw(view, options);
+  }
+  </script>
+  
+          <!-- ./wrapper -->
+          <!-- jQuery -->
+          <script src="../../static/plugins/jquery/jquery.min.js"></script>
+          <!-- jQuery UI 1.11.4 -->
+          <script src="../../static/plugins/jquery-ui/jquery-ui.min.js"></script>
+          <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+          <script>
+          $.widget.bridge('uibutton', $.ui.button)
+          </script>
+          <!-- Bootstrap 4 -->
+          <script src="../../static/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+          <script src="../../static/plugins/moment/moment.min.js"></script>
+          <script src="../../static/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+          <!-- AdminLTE App -->
+          <script src="../../static/dist/js/adminlte.js"></script>
+          <!-- AdminLTE for demo purposes -->
+          <script>
+          document.getElementById("dashboard-active").className += " active";
+          </script>
+          
+        </body>
+      </html>

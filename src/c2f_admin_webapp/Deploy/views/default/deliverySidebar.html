@@ -1,0 +1,247 @@
+<!-- Sidebar -->
+<div class="sidebar">
+  <nav class="mt-2">
+    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+      <!-- Add icons to the links using the .nav-icon class
+      with font-awesome or any other icon font library -->
+      <li class="nav-item has-treeview">
+        <a href="/Dashboard" id="dashboard-active" class="nav-link ">
+          <i class="nav-icon fas fa-tachometer-alt"></i>
+          <p id="db">
+            Dashboard
+          </p>
+        </a>
+      </li>
+      <!-- <li id="usermanagement-menu" class="nav-item has-treeview ">
+        <a href="#" id="usermanagement-active" class="nav-link">
+          <i class="nav-icon fas fa-user-friends"></i>
+          <p>
+            User Management
+            <i class="right fas fa-angle-left"></i>
+          </p>
+        </a>
+        <ul class="nav nav-treeview">
+          <li class="nav-item">
+            <a href="/User/CreateUser" id="adduser-active" class="nav-link ">
+              <p>Create User</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/User/SearchUser" id="searchuser-active" class="nav-link">
+              <p><i class="left fas fa-caret-right"></i>Search User</p>
+            </a>
+          </li>
+        </ul>
+      </li> -->
+      <!-- <li id="customermanagement-menu" class="nav-item has-treeview ">
+        <a href="#" id="customermanagement-active" class="nav-link ">
+          <i class="nav-icon fas fa-users-cog"></i>
+          <p>
+            Customer Management
+            <i class="right fas fa-angle-left"></i>
+          </p>
+        </a>
+        <ul class="nav nav-treeview">
+          <li class="nav-item">
+            <a href="/CreateCustomer" id="createcustomer-active" class="nav-link ">
+              <p>Create Customer</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/SearchCustomer" id="searchcustomer-active" class="nav-link">
+              <p><i class="left fas fa-caret-right"></i>Search Customer</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/BulkCustomer" id="uploadata-active" class="nav-link">
+              <p><i class="left fas fa-caret-right"></i>Bulk Customer Creation</p>
+            </a>
+          </li>
+        </ul>
+      </li> -->
+      <li id="deliveryexecmanagement-menu" class="nav-item has-treeview ">
+        <a href="#" id="deliveryexecmanagement-active" class="nav-link ">
+          <i class="nav-icon fas fa fa-shipping-fast"></i>
+          <p id="delexecmgmt">
+            Delivery Exec Management
+            <i class="right fas fa-angle-left"></i>
+          </p>
+        </a>
+        <ul class="nav nav-treeview">
+       
+          <li class="nav-item zoom1">
+            <a href="/DeliveryUsers/SearchDeliveryUser" id="searchexec-active" class="nav-link">
+              <i class="left fas fa-caret-right"></i><p id="searchexec">Search Executive</p>
+            </a>
+          </li>
+          <!--<li class="nav-item">
+            <a href="/BulkCustomer" id="bulkcustomer-active" class="nav-link">
+              <p><i class="left fas fa-caret-right"></i>Bulk Customer Creation</p>
+            </a>
+          </li>-->
+        </ul>
+      </li>
+      
+      <li class="nav-item has-treeview">
+        <a href="/Logout" class="nav-link">
+          <i class="nav-icon fas fa-arrow-alt-circle-left"></i>
+          <p id="logout">
+            Logout
+          </p>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <!-- /.sidebar-menu -->
+</div>
+
+<script src="/static/dist/js/jquery-3.6.4.min.js"></script></script>
+<script type="text/javascript"> 
+
+ //var x = {{.language}};
+//alert("USER Language is  "+x);
+
+$(window).on("load", function() 
+{
+  
+  
+  
+    var x = {{.language}};
+    if (x == "EN") 
+{      
+      $("#db").text("Dashboard");
+      $("#um").text("User Management");
+      $("#su").text("Search User");
+      $("#cam").text("Collection Agent Management");
+      $("#sa").text("Search Agent");
+      $("#cp").text("Collect Payment");
+      $("#sconf").text("System Configurations");
+      $("#scat").text("Set Category");
+      $("#ssc").text("Set Sub-Category");
+      $("#rm").text("Role Management");
+      $("#ppcm").text("Product-Producer-Cluster Map");
+      $("#pn").text("Push Notification");
+      $("#oi").text("Owner Info");
+      $("#clm").text("Cluster Management");
+      $("#sc").text("Search Clusters");
+      $("#clusrmap").text("Cluster-User Map");
+      $("#clcexecmap").text("Cluster-ClusterExecutive Map");
+      $("#clcollnagmap").text("Cluster-Collection Agent Map");
+      $("#clpdctmap").text("Cluster-Product Map");
+      $("#cldelexemap").text("Cluster-Delivery Executive Map");
+      $("#orderdelimap").text("Order-Delivery Map");
+      $("#udo").text("Update Delivery Order");
+      $("#ocamap").text("Order-CollectionAgent Map");
+      $("#ri").text("Reverse Inventory");
+      $("#vnm").text("View Navigation Map");
+      $("#ctocpdct").text("Cluster to Cluster Product Purchase Order");
+      $("#porder").text("Purchase Order");
+      $("#cpdctpo").text("Cluster Product Purchase Order");
+      $("#spdctpco").text("Supply Product Purchase Order");
+      $("#pdctmgmt").text("Product Management");
+      $("#spdct").text("Search Product");
+      $("#custmgmt").text("Customer Management");
+      $("#scust").text("Search Customer");
+      $("#porder").text("Place Order");
+      $("#prodmgmt").text("Producer Management");
+      $("#seprod").text("Search Producers");
+      $("#sesupporder").text("Search Supply Order");
+      $("#delexecmgmt").text("Delivery Exec Management");
+      $("#searchexec").text("Search Executive");
+      $("#suppmgmt").text("Supply Management");
+      $("#sf").text("Supply Forecast");
+      $("#sorder").text("Supply Order");
+      $("#cso").text("Collect Supply Order");
+      $("#compso").text("Complete Supply Order");
+      $("#delimgmt").text("Delivery Management");
+      $("#searchdeli").text("Search Deliverys");
+      $("#bm").text("Bill Management");
+      $("#psb").text("Producer Supply Bill");
+      $("#cob").text("Customer Order Bill");
+      $("#reports").text("Reports");
+      $("#sfr").text("Supply Forecast Report");
+      $("#sor").text("Supply Order Report");
+      $("#ir").text("Inventory Report");
+      $("#cor").text("Customer Order Report");
+      $("#delrep").text("Delivery Report");
+      $("#collagentrep").text("Collection Agent Report");
+      $("#clupporep").text("Cluster Product Purchase Order Report");
+      $("#auditrep").text("Audit Report");
+      $("#analytics").text("Analytics");
+      $("#viewanalytics").text("View Analytics");
+      $("#logout").text("Logout");
+     
+        
+} 
+
+else if (x == "TN")  
+{
+
+     $("#db").text("డాష్బోర్డ్");
+      $("#um").text("వాడుకరి నిర్వహణ");
+      $("#su").text("శోధన వినియోగదారు");
+      $("#cam").text("కలెక్షన్ ఏజెంట్ నిర్వహణ");
+      $("#sa").text("శోధన ఏజెంట్");
+      $("#cp").text("చెల్లింపును సేకరించండి");
+      $("#sconf").text("సిస్టమ్ కాన్ఫిగరేషన్‌లు");
+      $("#scat").text("వర్గాన్ని సెట్ చేయండి");
+      $("#ssc").text("ఉప-వర్గాన్ని సెట్ చేయండి");
+      $("#rm").text("పాత్ర నిర్వహణ");
+      $("#ppcm").text("ఉత్పత్తి-నిర్మాత-క్లస్టర్ మ్యాప్");
+      $("#pn").text("పుష్ నోటిఫికేషన్");
+      $("#oi").text("యజమాని సమాచారం");
+      $("#clm").text("క్లస్టర్ నిర్వహణ");
+      $("#sc").text("శోధన క్లస్టర్లు");
+      $("#clusrmap").text("క్లస్టర్ వినియోగదారు మ్యాప్");
+      $("#clcexecmap").text("క్లస్టర్-క్లస్టర్ ఎగ్జిక్యూటివ్ మ్యాప్");
+      $("#clcollnagmap").text("క్లస్టర్-కలెక్షన్ ఏజెంట్ మ్యాప్");
+      $("#clpdctmap").text("క్లస్టర్-ఉత్పత్తి మ్యాప్");
+      $("#cldelexemap").text("క్లస్టర్-డెలివరీ ఎగ్జిక్యూటివ్ మ్యాప్");
+      $("#orderdelimap").text("ఆర్డర్-డెలివరీ మ్యాప్");
+      $("#udo").text("డెలివరీ ఆర్డర్‌ని నవీకరించండి");
+      $("#ocamap").text("ఆర్డర్-కలెక్షన్ ఏజెంట్ మ్యాప్");
+      $("#ri").text("రివర్స్ ఇన్వెంటరీ");
+      $("#vnm").text("నావిగేషన్ మ్యాప్‌ని వీక్షించండి");
+      $("#ctocpdct").text("క్లస్టర్ నుండి క్లస్టర్ ఉత్పత్తి కొనుగోలు ఆర్డర్");
+      $("#porder").text("కొనుగోలు ఆర్డర్");
+      $("#cpdctpo").text("క్లస్టర్ ఉత్పత్తి కొనుగోలు ఆర్డర్");
+      $("#spdctpco").text("సరఫరా ఉత్పత్తి కొనుగోలు ఆర్డర్");
+      $("#pdctmgmt").text("ఉత్పత్తి నిర్వహణ");
+      $("#spdct").text("శోధన ఉత్పత్తి");
+      $("#custmgmt").text("కస్టమర్ మేనేజ్‌మెంట్");
+      $("#scust").text("వినియోగదారుని శోధించండి");
+      $("#porder").text("ఆర్డర్ చేయండి");
+      $("#prodmgmt").text("నిర్మాత నిర్వహణ");
+      $("#seprod").text("నిర్మాతలను శోధించండి");
+      $("#sesupporder").text("శోధన సరఫరా ఆర్డర్");
+      $("#delexecmgmt").text("డెలివరీ ఎగ్జిక్యూటివ్ మేనేజ్‌మెంట్");
+      $("#searchexec").text("సెర్చ్ ఎగ్జిక్యూటివ్");
+      $("#suppmgmt").text("సరఫరా నిర్వహణ");
+      $("#sf").text("సరఫరా సూచన");
+      $("#sorder").text("సరఫరా ఆర్డర్");
+      $("#cso").text("సరఫరా ఆర్డర్‌ని సేకరించండి");
+      $("#compso").text("పూర్తి సరఫరా ఆర్డర్");
+      $("#delimgmt").text("డెలివరీ నిర్వహణ");
+      $("#searchdeli").text("డెలివరీని శోధించండి");
+      $("#bm").text("బిల్లు నిర్వహణ");
+      $("#psb").text("నిర్మాత సరఫరా బిల్లు");
+      $("#cob").text("కస్టమర్ ఆర్డర్ బిల్లు");
+      $("#reports").text("నివేదికలు");
+      $("#sfr").text("సరఫరా సూచన నివేదిక");
+      $("#sor").text("సరఫరా ఆర్డర్ నివేదిక");
+      $("#ir").text("ఇన్వెంటరీ నివేదిక");
+      $("#cor").text("కస్టమర్ ఆర్డర్ నివేదిక");
+      $("#delrep").text("విడుదల నివేదిక");
+      $("#collagentrep").text("ఏజెంట్ నివేదిక సేకరణ");
+      $("#clupporep").text("క్లస్టర్ ఉత్పత్తి కొనుగోలు ఆర్డర్ నివేదిక");
+      $("#auditrep").text("ఆర్థిక లెక్కల నివేదిక");
+      $("#analytics").text("విశ్లేషణలు");
+      $("#viewanalytics").text("విశ్లేషణలను వీక్షించండి");
+      $("#logout").text("లాగ్ అవుట్ చేయండి");
+        
+        
+    }
+});
+
+
+</script>

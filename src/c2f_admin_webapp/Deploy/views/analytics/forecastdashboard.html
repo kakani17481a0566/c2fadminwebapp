@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+   <title>C2F Admin</title>
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" X-Frame-Options="SAMEORIGIN">
+    <link rel="icon" href="/static/dist/img/logo-s.png" type="image/gif" sizes="16x16">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../static/plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="../../static/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="../../static/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="../../static/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../static/dist/css/adminlte.min.css">
+    <!-- style css -->
+    <link rel="stylesheet" href="../../static/dist/css/style.css">
+    <!-- daterange css -->
+    <link rel="stylesheet" href="../../static/plugins/datepicker/daterangepicker.css">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="../../static/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="../../static/dist/css/fonts/source-sans-pro.css">
+    
+<!--     For the Graphs -->
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+   <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+  
+  
+<!--For Download PNG   -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.3/FileSaver.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+  
+  </head>
+  
+  <body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+    
+    
+      <!-- Navbar -->
+      <nav   class="main-header navbar navbar-expand navbar-light navbar-green">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+          </li>
+        </ul>
+        <!-- Right navbar links -->
+        <ul class="navbar-nav ml-auto logo">
+          <!-- Notifications Dropdown Menu -->
+          <li class="tablogo"><a href="/Dashboard" class="brand-link navbar-light" style="padding-bottom: 35px;">
+          <img src="/static/dist/img/logo.png" alt="AdminLTE Logo" class="brand-image"
+          style="opacity: .8">
+          
+          <!-- <span class="brand-text font-weight-light">Asset Monitoring</span> -->
+        </a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#">
+              <img src="/static/dist/img/user-icon-jpg-8.jpg" alt="User Avatar" class="img-size-35 mr-3 img-circle">
+            </a>
+            <div class="dropdown-menu dropdown-menu-right">
+              <!-- <a href="/Profile" class="dropdown-item">
+                <i class="fas fa-users mr-2"></i> Profile
+              </a>
+              <div class="dropdown-divider"></div> -->
+              <a href="/ChangePassword" class="dropdown-item">
+                <i id="change-pwd" class="fas fa-key mr-2"></i> 
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="/Logout" class="dropdown-item">
+                <i id="lout" class="fas fas fa-arrow-alt-circle-left"></i> 
+              </a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+      <!-- /.navbar -->
+      <!-- Main Sidebar Container -->
+      <aside class="main-sidebar elevation-4 sidebar-light-green">
+        <!-- Brand Logo -->
+        <a href="/Dashboard" class="brand-link navbar-light" style="padding-bottom: 35px;">
+          <img src="/static/dist/img/logo.png" alt="AdminLTE Logo" class="brand-image"
+          style="opacity: .8">
+          <!--<img src="/static/dist/img/logo-s.png" alt="AdminLTE Logo" class="brand-image-small"
+          style="opacity: .8">-->
+          <!-- <span class="brand-text font-weight-light">Asset Monitoring</span> -->
+        </a>
+        {{if eq .utype "HOADMIN"}} {{template "default/sidebar.html" .}} {{else if eq .utype "USER"}} {{template "default/userSidebar.html" .}} {{else}} {{template "default/reportSidebar.html" .}} {{end}}
+        
+      </aside>
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper content-bg-color">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <div class="col-sm-6">
+                <h1 id="" class="m-0 text-color-white forecastdboard">Forecast Dashboard</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                  <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a id="lihome" href="/Dashboard">Home</a></li>
+                    <li id="liforecastdboard" class="breadcrumb-item active">Forecast Dashboard</li>
+                  </ol>
+                  </div><!-- /.col -->
+                  </div><!-- /.row -->
+                  </div><!-- /.container-fluid -->
+                  </div>
+                  
+                <!-- /.content-header -->
+                
+                 <!-- Main content -->
+                  <section class="content">
+                      <div class="container-fluid">
+                      <!-- Small boxes (Stat box) -->
+                          <div class="row">
+                              <div class="col-12">
+                                  <div class="card card-bg-color">
+                                      <div class="card-header">
+                                      </div>
+                                      <form id="producerform" action="/CombinedForecastDashboard" method="post">
+                                      <br>
+                                        <div class="col-sm-12">
+                                          <h4 id="cfdd" class="m-0 text-color-white">Cumulative Forecast Details</h4>
+                                        </div><!-- /.col -->
+                                          <div class="row">
+                                            <div class="col-lg-8 col-8">
+                                            </div>
+                                          </div>
+                                            <div class="card-body">
+                                              <div class="row">
+                                               <div class="col-sm-4">
+                                                  <!-- Total Forecasted Products -->
+                                                  <div class="form-group">
+                                                    <label id="tfp" class="text-color-white required">Total Forecasted Products</label>
+                                                    <select class="form-control" id="input_combined_product" name="input_combined_product">
+                                                      <option class="select" value="">-- Select Forecasted Product --</option>
+                                                      {{range $key, $val := .Dis3.Fields}}
+                                                      <option value="{{$val.ProducerForecastProduct}}">{{$val.ProducerForecastProduct}} - {{$val.ProductQty}}</option>
+                                                      {{end}}
+                                                    </select>
+                                                  </div>
+                                                </div>
+                                                
+                                                <div class="col-sm-4">
+  <!-- Version Dropdown -->
+  <div class="form-group">
+    <label id="versionLabel" class="text-color-white required">Select Version</label>
+    <select class="form-control" id="input_combined_version" name="input_combined_version">
+      <option class="select selectversion" value="">-- Select Version --</option>
+      {{range $key, $val := .Dis13.Fields}}
+        <option value="{{ $val.Version }}">{{ $val.Version }} -- {{ $val.CreateDate }}</option>
+      {{end}}
+    </select>
+  </div>
+</div>
+
+                                          
+                                                 <div class="col-sm-4">
+                                                 <label id="" class="text-color-white"></label>
+                                                  <div  style="text-align: center;">
+                                                    <button id="save3" type="button"  class="btn">Download PNG</button><br><br>
+                                                    <a id ="link1" href="/Analytics/Forecast/ProducerForecastReport/{{.product}}">Check with Producer Forecast Report for the Product</a><br>
+                                                    <a id ="link2" href="/Analytics/Forecast/CustomerForecastReport/{{.product}}">Check with Customer Forecast Report for the Product</a>
+                                                  </div>
+                                                </div>
+                                                 <!-- <div class="col-sm-12">
+                                                 <label id="" class="text-color-white"></label>
+                                                   <div  style="text-align: center;">
+                                                     
+                                                   </div>
+                                                </div>-->
+                                               
+                                      
+                                                <div class="col-sm-12">
+                                                  <div style="text-align: center;">
+                                                    <button id="button3" type="submit" class="btn submit">Submit</button>
+                                                    <br/>
+                                                   <span id="selectedpdct3" style="font-weight:bold;"></span>
+                                                  </div>
+                                                </div>
+                                                
+                                              </div>
+                                              
+                                                <div class="col-sm-12">
+                                                  <div class="center">
+                                                  <div id="container1" style="height:400px;"></div>
+                                                </div>
+                                              </div>
+                                        <!--end of row-->
+                                            </div>
+                                            <!--end of card body-->  
+                                          </div>
+                                            <!--end of card -->  
+                                        </div>
+                                         <!--end of col-12 -->  
+                                      <br>
+                                 <div class="col-sm-12">
+                <h4 id="pfd" class="m-0 text-color-white">Producer Forecast Details</h4>
+                </div><!-- /.col -->
+                          <div class="row">
+                              <div class="col-lg-8 col-8">
+                              </div>
+                          </div>
+                              <div class="card-body">
+                                  <div class="row">
+                                   <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="pfp" class="text-color-white required">Producer's Forecasted Products</label>
+                                    <select class="form-control" id="input_forecasted_product" name="input_forecasted_product">
+                                      <option class="select" value="">-- Select Forecasted Product --</option>
+                                      {{range $key, $val := .Dis.Fields}}
+                                      <option value="{{$val.ProducerForecastProduct}}">{{$val.ProducerForecastProduct}} - {{$val.ProductQty}}</option>
+                                      {{end}}
+                                    </select>
+                                  </div>
+                                  </div>
+                                   
+                                  <div class="col-sm-4">
+                                    <div class="form-group">
+                                      <label id="versionLabel" class="text-color-white required">Select Version</label>
+                                        <select class="form-control" id="input_producer_version" name="input_producer_version">
+                                            <option class="select selectversion" value="">-- Select Version --</option>
+                                              {{range $key, $val := .Dis12.Fields}}
+                                            <option value="{{$val.Version}}">{{$val.Version}} -- {{$val.CreateDate}}</option>
+                                              {{end}}
+                                          </select>
+                                      </div>
+                                  </div>
+                                  <div class="col-sm-4">
+                                  <label id="" class="text-color-white"></label><br/>
+                                                <div  style="text-align: center;">
+                                                   <button id="save1" type="button"  class="btn">Download PNG</button><br><br>
+                                                   <a id ="link3" href="">Check with Producer Forecast Report for the Product</a>
+                                                </div>
+                                            </div>
+                                                  
+                                    <div class="col-sm-12">
+                                      <div style="text-align: center;">
+                                          <button id="button1" type="button" class="btn submit" >Submit</button><br><br>
+                                           <span id="selectedpdct1" style="font-weight:bold;"></span>
+                                      </div>
+                                    </div>
+                                       
+<!--                                </div>-->
+                                
+                               
+                                    <div class="col-sm-7">
+                                          <div class="center">
+                                             <canvas id="myChart" style="width:100%;max-width:700px;margin-left:100px;margin-right:200px;"></canvas>
+                                          </div>
+                                     </div>
+                                            
+                                        </div>
+                                  </div>
+                            </div>
+                            
+                              
+                      <br>
+                                 <div class="col-sm-12">
+                <h4 id="cfd" class="m-0 text-color-white">Customer Forecast Details</h4>
+                </div><!-- /.col -->
+                          <div class="row">
+                              <div class="col-lg-8 col-8">
+                              </div>
+                          </div>
+                              <div class="card-body">
+                                  <div class="row">
+                                  <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="cfp" class="text-color-white required">Customer's Forecasted Products</label>
+                                    <select class="form-control" id="input_forecasted_product2" name="input_forecasted_product2">
+                                      <option class="select" value="">-- Select Forecasted Product --</option>
+                                      {{range $key, $val := .Dis1.Fields}}
+                                      <option value="{{$val.ProducerForecastProduct}}">{{$val.ProducerForecastProduct}} -{{$val.ProductQty}}</option>
+                                      {{end}}
+                                    </select>
+                                  </div>
+                                  </div>
+                                  
+                                  <div class="col-sm-4">
+                                    <div class="form-group">
+                                      <label id="versionLabel" class="text-color-white required">Select Version</label>
+                                        <select class="form-control" id="input_customer_version" name="input_customer_version">
+                                            <option class="select selectversion" value="">-- Select Version --</option>
+                                              {{range $key, $val := .Dis11.Fields}}
+                                            <option value="{{$val.Version}}">{{$val.Version}} -- {{$val.CreateDate}}</option>
+                                              {{end}}
+                                          </select>
+                                      </div>
+                                  </div>
+                                  
+                                  <div class="col-sm-4">
+                                  <label id="" class="text-color-white"></label><br/>
+                                                <div  style="text-align: center;">
+                                                  <button id="save2" type="button" class="btn">Download PNG</button><br><br>
+                                                  <a id ="link4" href="">Check with Customer Forecast Report for the Product</a>
+                                                </div>
+                                              </div>
+                                  
+                                  
+                                  <div class="col-sm-12">
+                                      <div style="text-align: center;">
+                                          <button id="button2" type="button" class="btn submit" >Submit</button><br><br>
+                                          <span id="selectedpdct2" style="font-weight:bold;"></span>
+                                      </div>
+                                    </div>
+                                       
+<!--                                </div>-->
+                                    <div class="col-sm-7">
+                                          <div class="center">
+                                             <canvas id="myChart2" style="width:100%;max-width:700px;margin-left:100px;margin-right:200px;"></canvas>
+                                          </div>
+                                     </div>
+                                        <!-- <div class="col-sm-4">
+                                             <div class="form-group">
+                                                 <div class="form-group">
+                                                     <label class="daterange" class="text-color-white">Date Range</label>
+                                                         <input type="text" name="daterange1" id="daterange1" class="form-control simple-date-range-picker">
+                                                </div>
+                                            </div>-->
+                                              
+                                        </div>
+                                  </div>
+                            </div>
+                            
+                               </form>
+                    
+                          </div>
+                          </div>
+                           </div>
+                          </div>
+                          
+                          
+                         
+                  <!-- /.card -->
+                      <!-- /.row -->
+                      <!-- Main row -->
+                      <!-- /.row (main row) -->
+                      </div><!-- /.container-fluid -->
+                      <!--</section>-->
+       
+          
+          
+                    <!-- /.content -->
+                  </div>
+                  <!-- /.content-wrapper -->
+                
+                           <img src="/static/dist/img/logo-s.png" alt="AdminLTE Logo" class="brand-image-small"
+          style="opacity: .8"> 
+                  <footer class="main-footer content-bg-color">
+                    <strong>Copyright &copy; 2021.</strong>
+                    All rights reserved.
+                  </footer>
+                  <!-- Control Sidebar -->
+                  <aside class="control-sidebar control-sidebar-dark">
+                    <!-- Control sidebar content goes here -->
+                  </aside>
+                  <!-- /.control-sidebar -->
+                </div>
+                <!-- ./wrapper -->
+                <!-- jQuery -->
+                <script src="../../static/plugins/jquery/jquery.min.js"></script>
+                <!-- jQuery UI 1.11.4 -->
+                <script src="../../static/plugins/jquery-ui/jquery-ui.min.js"></script>
+                <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+                <script>
+                $.widget.bridge('uibutton', $.ui.button)
+                </script>
+                <!-- Bootstrap 4 -->
+                <script src="../../static/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+                <script src="../../static/plugins/moment/moment.min.js"></script>
+                <script src="../../static/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+                <!-- DataTables -->
+                <script src="../../static/plugins/datatables/jquery.dataTables.min.js"></script>
+                <script src="../../static/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+                <script src="../../static/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+                <script src="../../static/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+                <!-- daterange js -->
+                <script src="../../static/plugins/datepicker/datepicker.js"></script>
+                <script src="../../static/plugins/datepicker/daterangepicker.js"></script>
+                <!-- DataTables  buttons-->
+                <script type="text/javascript" src="../../static/plugins/datatables-buttons/dataTables.buttons.min.js"></script>
+                <script type="text/javascript" src="../../static/plugins/datatables-buttons/jszip.min.js"></script>
+                <script type="text/javascript" src="../../static/plugins/datatables-buttons/pdfmake.min.js"></script>
+                <script type="text/javascript" src="../../static/plugins/datatables-buttons/vfs_fonts.js"></script>
+                <script type="text/javascript" src="../../static/plugins/datatables-buttons/buttons.html5.min.js"></script>
+                <!-- AdminLTE App -->
+                <script src="../../static/dist/js/adminlte.js"></script>
+                <script>
+                document.getElementById("analytics-menu").className += " menu-open";
+                document.getElementById("analytics-active").className += " active";
+                document.getElementById("forecastdashboard-active").className += " active";
+                </script>
+                
+              
+          <!-- For the purpose of graphs -->
+          
+          
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script> 
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>               
+<script>
+
+        $("#link3").hide();
+
+        var Ppdct;
+        var Cpdct;
+        var pdctqty1;
+        var xValues;
+        var yValues;
+        //Script For Producer Forecast Details  Graph with Download
+        var barColors = ["orange", "orange","orange", "orange","orange","orange", "orange","orange", "orange","orange","orange","orange"];
+
+        // draw background
+        var backgroundColor = 'white';
+        Chart.plugins.register({
+            beforeDraw: function(c) {
+                var ctx = c.chart.ctx;
+                ctx.fillStyle = backgroundColor;
+                ctx.fillRect(0, 0, c.chart.width, c.chart.height);
+            }
+        });
+        // chart
+        var canvas1 = $('#myChart').get(0);
+        
+        var xAxesOptions = [{}];
+                    
+        var myChart = new Chart(canvas1, {});  
+
+        $("#button1").click(function(){
+                
+                $.ajax({
+                type: "POST",
+                url: "/ForecastDashboard",
+                data: $("#producerform").serialize(),
+                    success:function(data){
+                    $('body').addClass('loaded');
+                  var obj=jQuery.parseJSON(data);
+                   console.log(obj);
+                  
+                  Ppdct=obj.payloaddata.product1;
+                  pdctqty1=obj.payloaddata.product1qty;
+           
+                  if (Ppdct != "" && Ppdct != null){
+ 
+                  $("#input_forecasted_product").val(Ppdct); 
+                  var txt1 =$('#input_forecasted_product').find('option:selected').text();
+  
+                  $("#selectedpdct1").text("Selected Product :- "+txt1); 
+                  
+                  
+                   document.getElementById("link3").href = "/Analytics/Forecast/ProducerForecastReport/"+Ppdct;                  
+                   $("#link3").show();
+                  
+                 
+ 
+                  }
+
+                  xValues = [obj.payloaddata.month1,obj.payloaddata.month2,obj.payloaddata.month3,obj.payloaddata.month4,obj.payloaddata.month5,obj.payloaddata.month6,obj.payloaddata.month7,obj.payloaddata.month8,obj.payloaddata.month9,obj.payloaddata.month10,obj.payloaddata.month11,obj.payloaddata.month12];
+                  yValues = [obj.payloaddata.pm1,obj.payloaddata.pm2,obj.payloaddata.pm3,obj.payloaddata.pm4,obj.payloaddata.pm5,obj.payloaddata.pm6,obj.payloaddata.pm7,obj.payloaddata.pm8,obj.payloaddata.pm9,obj.payloaddata.pm10,obj.payloaddata.pm11,obj.payloaddata.pm12];
+
+                   myChart.destroy(); 
+                  
+                   xAxesOptions = [{
+                    id: 'y-axis-0',
+                    display: true,
+                    type: 'linear',
+                    position: 'left',
+                    scaleLabel: {
+                      display: true,
+                      labelString: pdctqty1
+                    }
+                  }];
+
+                 myChart = new Chart(canvas1, {
+                  type: "bar",
+                    
+                  data: {
+                    labels: xValues,
+                    datasets: [{
+                      backgroundColor: barColors,
+                      data: yValues
+                    }]
+                  },
+                  options: {
+                    legend: {display: false},
+                    title: {
+                      display: true,
+                      text: "Producer's Forecast Details"
+                    },
+                    scales: {
+                        yAxes: xAxesOptions
+                      } 
+                  }
+                }); 
+
+                        
+                }
+            });
+        });
+                
+// save as PNG
+
+$('#save1').click(function() {
+    canvas1.toBlob(function(blob) {
+        saveAs(blob, "ProducerForecast.png");
+    });
+});  
+
+// save SVG
+
+$('#save11').click(function() {
+    canvas1.toBlob(function(blob) {
+        saveAs(blob, "ProducerForecast.svg");
+    });
+}); 
+
+</script>
+
+<script>
+
+       $("#link4").hide();
+
+          var Cpdct;
+          var pdctqty2;
+          var xValues;
+          var yValues2;
+          
+          //Script For Customer Forecast Details  Graph with Download
+          var barColors2 = ["#C9CC3F", "#C9CC3F","#C9CC3F", "#C9CC3F","#C9CC3F","#C9CC3F", "#C9CC3F","#C9CC3F", "#C9CC3F","#C9CC3F","#C9CC3F","#C9CC3F"];
+          // draw background
+          var backgroundColor = 'white';
+          Chart.plugins.register({
+              beforeDraw: function(c) {
+                  var ctx = c.chart.ctx;
+                  ctx.fillStyle = backgroundColor;
+                  ctx.fillRect(0, 0, c.chart.width, c.chart.height);
+              }
+          });
+          // chart
+          var canvas2 = $('#myChart2').get(0);
+          
+          var xAxesOptions = [{}];
+                    
+          var myChart2 = new Chart(canvas2, {});  
+
+          $("#button2").click(function(){
+                  
+              $.ajax({
+                type: "POST",
+                url: "/ForecastDashboard",
+                data: $("#producerform").serialize(),
+                    success:function(data){
+                    $('body').addClass('loaded');
+                  var obj=jQuery.parseJSON(data);
+                   console.log(obj);
+                  
+                  Cpdct=obj.payloaddata.product2;
+                  pdctqty2=obj.payloaddata.product2qty;
+             
+                  
+                  if (Cpdct != "" && Cpdct != null){
+                  $("#input_forecasted_product2").val(Cpdct);
+                  var txt2 =$('#input_forecasted_product2').find('option:selected').text(); 
+                  $("#selectedpdct2").text("Selected Product :- "+txt2); 
+                  
+                   document.getElementById("link4").href = "/Analytics/Forecast/CustomerForecastReport/"+Cpdct;                  
+                   $("#link4").show();
+                  }
+
+                  xValues = [obj.payloaddata.month1,obj.payloaddata.month2,obj.payloaddata.month3,obj.payloaddata.month4,obj.payloaddata.month5,obj.payloaddata.month6,obj.payloaddata.month7,obj.payloaddata.month8,obj.payloaddata.month9,obj.payloaddata.month10,obj.payloaddata.month11,obj.payloaddata.month12];
+                  yValues2 = [obj.payloaddata.cm1,obj.payloaddata.cm2,obj.payloaddata.cm3,obj.payloaddata.cm4,obj.payloaddata.cm5,obj.payloaddata.cm6,obj.payloaddata.cm7,obj.payloaddata.cm8,obj.payloaddata.cm9,obj.payloaddata.cm10,obj.payloaddata.cm11,obj.payloaddata.cm12];
+  
+  
+                   myChart2.destroy(); 
+                  
+                  xAxesOptions = [{
+                    id: 'y-axis-0',
+                    display: true,
+                    type: 'linear',
+                    position: 'left',
+                    scaleLabel: {
+                      display: true,
+                      labelString: pdctqty2
+                    }
+                  }];
+                  myChart2 = new Chart(canvas2, {
+                    type: "bar",
+                      
+                    data: {
+                      labels: xValues,
+                      datasets: [{
+                        backgroundColor: barColors2,
+                        data: yValues2
+                      }]
+                  
+                    },
+                    options: {
+                      legend: {display: false},
+                      title: {
+                        display: true,
+                        text: "Customer's Forecast Details"
+                      },
+                        scales: {
+                          yAxes: xAxesOptions
+                        } 
+                    
+                        
+                    }
+                  });
+                  
+                  
+                                  
+                }
+            });
+        });
+                  
+
+// save as PNG
+
+$('#save2').click(function() {
+    canvas1.toBlob(function(blob) {
+        saveAs(blob, "CustomerForecast.png");
+    });
+});   
+// save SVG
+
+$('#save11').click(function() {
+    canvas2.toBlob(function(blob) {
+        saveAs(blob, "CustomerForecast.svg");
+    });
+});  
+
+
+
+</script>
+
+
+
+
+  <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-base.min.js?hcode=a0c21fc77e1449cc86299c5faa067dc4"></script>
+  <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-exports.min.js?hcode=a0c21fc77e1449cc86299c5faa067dc4"></script>
+  <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-ui.min.js?hcode=a0c21fc77e1449cc86299c5faa067dc4"></script>
+  <script type="text/javascript">
+  
+  
+  
+  
+          var pdct;
+          var pdctqty;
+          var data;
+          
+           pdct={{.product}};
+          
+        
+                  pdctqty={{.productqty}};
+                  
+                    $("#link1").hide();
+                   $("#link2").hide();
+                  
+                  if (pdct != "" && pdct != null){
+                  $("#input_combined_product").val(pdct);
+                  var txt2 =$('#input_combined_product').find('option:selected').text(); 
+                  $("#selectedpdct3").text("Selected Product :- "+txt2); 
+                   $("#link1").show();
+                   $("#link2").show();
+                  }
+          
+          
+          
+          
+          //Script For Combined Forecast Details  Graph with Download
+          
+         
+          
+          
+             anychart.onDocumentReady(function () {
+                  
+                // create a data set
+                data = anychart.data.set([
+                  [{{.month1}}, {{.pm1}},{{.cm1}},"orange", "#C9CC3F", "#FDFEFE", {enabled: true}],
+                  [{{.month2}}, {{.pm2}}, {{.cm2}},"orange", "#C9CC3F", "#FDFEFE", {enabled: true}],
+                  [{{.month3}},{{.pm3}}, {{.cm3}},"orange", "#C9CC3F", "#FDFEFE", {enabled: true}],
+                  [{{.month4}}, {{.pm4}},{{.cm4}},"orange", "#C9CC3F", "#FDFEFE", {enabled: true}],
+                  [{{.month5}}, {{.pm5}}, {{.cm5}},"orange", "#C9CC3F", "#FDFEFE", {enabled: true}],
+                  [{{.month6}},{{.pm6}}, {{.cm6}},"orange", "#C9CC3F", "#FDFEFE", {enabled: true}],
+                  [{{.month7}}, {{.pm7}}, {{.cm7}},"orange", "#C9CC3F", "#FDFEFE", {enabled: true}],
+                  [{{.month8}}, {{.pm8}}, {{.cm8}},"orange", "#C9CC3F", "#FDFEFE", {enabled: true}],
+                  [{{.month9}}, {{.pm9}}, {{.cm9}},"orange", "#C9CC3F", "#FDFEFE", {enabled: true}],
+                  [{{.month10}},{{.pm10}},{{.cm10}},"orange", "#C9CC3F", "#FDFEFE", {enabled: true}],
+                  [{{.month11}},{{.pm11}},{{.cm11}},"orange", "#C9CC3F", "#FDFEFE", {enabled: true}],
+                  [{{.month12}},{{.pm12}},{{.cm12}},"orange", "#C9CC3F", "#FDFEFE", {enabled: true}],
+                ]);
+                
+               
+
+                // map the data
+                var seriesData_1 = data.mapAs({x: 0, value: 1, fill: 3, stroke: 5, label: 6});
+                var seriesData_2 = data.mapAs({x: 0, value: 2, fill: 4, stroke: 5, label: 6});
+                
+                // create a chart
+                 var chart = anychart.column();
+                
+                // create the first series, set the data and name
+                var series1 = chart.column(seriesData_1);
+                series1.name("Producer's Forecast");
+                
+                // create the second series, set the data and name
+                var series2 = chart.column(seriesData_2);
+                series2.name("Customer's Forecast");
+                
+                // set the chart title
+                chart.title("Cumulative Forecast of Product");
+                chart.barGroupsPadding(1);
+                
+                // set the titles of the axes
+                var xAxis = chart.xAxis();
+                xAxis.title("Months");
+               
+                var yAxis = chart.yAxis();
+                yAxis.title(pdctqty);
+                
+                var label = anychart.standalones.label();
+                label.enabled(true).width('100%');
+                
+                // set the container id
+                chart.container("container1");
+                
+                //turn on chart animation
+               chart.animation(true);
+              
+              
+                // initiate drawing the chart
+                chart.draw();
+
+                
+                 
+   // save as PNG
+                    
+                    $('#save3').click(function() {
+                       chart.saveAsPng(1000, 1000, 0.4,"CumulativeForecast");
+                    });  
+
+    
+    });
+              
+                    
+
+</script>
+
+
+
+
+
+
+
+
+
+<!--Script For Language Changes-->
+
+
+                <script type="text/javascript"> 
+  
+                $(window).on("load", function() 
+                {
+                      var x = {{.language}};
+                      if (x == "EN") 
+                  {   
+                      $("#change-pwd").text(" Change Password");
+                      $("#lout").text(" Logout");   
+                        $(".forecastdboard").text("Forecast Dashboard");
+                      $("#lihome").text("Home");
+                      $("#liforecastdboard").text("Forecast Dashboard");
+                      
+                     
+                      
+                       $("#save1").text("Download PNG");
+                       $("#save2").text("Download PNG");
+                        $(".submit").text("Submit");
+                      
+                        $("#pfd").text("Producer Forecast Details");
+                       $("#pfp").text("Producer's Forecasted Products");
+                        $("#cfd").text("Customer Forecast Details");
+                       $("#cfp").text("Customer's Forecasted Products");
+                      $(".select").text("-- Select Forecasted Product --");
+                      
+                      
+                      $("#cfdd").text("Cumulative Forecast Details");
+                       $("#tfp").text("Total Forecasted Products");
+                       $("#save3").text("Download PNG");
+                      $("#versionLabel").text("Select Version");
+                      $(".selectversion").text("-- Select Version --");
+                      
+                      
+                   
+                      
+                  } 
+               else if (x == "TN")  
+                  
+                  {
+                    
+                     $("#change-pwd").text(" పాస్‌వర్డ్ మార్చండి");
+                    $("#lout").text(" లాగ్అవుట్");
+                      $(".forecastdboard").text("సూచన డాష్‌బోర్డ్");
+                      $("#lihome").text("హోమ్");
+                      $("#liforecastdboard").text("సూచన డాష్‌బోర్డ్");
+                     
+                   
+                      
+                      $("#save1").text("PNGని డౌన్‌లోడ్ చేయండి");
+                       $("#save2").text("PNGని డౌన్‌లోడ్ చేయండి");
+                      
+                      
+                        $("#pfd").text("నిర్మాత అంచనా వివరాలు");
+                       $("#pfp").text("నిర్మాత అంచనా ఉత్పత్తులు");
+                        $("#cfd").text("కస్టమర్ సూచన వివరాలు");
+                       $("#cfp").text("కస్టమర్ అంచనా వేసిన ఉత్పత్తులు");
+                      $(".select").text("-- అంచనా వేసిన ఉత్పత్తిని ఎంచుకోండి --");
+                       $(".submit").text("సమర్పించండి");
+                       $("#cfdd").text("సంచిత సూచన వివరాలు");
+                       $("#tfp").text("మొత్తం అంచనా ఉత్పత్తులు");
+                       $("#save3").text("PNGని డౌన్‌లోడ్ చేయండి");
+                      $("#versionLabel").text("సంస్కరణను ఎంచుకోండి");
+                      $(".selectversion").text("-- సంస్కరణను ఎంచుకోండి --");
+                   
+                   
+                      
+                  } 
+});
+    </script>
+    
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var selectedCustomerVersion = "{{.SelectedCustomerVersion}}";
+    var selectedProducerVersion = "{{.SelectedProducerVersion}}";
+    var selectedProducerAndCustomerVersion = "{{.SelectedProducerAndCustomerVersion}}";
+
+    var customerSelect = document.getElementById('input_customer_version');
+    if (selectedCustomerVersion) {
+      customerSelect.value = selectedCustomerVersion;
+    }
+
+    var producerSelect = document.getElementById('input_producer_version');
+    if (selectedProducerVersion) {
+      producerSelect.value = selectedProducerVersion;
+    }
+
+    var producerandCustomerSelect = document.getElementById('input_combined_version');
+    if (selectedProducerAndCustomerVersion) {
+      producerandCustomerSelect.value = selectedProducerAndCustomerVersion.trim();
+      console.log("Selected Combined Version:", selectedProducerAndCustomerVersion);
+    }
+
+    console.log("Options in combined version:");
+    Array.from(producerandCustomerSelect.options).forEach(o => console.log("Option:", o.value));
+  });
+</script>
+
+<script>
+  const select = document.getElementById('input_combined_version');
+  const selected = "{{.SelectedProducerAndCustomerVersion}}";
+  console.log("SELECTED VALUE:", `"${selected}"`);
+  
+  Array.from(select.options).forEach(opt => {
+    console.log("OPTION VALUE:", `"${opt.value}"`);
+    if (opt.value === selected) {
+      console.log("MATCH FOUND");
+    }
+  });
+</script>
+
+
+
+              </body>
+            </html>
+              
+                 

@@ -1,0 +1,442 @@
+package updateChannelPartner
+
+import (
+	"c2f_admin_webapp/session"
+
+	"runtime/debug"
+
+	"c2f_admin_webapp/model/utils"
+	"errors"
+
+	"strings"
+
+	"c2f_admin_webapp/middleware"
+	"c2f_admin_webapp/model/db"
+	"c2f_admin_webapp/services"
+
+	"github.com/astaxie/beego"
+
+	"c2f_admin_webapp/model/database/sql"
+
+	"c2f_admin_webapp/model/util/log"
+)
+
+type Row struct {
+	Id          string
+	FirstName   string
+	MiddleName  string
+	LastName    string
+	Mobile      string
+	Email       string
+	Usertype    string
+	Status      string
+	ClusterName string
+}
+
+type UpdateChannelPartner struct {
+	// beego.Controller
+	middleware.BaseController
+}
+
+type Display struct {
+	Fields []Field
+}
+type Field struct {
+	Id    string
+	Name  string
+	Email string
+}
+
+func (c *UpdateChannelPartner) Get() {
+	AdminId := c.Ctx.Input.Param(":AdminID")
+	log.Println(beego.AppConfig.String("loglevel"), "Info", "Update Channel Partner Page Start")
+	pip := c.Ctx.Input.IP()
+	log.Println(beego.AppConfig.String("loglevel"), "Debug", "Client IP - ", pip)
+	var err error
+	var Autherr error
+	sessErr := false
+	defer func() {
+
+		if l_exception := recover(); l_exception != nil {
+			stack := debug.Stack()
+			log.Println(beego.AppConfig.String("loglevel"), "Exception", string(stack))
+			session.GlobalSessions.SessionDestroy(c.Ctx.ResponseWriter, c.Ctx.Request)
+			c.Data["DisplayMessage"] = "Something went wrong.Please Contact CustomerCare."
+			c.TplName = "error/error.html"
+		}
+		if Autherr != nil {
+			c.Data["DisplayMessage"] = Autherr.Error()
+			c.TplName = "error/error.html"
+			return
+		}
+		if err != nil {
+			if sessErr == true {
+				log.Println(beego.AppConfig.String("loglevel"), "Info", "Redirecting to login")
+				c.Redirect(beego.AppConfig.String("LOGIN_PATH"), 302)
+
+			} else {
+				c.Data["DisplayMessage"] = err.Error()
+			}
+			c.TplName = "channelpartner/updateChannelPartner/updateChannelPartner.html"
+			log.Println(beego.AppConfig.String("loglevel"), "Info", "Update Channel Partner Page Fail")
+		} else {
+			c.Data["DisplayMessage"] = ""
+			c.TplName = "channelpartner/updateChannelPartner/updateChannelPartner.html"
+			log.Println(beego.AppConfig.String("loglevel"), "Info", "Update Channel Partner Page Success")
+		}
+		return
+	}()
+	sess, err := session.GlobalSessions.SessionStart(c.Ctx.ResponseWriter, c.Ctx.Request)
+	if err != nil {
+		log.Println(beego.AppConfig.String("loglevel"), "Error", err)
+		err = errors.New("System is unable to process your request.Please contact customer care")
+		sessErr = true
+		return
+	}
+
+	if err = session.ValidateSession(sess); err != nil {
+		sess.SessionRelease(c.Ctx.ResponseWriter)
+		session.GlobalSessions.SessionDestroy(c.Ctx.ResponseWriter, c.Ctx.Request)
+		log.Println(beego.AppConfig.String("loglevel"), "Error", err)
+		sessErr = true
+		return
+	}
+	defer func() {
+		utils.EventLogs(c.Ctx, sess, c.Ctx.Input.Method(), c.Input(), c.Data, err)
+		sess.SessionRelease(c.Ctx.ResponseWriter)
+	}()
+	utype := sess.Get("user_type").(string)
+	c.Data["utype"] = utype
+	//log.Println(beego.AppConfig.String("loglevel"), "Debug", "utype", utype)
+
+	language := sess.Get("language").(string)
+	c.Data["language"] = language
+	log.Println(beego.AppConfig.String("loglevel"), "Debug", "language", language)
+
+	clustername := sess.Get("clustername").(string)
+	clustername1 := strings.ToUpper(clustername)
+	c.Data["clustername"] = clustername1
+	log.Println(beego.AppConfig.String("loglevel"), "Debug", "clustername", clustername1)
+
+	fullname := sess.Get("fullname").(string)
+	fullname1 := strings.ToUpper(fullname)
+	c.Data["fullname1"] = fullname1
+
+	maptoken := sess.Get("token")
+	c.Data["maptoken"] = maptoken
+	log.Println(beego.AppConfig.String("loglevel"), "Debug", "maptoken", maptoken)
+
+	auth, err := utils.IsAuthorized(utype, "ChannelPartner")
+	if !auth {
+		log.Println(beego.AppConfig.String("loglevel"), "Debug", "IsAuthorized - ", "UnAuthorized")
+		Autherr = errors.New("UnAuthorized")
+		return
+	}
+	log.Println(beego.AppConfig.String("loglevel"), "Debug", "IsAuthorized - ", "Authorized")
+
+	row, err := db.Db.Query(`select ChannelPartner.id,ChannelPartner.first_name,ChannelPartner.middle_name,ChannelPartner.last_name,ChannelPartner.mob_no,ChannelPartner.email,
+	ChannelPartner.status,ChannelPartner.address1,ChannelPartner.address2,ChannelPartner.city,ChannelPartner.zipcode,ChannelPartner.state,
+	ChannelPartner.language,ChannelPartner.town,ChannelPartner.location_type,ChannelPartner.location_info,ChannelPartnerType.id 
+	from ChannelPartner
+	LEFT JOIN ChannelPartnerType ON ChannelPartner.channel_partner_type_id = ChannelPartnerType.id 
+	WHERE ChannelPartner.id =?  limit 1`, AdminId)
+	if err != nil {
+		log.Println(beego.AppConfig.String("loglevel"), "Error", err)
+		err = errors.New("Unable to get channel partner data")
+		return
+	}
+	defer sql.Close(row)
+	_, data, err := sql.Scan(row)
+	if err != nil {
+		log.Println(beego.AppConfig.String("loglevel"), "Error", err)
+		err = errors.New("Unable to get channel partner data")
+		return
+	}
+	log.Println(beego.AppConfig.String("loglevel"), "Debug", "Query Data - ", data, "\nData len - ", len(data))
+	if len(data) <= 0 {
+		err = errors.New("Channel Partner data not found")
+		return
+	}
+
+	log.Println(beego.AppConfig.String("loglevel"), "Debug", data)
+
+	for i := range data {
+
+		c.Data["Id"] = data[i][0]
+		c.Data["FirstName"] = data[i][1]
+		c.Data["MiddleName"] = data[i][2]
+		c.Data["LastName"] = data[i][3]
+		c.Data["Mobile"] = data[i][4]
+		c.Data["Email"] = data[i][5]
+		c.Data["UStatus"] = data[i][6]
+		c.Data["Address1"] = data[i][7]
+		c.Data["Address2"] = data[i][8]
+		c.Data["City"] = data[i][9]
+		c.Data["Zipcode"] = data[i][10]
+		c.Data["State"] = data[i][11]
+		c.Data["Language"] = data[i][12]
+		c.Data["Town"] = data[i][13]
+		c.Data["LocationType"] = data[i][14]
+		c.Data["LocationInfo"] = data[i][15]
+		c.Data["ChannelPartnerType"] = data[i][16]
+
+		// data, err := services.GetClusteruser()
+		// if err != nil {
+		// 	log.Println(beego.AppConfig.String("loglevel"), "Error", err)
+		// 	err = errors.New("Cluster user fetch Failed")
+		// 	return
+		// }
+		// if len(data) <= 0 {
+		// 	err = errors.New("Cluster user  Not Found")
+		// 	return
+		// }
+		// var Dis Display
+		// for i := range data {
+		// 	var d Field
+		// 	//d.Id = data[i][0]
+		// 	d.Name = data[i][1]
+		// 	Dis.Fields = append(Dis.Fields, d)
+		// }
+		// c.Data["Dis"] = Dis
+		// log.Println(beego.AppConfig.String("loglevel"), "Debug", "Object Data - ", Dis)
+
+		data1, err := services.GetChannelPartnerType()
+		if err != nil {
+			log.Println(beego.AppConfig.String("loglevel"), "Error", err)
+			err = errors.New("Channel Partner Type fetch Failed")
+			return
+		}
+		if len(data1) <= 0 {
+			err = errors.New("Channel Partner Type  Not Found")
+			return
+		}
+		var Dis1 Display
+		for i := range data1 {
+			var d Field
+			d.Id = data1[i][0]
+			d.Name = data1[i][1]
+			Dis1.Fields = append(Dis1.Fields, d)
+		}
+		c.Data["Dis1"] = Dis1
+		log.Println(beego.AppConfig.String("loglevel"), "Debug", "Object Data - ", Dis1)
+	}
+
+	return
+
+}
+
+func (c *UpdateChannelPartner) Post() {
+
+	AdminId := c.Ctx.Input.Param(":AdminID")
+
+	log.Println(beego.AppConfig.String("loglevel"), "Info", "Update Channel Partner post page")
+	pip := c.Ctx.Input.IP()
+	log.Println(beego.AppConfig.String("loglevel"), "Debug", "Client IP - ", pip)
+	var err error
+	var Autherr error
+	sessErr := false
+	defer func() {
+		if l_exception := recover(); l_exception != nil {
+			stack := debug.Stack()
+			log.Println(beego.AppConfig.String("loglevel"), "Exception", string(stack))
+			session.GlobalSessions.SessionDestroy(c.Ctx.ResponseWriter, c.Ctx.Request)
+			c.TplName = "error/error.html"
+		}
+		if Autherr != nil {
+			c.Data["DisplayMessage"] = Autherr.Error()
+			c.TplName = "error/error.html"
+			return
+		}
+		if err != nil {
+			if sessErr == true {
+				log.Println(beego.AppConfig.String("loglevel"), "Info", "Redirecting to login")
+				c.Redirect(beego.AppConfig.String("LOGIN_PATH"), 302)
+			} else {
+				c.Data["DisplayMessage"] = err.Error()
+			}
+			c.TplName = "channelpartner/updateChannelPartner/updateChannelPartner.html"
+			log.Println(beego.AppConfig.String("loglevel"), "Info", "Update Channel Partner Page Fail")
+		} else {
+			c.Data["DisplayMessage"] = "Channel Partner Updated Successfully"
+			c.TplName = "channelpartner/updateChannelPartner/updateChannelPartner.html"
+			log.Println(beego.AppConfig.String("loglevel"), "Info", "Update Channel Partner  Page Success")
+		}
+		return
+	}()
+
+	sess, err := session.GlobalSessions.SessionStart(c.Ctx.ResponseWriter, c.Ctx.Request)
+	if err != nil {
+		log.Println(beego.AppConfig.String("loglevel"), "Error", err)
+		err = errors.New("System is unable to process your request.Please contact customer care")
+		sessErr = true
+		return
+	}
+
+	if err = session.ValidateSession(sess); err != nil {
+		sess.SessionRelease(c.Ctx.ResponseWriter)
+		session.GlobalSessions.SessionDestroy(c.Ctx.ResponseWriter, c.Ctx.Request)
+		log.Println(beego.AppConfig.String("loglevel"), "Error", err)
+		sessErr = true
+		return
+	}
+	defer func() {
+		utils.EventLogs(c.Ctx, sess, c.Ctx.Input.Method(), c.Input(), c.Data, err)
+		sess.SessionRelease(c.Ctx.ResponseWriter)
+	}()
+	utype := sess.Get("user_type").(string)
+	c.Data["utype"] = utype
+	//log.Println(beego.AppConfig.String("loglevel"), "Debug", "utype", utype)
+
+	language := sess.Get("language").(string)
+	c.Data["language"] = language
+	log.Println(beego.AppConfig.String("loglevel"), "Debug", "language", language)
+
+	clustername := sess.Get("clustername").(string)
+	clustername1 := strings.ToUpper(clustername)
+	c.Data["clustername"] = clustername1
+	log.Println(beego.AppConfig.String("loglevel"), "Debug", "clustername", clustername1)
+
+	fullname := sess.Get("fullname").(string)
+	fullname1 := strings.ToUpper(fullname)
+	c.Data["fullname1"] = fullname1
+
+	auth, err := utils.IsAuthorized(utype, "ChannelPartner")
+	if !auth {
+		log.Println(beego.AppConfig.String("loglevel"), "Debug", "IsAuthorized - ", "UnAuthorized")
+		Autherr = errors.New("UnAuthorized")
+		return
+	}
+
+	log.Println(beego.AppConfig.String("loglevel"), "Debug", "IsAuthorized - ", "Authorized")
+
+	row1, err := db.Db.Query(`select ChannelPartner.id,ChannelPartner.first_name,ChannelPartner.middle_name,ChannelPartner.last_name,ChannelPartner.mob_no,ChannelPartner.email,
+	ChannelPartner.status,ChannelPartner.address1,ChannelPartner.address2,ChannelPartner.city,ChannelPartner.zipcode,ChannelPartner.state,
+	ChannelPartner.language,ChannelPartner.town,ChannelPartner.location_type,ChannelPartner.location_info,ChannelPartnerType.id 
+	from ChannelPartner
+	LEFT JOIN ChannelPartnerType ON ChannelPartner.channel_partner_type_id = ChannelPartnerType.id 
+	WHERE ChannelPartner.id =?  limit 1`, AdminId)
+	if err != nil {
+		log.Println(beego.AppConfig.String("loglevel"), "Error", err)
+		err = errors.New("Unable to get channel partner data")
+		return
+	}
+	defer sql.Close(row1)
+	_, data1, err := sql.Scan(row1)
+	if err != nil {
+		log.Println(beego.AppConfig.String("loglevel"), "Error", err)
+		err = errors.New("Unable to get channel partner data")
+		return
+	}
+	log.Println(beego.AppConfig.String("loglevel"), "Debug", "Query Data - ", data1, "\nData len - ", len(data1))
+	if len(data1) <= 0 {
+		err = errors.New("Channel Partner data not found")
+		return
+	}
+
+	log.Println(beego.AppConfig.String("loglevel"), "Debug", data1)
+
+	for i := range data1 {
+
+		c.Data["Id"] = data1[i][0]
+		c.Data["FirstName"] = data1[i][1]
+		c.Data["MiddleName"] = data1[i][2]
+		c.Data["LastName"] = data1[i][3]
+		c.Data["Mobile"] = data1[i][4]
+		c.Data["Email"] = data1[i][5]
+		c.Data["UStatus"] = data1[i][6]
+		c.Data["Address1"] = data1[i][7]
+		c.Data["Address2"] = data1[i][8]
+		c.Data["City"] = data1[i][9]
+		c.Data["Zipcode"] = data1[i][10]
+		c.Data["State"] = data1[i][11]
+		c.Data["Language"] = data1[i][12]
+		c.Data["Town"] = data1[i][13]
+		c.Data["LocationType"] = data1[i][14]
+		c.Data["LocationInfo"] = data1[i][15]
+		c.Data["ChannelPartnerType"] = data1[i][16]
+
+		// data, err := services.GetClusteruser()
+		// if err != nil {
+		// 	log.Println(beego.AppConfig.String("loglevel"), "Error", err)
+		// 	err = errors.New("Cluster user fetch Failed")
+		// 	return
+		// }
+		// if len(data) <= 0 {
+		// 	err = errors.New("Cluster user  Not Found")
+		// 	return
+		// }
+		// var Dis Display
+		// for i := range data {
+		// 	var d Field
+		// 	//d.Id = data[i][0]
+		// 	d.Name = data[i][1]
+		// 	Dis.Fields = append(Dis.Fields, d)
+		// }
+		// c.Data["Dis"] = Dis
+		// log.Println(beego.AppConfig.String("loglevel"), "Debug", "Object Data - ", Dis)
+
+		data1, err := services.GetChannelPartnerType()
+		if err != nil {
+			log.Println(beego.AppConfig.String("loglevel"), "Error", err)
+			err = errors.New("Channel Partner Type fetch Failed")
+			return
+		}
+		if len(data1) <= 0 {
+			err = errors.New("Channel Partner Type  Not Found")
+			return
+		}
+		var Dis1 Display
+		for i := range data1 {
+			var d Field
+			d.Id = data1[i][0]
+			d.Name = data1[i][1]
+			Dis1.Fields = append(Dis1.Fields, d)
+		}
+		c.Data["Dis1"] = Dis1
+		log.Println(beego.AppConfig.String("loglevel"), "Debug", "Object Data - ", Dis1)
+	}
+
+	input_first_name := c.Input().Get("input_first_name")
+	input_middle_name := c.Input().Get("input_middle_name")
+	input_last_name := c.Input().Get("input_last_name")
+	input_mobile := c.Input().Get("input_mobile")
+	input_email := c.Input().Get("input_email")
+	input_status := c.Input().Get("input_status")
+	input_address1 := c.Input().Get("input_address1")
+	input_address2 := c.Input().Get("input_address2")
+	input_town := c.Input().Get("input_town")
+	input_city := c.Input().Get("input_city")
+	input_zipcode := c.Input().Get("input_zipcode")
+	input_state := c.Input().Get("input_state")
+	input_language := c.Input().Get("input_language")
+	LocationType := c.Input().Get("LocationType")
+	LocationInfo := c.Input().Get("LocationInfo")
+	select_channel_partner_type := c.Input().Get("select_channel_partner_type")
+
+	if input_status == "" {
+		input_status = "ACTIVE"
+	}
+
+	if input_language == "" || LocationType == "" || LocationInfo == "" || input_status == "" {
+		err = errors.New("* fields cannot be empty")
+		return
+	}
+
+	res, err := db.Db.Exec(`UPDATE ChannelPartner SET 
+	first_name = ?, middle_name = ?, last_name = ?, email = ?, mob_no = ?,status=? ,
+	address1=?,address2=?,town=?,city=?,zipcode=?,state=?,language=?,location_type=?,location_info=?,channel_partner_type_id=?,update_date=now()
+	WHERE id = ?`, input_first_name, input_middle_name, input_last_name, input_email, input_mobile, input_status, input_address1,
+		input_address2, input_town, input_city, input_zipcode, input_state, input_language, LocationType, LocationInfo, select_channel_partner_type, AdminId)
+	if err != nil {
+		err = errors.New("Channel Partner updation failed")
+		return
+	}
+
+	i, err := res.RowsAffected()
+	if err != nil || i == 0 {
+		err = errors.New("Channel Partner updation failed")
+		return
+	}
+
+	return
+}

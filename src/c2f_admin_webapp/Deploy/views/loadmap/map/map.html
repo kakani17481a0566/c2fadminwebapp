@@ -1,0 +1,82 @@
+<html>
+ <head>
+    <title>MapmyIndia Plugin - direction Plugin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="desciption" content="Mapmyindia Direction Plugin">
+    <script src="https://apis.mapmyindia.com/advancedmaps/v1/5420aed9-1ad3-4864-9137-80e6bcf3e889/map_load?v=1.5"></script>
+    <script src="https://apis.mapmyindia.com/advancedmaps/api/5420aed9-1ad3-4864-9137-80e6bcf3e889/map_sdk_plugins"></script>
+    <style>
+        body{margin: 0}
+        #map{
+            width: 100%; height: 100vh; margin: 0; padding: 0;
+        }
+        #direction{color: #000;max-width: 99%;width:300px;position:absolute;z-index: 999;font-size: 15px;padding:10px;border: 1px solid #ddd;outline: none !important;top:55px;border-radius:10px;margin:2px 4px;}
+    </style>
+    </head>
+    <body>
+        <div id="map"></div>
+        <div id="direction"></div>
+        <script>
+         /*Map Initialization*/
+          var map = new MapmyIndia.Map('map', {center: [28.09, 78.3], zoom: 5, search: false});
+          
+          /*direction plugin initialization*/
+            var direction_option={
+                map:map,
+             start :"12.1409395,75.9435116",
+    via : ["12.3052,76.6548",
+    "12.2752726,76.6701295",
+  "12.3027454,76.631148",
+"12.3252662,76.647759",
+"12.2927281,76.6268186",
+"12.297506,76.5953",
+"12.52295,76.9384",
+"12.31465,76.66125",
+"12.30835,76.6677",
+"12.2695942,76.6260985",
+"12.29265,76.66445",
+"12.4595,76.38705",
+"12.3052,76.6548",
+"12.3165584,76.6556982",
+"12.3319281,76.6268236",
+"12.2675,76.6548",
+"12.3283741,76.6398172",
+"12.3039,76.6543",
+"12.58275,76.8705",
+"11.8844,76.63046",
+"12.2352131,76.4548526",
+"11.9348,76.7537",
+"12.2885043,76.6405392",
+"12.343,76.8774",
+"12.070855,76.7523987",
+"12.61036,76.2677",
+"12.4386437,76.857666",
+"12.60423,76.36986",
+"12.119708,76.682792",
+"12.5318721,76.1522769",
+"12.2958,76.28705",
+"12.2241302,76.7002237",
+"12.119705,76.682795",
+"12.2958194,76.6393715",
+"12.4854192,76.0406344",
+"12.307506,76.287794",
+"12.58275,76.8705",
+"12.2958194,76.6393715",
+"12.1825,76.90965",
+"11.9348,76.7537",
+"12.4595,76.38705",
+"12.3638418,76.0545672",
+"12.44375,76.4419",
+"12.3252662,76.647759",
+"12.60423,76.36986",
+"12.2958,76.28705",
+"12.2958194,76.6393715"],
+    end :{geoposition:"12.3496162,76.6304319"},
+		callback:function(data){console.log(data);}
+            }
+            var direction_plugin=MapmyIndia.direction(direction_option);  
+            //direction_plugin.remove(); 
+       </script>
+    </body>
+</html>
+             

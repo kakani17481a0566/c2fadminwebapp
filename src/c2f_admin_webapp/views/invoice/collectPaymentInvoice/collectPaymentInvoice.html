@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>C2F Admin</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="/static/dist/img/logo-s.png" type="image/gif" sizes="16x16">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../static/plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="../../static/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../static/dist/css/adminlte.min.css">
+    <!-- style css -->
+    <link rel="stylesheet" href="../../static/dist/css/style.css">
+    <link rel = "stylesheet" type = "text/css" media = "print" href="../../static/dist/css/style.css">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="../../static/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <link rel="stylesheet" type="text/css" href="../../static/plugins/duDialog-master/duDialog.css">
+   
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="../../static/dist/css/fonts/source-sans-pro.css">
+    <style type="text/css">
+
+    @media print {
+
+                            h4 {
+                  overflow: hidden;
+                  text-align: center;
+              }
+              h4:before,
+              h4:after {
+                  background-color: #000;
+                  content: "";
+                  display: inline-block;
+                  height: 1px;
+                  position: relative;
+                  vertical-align: middle;
+                  width: 50%;
+              }
+              h4:before {
+                  right: 0.5em;
+                  margin-left: -50%;
+              }
+              h4:after {
+                  left: 0.5em;
+                  margin-right: -50%;
+              }
+
+    }
+      
+.text-secondary-d1 {
+    color: #728299!important;
+}
+.page-header {
+    margin: 0 0 1rem;
+    padding-bottom: 1rem;
+    padding-top: .5rem;
+    border-bottom: 1px dotted #e2e2e2;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -ms-flex-align: center;
+    align-items: center;
+}
+/*.page-title {
+    padding: 0;
+    margin: 0;
+    font-size: 1.75rem;
+    font-weight: 300;
+}*/
+.brc-default-l1 {
+    border-color: #dce9f0!important;
+}
+
+.ml-n1, .mx-n1 {
+    margin-left: -.25rem!important;
+}
+.mr-n1, .mx-n1 {
+    margin-right: -.25rem!important;
+}
+.mb-4, .my-4 {
+    margin-bottom: 1.5rem!important;
+}
+
+hr {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 0;
+    border-top: 1px solid rgba(0,0,0,.1);
+}
+
+.text-grey-m2 {
+    color: #888a8d!important;
+}
+
+.text-success-m2 {
+    color: #86bd68!important;
+}
+
+.font-bolder, .text-600 {
+    font-weight: 600!important;
+}
+
+.text-110 {
+    font-size: 110%!important;
+}
+.text-blue {
+    color: #478fcc!important;
+}
+.pb-25, .py-25 {
+    padding-bottom: .75rem!important;
+}
+
+.pt-25, .py-25 {
+    padding-top: .75rem!important;
+}
+.bgc-default-tp1 {
+    background-color: rgba(121,169,197,.92)!important;
+}
+.bgc-default-l4, .bgc-h-default-l4:hover {
+    background-color: #f3f8fa!important;
+}
+/*.page-header .page-tools {
+    -ms-flex-item-align: end;
+    align-self: flex-end;
+}*/
+
+.btn-light {
+    color: #757984;
+    background-color: #f5f6f9;
+    border-color: #dddfe4;
+}
+.w-2 {
+    width: 1rem;
+}
+
+.text-120 {
+    font-size: 120%!important;
+}
+.text-primary-m1 {
+    color: #4087d4!important;
+}
+
+.text-danger-m1 {
+    color: #dd4949!important;
+}
+.text-blue-m2 {
+    color: #68a3d5!important;
+}
+.text-150 {
+    font-size: 150%!important;
+}
+.text-60 {
+    font-size: 60%!important;
+}
+.text-grey-m1 {
+    color: #7b7d81!important;
+}
+.align-bottom {
+    vertical-align: bottom!important;
+}
+
+ h4 {
+    overflow: hidden;
+    text-align: center;
+}
+h4:before,
+h4:after {
+    background-color: #000;
+    content: "";
+    display: inline-block;
+    height: 1px;
+    position: relative;
+    vertical-align: middle;
+    width: 50%;
+}
+h4:before {
+    right: 0.5em;
+    margin-left: -50%;
+}
+h4:after {
+    left: 0.5em;
+    margin-right: -50%;
+}
+
+    </style>
+  </head>
+  <body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+      <!-- Navbar -->
+      <nav   class="main-header navbar navbar-expand navbar-light navbar-green">        <!-- Left navbar links -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+      </ul>
+      <!-- Right navbar links -->
+      <ul class="navbar-nav ml-auto">
+        <!-- Notifications Dropdown Menu -->
+       <!-- <li><a href="/Dashboard" class="brand-link navbar-light" style="padding-bottom: 35px;">
+          <img src="/static/dist/img/logo.png" alt="AdminLTE Logo" class="brand-image"
+          style="opacity: .8">-->
+          
+          <!-- <span class="brand-text font-weight-light">Asset Monitoring</span> -->
+<!--        </a></li>-->
+        <li class="nav-item dropdown">
+          <a class="nav-link" data-toggle="dropdown" href="#">
+            <img src="/static/dist/img/user-icon-jpg-8.jpg" alt="User Avatar" class="img-size-35 mr-3 img-circle">
+          </a>
+          <div class="dropdown-menu dropdown-menu-right">
+            <!-- <a href="/Profile" class="dropdown-item">
+              <i class="fas fa-users mr-2"></i> Profile
+            </a>
+            <div class="dropdown-divider"></div> -->
+            
+            <div id="namecard" style=" background-color:#355E3B;height: 100px;width: 100%; text-align: center; padding: 20px;">
+              
+           <span style="color:#FFFFFF;font-weight:bold; font-size: 120%;"> {{.fullname1}}</span><br>
+          <span style="color:#FFFFFF;font-weight:600">{{.utype}}</span><br>
+          <span style="color:#FFFFFF;font-weight:500">{{.clustername}}</span>
+            </div>
+            <a href="/ChangePassword" class="dropdown-item">
+              <i id="change-pwd" class="fas fa-key mr-2"></i>
+            <div class="dropdown-divider"></div>
+            <a href="/Logout" class="dropdown-item">
+              <i id="lout" class="fas fas fa-arrow-alt-circle-left"></i>
+            </a>
+          </div>
+        </li>
+      </ul>
+    </nav>
+    <!-- /.navbar -->
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar elevation-4 sidebar-light-green">
+      <!-- Brand Logo -->
+      <a href="/Dashboard" class="brand-link navbar-light" style="padding-bottom: 35px;">
+        <img src="/static/dist/img/logo.png" alt="AdminLTE Logo" class="brand-image"
+          style="opacity: .8">
+          <!--<img src="/static/dist/img/logo-s.png" alt="AdminLTE Logo" class="brand-image-small"
+          style="opacity: .8">-->
+        <!-- <span class="brand-text font-weight-light">Asset Monitoring</span> -->
+      </a>
+    {{if eq .utype "HOADMIN"}} {{template "default/sidebar.html" .}} {{else if eq .utype "USER"}} {{template "default/userSidebar.html" .}} {{else if eq .utype "CLUSTERMANAGER"}} {{template "default/clusteradminSidebar.html" .}} {{else if eq .utype "CLUSTEREXECUTIVE"}} {{template "default/clusterexecutiveSidebar.html" .}} {{else}} {{template "default/reportSidebar.html" .}} {{end}}
+      
+      
+    </aside>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper content-bg-color">
+      <!-- Content Header (Page header) -->
+      <div class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1 id="vcod" class="m-0 text-color-white">View Collect Payment Details</h1>
+              </div><!-- /.col -->
+              <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                  <li class="breadcrumb-item"><a id="lihome" href="/Dashboard">Home</a></li>
+                  <li id="livcod" class="breadcrumb-item active">View Collect Payment Details</li>
+                </ol>
+                </div><!-- /.col -->
+                </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+              </div>
+              <!-- /.content-header -->
+              <form action="/Invoice/CollectPaymentInvoice" id="addUsersValidate" method="post">
+                <!-- Main content -->
+                
+<section class="invoice content no-print" id="printablediv">
+<div class="page-content container">
+    <div class="page-header text-blue-d2">
+        <h1  class="page-title text-secondary-d1">
+            <p id="oid">Order ID</p>
+            <small class="page-info">
+                <i class="fa fa-angle-double-right text-80"></i>
+                 {{.OrderID}}
+            </small>
+            
+        </h1>
+        <br>
+         <h1 class="page-title text-secondary-d1">
+            <p id="tbill" >Total Bill</p>
+            <small class="page-info">
+                <i class="fa fa-angle-double-right text-80"></i>
+                {{.TotalBillAmount}}.00
+            </small>
+            
+        </h1>
+
+        <div class="page-tools">
+            <div class="action-buttons">
+                
+                  <button id="sendtp" class="btn btn-custom" onclick="javascript:printDiv('printablediv')"><i class="fa fa-print fa-fw"></i> Send to Print</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container px-0">
+        <div class="row mt-4">
+            <div class="col-12 col-lg-10 offset-lg-1">
+                <div class="row">
+                    <div class="col-12">
+                        <!--<div class="text-center text-150">
+                            
+                            <span class="text-default-d3">
+        <img src="/static/dist/img/logo.png" alt="AdminLTE Logo" class="brand-image"
+        style="opacity: .8; width: 15%;"></span>
+                        </div>-->
+                    </div>
+                </div>
+                <!-- .row -->
+
+                <hr class="row brc-default-l1 mx-n1 mb-4" />
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        
+                       
+                    </div>
+                    <!-- /.col -->
+
+                    <!--<div class="text-95 col-sm-6 align-self-start d-sm-flex justify-content-end">
+                        <hr class="d-sm-none" />
+                        <div class="text-grey-m2">
+                            <div id="cdetails" class="mt-1 mb-2 text-secondary-m1 text-600 text-125">
+                                Customer Details
+                            </div>
+
+                            <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span id="caname" class="text-600 text-90">Customer Name:</span>{{.CustomerName}}</div>
+                             <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span id="cmob" class="text-600 text-90">Customer Mobile:</span>{{.CustomerMobile}}</div>
+                             <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span id="add1" class="text-600 text-90">Address:</span> {{.Address1}},{{.Address2}} </div>
+                            <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span id="add2" class="text-600 text-90">Address:</span> {{.City}},{{.Zipcode}} </div>
+                            <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span id="status" class="text-600 text-90">Status:</span> <span class="badge badge-warning badge-pill px-25">{{.Status}}</span></div>
+                               </div>
+                    </div>-->
+                    <!-- /.col -->
+                </div>
+                <div class="mt-4" >
+                    <!-- <div class="row text-600 text-white bgc-default-tp1 py-25"> -->
+                      <div >
+                        <!-- <div class="d-none d-sm-block col-1">#</div> -->
+                        <h4 id="cdetails">Customer Details</h4>
+                        <!-- <div class="d-none d-sm-block col-4 col-sm-2">Qty</div>
+                        <div class="d-none d-sm-block col-sm-2">Unit Price</div>
+                        <div class="col-2">Amount</div> -->
+                    </div>
+
+                    <div class="text-95 text-secondary-d3 border" >
+                        <div class="row mb-2 mb-sm-0 py-25">
+                            <!-- <div class="d-none d-sm-block col-1">1</div> -->
+                            <div id="custname" class="col-9 col-sm-9">Customer Name</div>
+                            <!-- <div class="d-none d-sm-block col-2">2</div>
+                            <div class="d-none d-sm-block col-2 text-95">{{.OrderDate}}</div> -->
+                            <div class="col-3 text-secondary-d2 text-right">{{.CustomerName}}</div>
+                        </div>
+
+                        <div class="row mb-2 mb-sm-0 py-25 bgc-default-l4" >
+                            <!-- <div class="d-none d-sm-block col-1">1</div> -->
+                            <div id="cmob" class="col-9 col-sm-9">Customer Mobile</div>
+                            <!-- <div class="d-none d-sm-block col-2">2</div>
+                            <div class="d-none d-sm-block col-2 text-95">{{.OrderDate}}</div> -->
+                            <div class="col-3 text-secondary-d2 text-right">{{.CustomerMobile}}</div>
+                        </div>
+
+                        <div class="row mb-2 mb-sm-0 py-25">
+                            <!-- <div class="d-none d-sm-block col-1">1</div> -->
+                            <div id="add3" class="col-9 col-sm-9">Address</div>
+                            <!-- <div class="d-none d-sm-block col-2">2</div>
+                            <div class="d-none d-sm-block col-2 text-95">{{.OrderDate}}</div> -->
+                            <div class="col-3 text-secondary-d2 text-right"> {{.CustomerAdd1}},{{.CustomerAdd2}}</div>
+                        </div>
+
+                        <div class="row mb-2 mb-sm-0 py-25 bgc-default-l4">
+                            <!-- <div class="d-none d-sm-block col-1">1</div> -->
+                            <div id="add4" class="col-9 col-sm-9">Address</div>
+                            <!-- <div class="d-none d-sm-block col-2">2</div>
+                            <div class="d-none d-sm-block col-2 text-95">{{.OrderDate}}</div> -->
+                            <div class="col-3 text-secondary-d2 text-right"> {{.CustomerCity}},{{.ZipCode}}</div>
+                        </div>
+
+                        <div class="row mb-2 mb-sm-0 py-25">
+                            <!-- <div class="d-none d-sm-block col-1">1</div> -->
+                            <div id="sstatus" class="col-9 col-sm-9">Status</div>
+                            <!-- <div class="d-none d-sm-block col-2">2</div>
+                            <div class="d-none d-sm-block col-2 text-95">{{.OrderDate}}</div> -->
+                            <div class="col-3 text-secondary-d2 text-right">{{.Status}}</div>
+                        </div>
+                        
+                        
+                        <div class="row mb-2 mb-sm-0 py-25">
+                            <!-- <div class="d-none d-sm-block col-1">1</div> -->
+                            <div id="pstatus" class="col-9 col-sm-9">Payment Status</div>
+                            <!-- <div class="d-none d-sm-block col-2">2</div>
+                            <div class="d-none d-sm-block col-2 text-95">{{.OrderDate}}</div> -->
+                            <div class="col-3 text-secondary-d2 text-right">{{.PaymentStatus}}</div>
+                        </div>
+                        
+                         <div class="row mb-2 mb-sm-0 py-25">
+                            <!-- <div class="d-none d-sm-block col-1">1</div> -->
+                            <div id="ptype" class="col-9 col-sm-9">Payment Type</div>
+                            <!-- <div class="d-none d-sm-block col-2">2</div>
+                            <div class="d-none d-sm-block col-2 text-95">{{.OrderDate}}</div> -->
+                            <div class="col-3 text-secondary-d2 text-right">{{.PaymentType}}</div>
+                        </div>
+                        
+                        <div class="row mb-2 mb-sm-0 py-25">
+                            <!-- <div class="d-none d-sm-block col-1">1</div> -->
+                            <div id="otype" class="col-9 col-sm-9">Order Type</div>
+                            <!-- <div class="d-none d-sm-block col-2">2</div>
+                            <div class="d-none d-sm-block col-2 text-95">{{.OrderDate}}</div> -->
+                            <div class="col-3 text-secondary-d2 text-right">{{.OrderType}}</div>
+                        </div>
+
+                       
+                    </div>
+
+                <div class="mt-4" >
+                    <!-- <div class="row text-600 text-white bgc-default-tp1 py-25"> -->
+                      <div >
+                        <!-- <div class="d-none d-sm-block col-1">#</div> -->
+                        <h4 id="odetails">Order Details</h4>
+                        <!-- <div class="d-none d-sm-block col-4 col-sm-2">Qty</div>
+                        <div class="d-none d-sm-block col-sm-2">Unit Price</div>
+                        <div class="col-2">Amount</div> -->
+                    </div>
+
+                    <div class="text-95 text-secondary-d3 border" >
+                        <div class="row mb-2 mb-sm-0 py-25">
+                            <!-- <div class="d-none d-sm-block col-1">1</div> -->
+                            <div id="odate" class="col-9 col-sm-9">Order Date</div>
+                            <!-- <div class="d-none d-sm-block col-2">2</div>
+                            <div class="d-none d-sm-block col-2 text-95">{{.OrderDate}}</div> -->
+                            <div class="col-3 text-secondary-d2 text-right">{{.OrderDate}}</div>
+                        </div>
+
+                        <div class="row mb-2 mb-sm-0 py-25 bgc-default-l4" >
+                            <!-- <div class="d-none d-sm-block col-1">1</div> -->
+                            <div id="ddate" class="col-9 col-sm-9">Delivery Date</div>
+                            <!-- <div class="d-none d-sm-block col-2">2</div>
+                            <div class="d-none d-sm-block col-2 text-95">{{.OrderDate}}</div> -->
+                            <div class="col-3 text-secondary-d2 text-right">{{.DeliveryFrom}} To {{.DeliveryTo}}</div>
+                        </div>
+
+                        <div class="row mb-2 mb-sm-0 py-25">
+                            <!-- <div class="d-none d-sm-block col-1">1</div> -->
+                            <div id="dtime" class="col-9 col-sm-9">Delivery Time</div>
+                            <!-- <div class="d-none d-sm-block col-2">2</div>
+                            <div class="d-none d-sm-block col-2 text-95">{{.OrderDate}}</div> -->
+                            <div class="col-3 text-secondary-d2 text-right">{{.DeliveryTime}}</div>
+                        </div>
+
+                        <div class="row mb-2 mb-sm-0 py-25 bgc-default-l4">
+                            <!-- <div class="d-none d-sm-block col-1">1</div> -->
+                            <div id="ppttype" class="col-9 col-sm-9">Purchase Type</div>
+                            <!-- <div class="d-none d-sm-block col-2">2</div>
+                            <div class="d-none d-sm-block col-2 text-95">{{.OrderDate}}</div> -->
+                            <div class="col-3 text-secondary-d2 text-right">{{.PurchaseType}}</div>
+                        </div>
+
+                        <div class="row mb-2 mb-sm-0 py-25">
+                            <!-- <div class="d-none d-sm-block col-1">1</div> -->
+                            <div id="rorder" class="col-9 col-sm-9">Repeat Order</div>
+                            <!-- <div class="d-none d-sm-block col-2">2</div>
+                            <div class="d-none d-sm-block col-2 text-95">{{.OrderDate}}</div> -->
+                            <div class="col-3 text-secondary-d2 text-right">{{.RepeatOrder}}</div>
+                        </div>
+
+                        <div class="row mb-2 mb-sm-0 py-25 bgc-default-l4">
+                            <!-- <div class="d-none d-sm-block col-1">1</div> -->
+                            <div id="clname" class="col-9 col-sm-9">Cluster Name</div>
+                            <!-- <div class="d-none d-sm-block col-2">2</div>
+                            <div class="d-none d-sm-block col-2 text-95">{{.OrderDate}}</div> -->
+                            <div class="col-3 text-secondary-d2 text-right">{{.ClusterName}}</div>
+                        </div>
+                    </div>
+                   
+                    <div class="mt-4" >
+                    <div >
+                        <!-- <div class="d-none d-sm-block col-1">#</div> -->
+                        <h4 id="pdetails">Product Details</h4>
+                        <!-- <div class="d-none d-sm-block col-4 col-sm-2">Qty</div>
+                        <div class="d-none d-sm-block col-sm-2">Unit Price</div>
+                        <div class="col-2">Amount</div> -->
+                    </div>
+
+                    <div class="text-95 text-secondary-d3 border" >
+                        <div class="row mb-2 mb-sm-0 py-25">
+                            <!-- <div class="d-none d-sm-block col-1">1</div> -->
+                            <div id="cname" class="col-9 col-sm-9">Category Name</div>
+                            <!-- <div class="d-none d-sm-block col-2">2</div>
+                            <div class="d-none d-sm-block col-2 text-95">{{.OrderDate}}</div> -->
+                            <div class="col-3 text-secondary-d2 text-right">{{.CategoryName}}</div>
+                        </div>
+
+                        <div class="row mb-2 mb-sm-0 py-25 bgc-default-l4" >
+                            <!-- <div class="d-none d-sm-block col-1">1</div> -->
+                            <div id="scname" class="col-9 col-sm-9">Subcategory Name</div>
+                            <!-- <div class="d-none d-sm-block col-2">2</div>
+                            <div class="d-none d-sm-block col-2 text-95">{{.OrderDate}}</div> -->
+                            <div class="col-3 text-secondary-d2 text-right">{{.SubcategroryName}}</div>
+                        </div>
+
+
+                        <div class="row mb-2 mb-sm-0 py-25">
+                            <!-- <div class="d-none d-sm-block col-1">1</div> -->
+                            <div id="prdtname" class="col-9 col-sm-9">Product Name </div>
+                            <!-- <div class="d-none d-sm-block col-2">2</div>
+                            <div class="d-none d-sm-block col-2 text-95">{{.OrderDate}}</div> -->
+                            <div class="col-3 text-secondary-d2 text-right">{{.ProductName}}</div>
+                        </div>
+                        
+                        <div class="row mb-2 mb-sm-0 py-25 bgc-default-l4">
+                            <!-- <div class="d-none d-sm-block col-1">1</div> -->
+                            <div id="psku" class="col-9 col-sm-9">Product SKU </div>
+                            <!-- <div class="d-none d-sm-block col-2">2</div>
+                            <div class="d-none d-sm-block col-2 text-95">{{.OrderDate}}</div> -->
+                            <div class="col-3 text-secondary-d2 text-right"> {{.ProductSKU}}</div>
+                        </div>
+                        
+                          <div class="row mb-2 mb-sm-0 py-25">
+                            <!-- <div class="d-none d-sm-block col-1">1</div> -->
+                            <div id="ppqty" class="col-9 col-sm-9">Product Package& Quantity</div>
+                            <!-- <div class="d-none d-sm-block col-2">2</div>
+                            <div class="d-none d-sm-block col-2 text-95">{{.OrderDate}}</div> -->
+                            <div class="col-3 text-secondary-d2 text-right"> {{.ProductPackageQty}} {{.ProductQty}} </div>
+                        </div>
+
+                        <div class="row mb-2 mb-sm-0 py-25 bgc-default-l4 ">
+                            <!-- <div class="d-none d-sm-block col-1">1</div> -->
+                            <div id="punits" class="col-9 col-sm-9">Product Units </div>
+                            <!-- <div class="d-none d-sm-block col-2">2</div>
+                            <div class="d-none d-sm-block col-2 text-95">{{.OrderDate}}</div> -->
+                            <div class="col-3 text-secondary-d2 text-right">{{.ProductUnit}}</div>
+                        </div>
+
+                        <div class="row mb-2 mb-sm-0 py-25 ">
+                            <!-- <div class="d-none d-sm-block col-1">1</div> -->
+                            <div id="pprice" class="col-9 col-sm-9">Product Price</div>
+                            <!-- <div class="d-none d-sm-block col-2">2</div>
+                            <div class="d-none d-sm-block col-2 text-95">{{.OrderDate}}</div> -->
+                            <div class="col-3 text-secondary-d2 text-right">{{.UnitPrice}}</div>
+                        </div>
+                    
+
+                    <div class="row mb-2 mb-sm-0 py-25 bgc-default-l4">
+                            <!-- <div class="d-none d-sm-block col-1">1</div> -->
+                            <div id="ndays" class="col-9 col-sm-9">No.Days</div>
+                            <!-- <div class="d-none d-sm-block col-2">2</div>
+                            <div class="d-none d-sm-block col-2 text-95">{{.OrderDate}}</div> -->
+                            <div class="col-3 text-secondary-d2 text-right">{{.TotalDays}}</div>
+                        </div>
+                    </div>
+                   
+
+                    <div class="mt-4"> 
+                    <div >
+                        <!-- <div class="d-none d-sm-block col-1">#</div> -->
+                        <h4 id="bdetails">Bill Details</h4>
+                        <!-- <div class="d-none d-sm-block col-4 col-sm-2">Qty</div>
+                        <div class="d-none d-sm-block col-sm-2">Unit Price</div>
+                        <div class="col-2">Amount</div> -->
+                    </div>
+                    <div class="text-95 text-secondary-d3 ">
+                          <table id="nodeTable" class="table table-bordered table-striped text-center border">
+                            <thead class="bgc-default-l4">
+                              <tr>
+                                <th id="price">Price</th>
+                                <th id="scharge">Supply charge</th>
+                                <th id="pcharge">Packing charge</th>
+                                <th id="bcharge">Bank charge</th>
+                                <th id="dis">Discount</th>
+                                <th id="dc1">Delivery Charges</th>
+                                                  
+                              </tr>
+                            </thead>
+                            <tbody>                              
+                              <tr class="text-secondary-d2">                                
+                                                             
+                                  <td>{{.TotalAmount}}.00</td>
+                                  <td>{{.Clustersupplycharge}}</td>
+                                   <td>{{.Clusterpackagingcharge}}</td>
+                                  <td>{{.Clusterbankcharge}}</td>
+                                   <td>{{.Clusterdiscountcharge}}</td>
+                                  <td id="dc2">{{.DeliveryCharge}}</td>
+                                                          
+                                </tr>                               
+                              </tbody>
+                            </table>
+                          </div>
+                          
+                        </div>
+                        
+                         <div class="text-95 text-secondary-d3 ">
+                          <table id="nodeTable" class="table table-bordered table-striped text-center border">
+                            <thead class="bgc-default-l4">
+                              <tr>
+                                
+                                <th id="cgst">CGST</th>
+                                <th id="sgst">SGST</th>
+                                <th id="cess">CESS</th>
+                                <th id="otax">OtherTAX</th>
+                                <th id="totalbill">Total Bill</th>                              
+                              </tr>
+                            </thead>
+                            <tbody>                              
+                              <tr class="text-secondary-d2">                                
+                                                             
+                                 
+                                   <td>{{.KrishivalaCGSTcharge}}</td>
+                                   <td>{{.KrishivalaSGSTcharge}}</td>
+                                  <td>{{.KrishivalaCESScharge}}</td>
+                                   <td>{{.KrishivalaOtherTAXcharge}}</td>                            
+                                  <td><b>{{.TotalBillAmount}}.00</b></td>                            
+                                </tr>                               
+                              </tbody>
+                            </table>
+                          </div>
+                          
+                        </div>
+                      <div class="card-footer" style="text-align: right;">
+                          <a href="/CollectPayment/UpdatecollectPayment/{{.OrderID}}"><button id="continue" type="button" class="btn">Continue</button></a>
+                            </div>
+
+                    <!-- 
+                    <div class="row mt-3">
+                        <div class="col-12 col-sm-7 text-grey-d2 text-95 mt-2 mt-lg-0">
+                            Extra note such as company or payment information...
+                        </div>
+
+                        <div class="col-12 col-sm-5 text-grey text-90 order-first order-sm-last">
+                            <div class="row my-2">
+                                <div class="col-7 text-right">
+                                    SubTotal
+                                </div>
+                                <div class="col-5">
+                                    <span class="text-120 text-secondary-d1">$2,250</span>
+                                </div>
+                            </div>
+
+                            <div class="row my-2">
+                                <div class="col-7 text-right">
+                                    Tax (10%)
+                                </div>
+                                <div class="col-5">
+                                    <span class="text-110 text-secondary-d1">$225</span>
+                                </div>
+                            </div>
+
+                            <div class="row my-2 align-items-center bgc-primary-l3 p-2">
+                                <div class="col-7 text-right">
+                                    Total Amount
+                                </div>
+                                <div class="col-5">
+                                    <span class="text-150 text-success-d3 opacity-2">$2,475</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+
+                     <hr />
+
+                    <div>
+                        <span id="thankyou" class="text-secondary-d1 text-105">Thank you for your business</span>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+                  </form>
+                  <!-- /.content -->
+                </div>
+                <!-- /.content-wrapper -->
+                <footer class="main-footer footer-bg-color">
+                  <strong>Copyright &copy; 2021.</strong>
+                  All rights reserved.
+                </footer>
+                <!-- Control Sidebar -->
+                <aside class="control-sidebar control-sidebar-dark">
+                  <!-- Control sidebar content goes here -->
+                </aside>
+                <!-- /.control-sidebar -->
+              </div>
+              <!-- ./wrapper -->
+              <!-- jQuery -->
+              <script src="../../static/plugins/jquery/jquery.min.js"></script>
+              <!-- jQuery UI 1.11.4 -->
+              <script src="../../static/plugins/jquery-ui/jquery-ui.min.js"></script>
+              <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+              <script>
+              $.widget.bridge('uibutton', $.ui.button)
+              </script>
+              <!-- Bootstrap 4 -->
+              <script src="../../static/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+              <script src="../../static/plugins/moment/moment.min.js"></script>
+              <script src="../../static/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+              <script type="text/javascript" src="../../static/plugins/duDialog-master/duDialog.js"></script>
+              <!-- validation -->
+              <script src="../../static/plugins/jquery-validation/jquery.validate.min.js"></script>
+              <script src="../../static/plugins/jquery-validation/additional-methods.min.js"></script>
+              <!-- AdminLTE App -->
+              <script src="../../static/dist/js/adminlte.js"></script>
+              <script>
+              document.getElementById("collectionagentmanagement-menu").className += " menu-open";
+              document.getElementById("collectionagentmanagement-active").className += " active";
+              document.getElementById("collectpayment-active").className += " active";
+              </script>
+              <!-- change type -->
+              <script type="text/javascript">
+              var data = {{.DisplayMessage}};
+              if (data != ""){
+              new duDialog('', data);
+              }
+              </script>
+               <script>
+      $.widget.bridge('uibutton', $.ui.button);
+    function printPage()
+    {
+      var ua = window.navigator.userAgent;
+    var msie = ua.indexOf ("MSIE ");
+    var iframe = parent.document.getElementById('iFrameLandingPage');
+
+    if (msie > 0) {
+        iframe.contentWindow.document.execCommand('print', false, null);
+    } else {
+        iframe.contentWindow.print();
+    }
+    }
+    
+        var ProductQty = {{.ProductQty}};
+                    if ( ProductQty == 'gms'){
+                      
+                      document.getElementById('dc1').style.display = 'block';
+                      document.getElementById('dc2').style.display = 'block';
+                    
+                      
+                    }else{
+                      
+                      document.getElementById('dc1').style.display = 'none';
+                      document.getElementById('dc2').style.display = 'none';
+                    
+                      
+                    }
+    </script>
+  <script language="javascript" type="text/javascript">
+        function printDiv(divID) {
+            //Get the HTML of div
+            var divElements = document.getElementById(divID).innerHTML;
+            //Get the HTML of whole page
+            var oldPage = document.body.innerHTML;
+
+            //Reset the page's HTML with div's HTML only
+            document.body.innerHTML = 
+              "<html><head><title></title></head><body>" + 
+              divElements + "</body>";
+
+            //Print Page
+            window.print();
+
+            //Restore orignal HTML
+            document.body.innerHTML = oldPage;
+
+          
+        }
+    </script>
+     <script type="text/javascript"> 
+
+  
+                $(window).on("load", function() 
+                {
+                      var x = {{.language}};
+                      if (x == "EN") 
+                  {
+                    
+                      $("#change-pwd").text("Change Password");
+                      $("#lout").text("Logout");
+                      $("#vcod").text("View Collect Payment Details");
+                      $("#lihome").text("Home");
+                      $("#livcod").text("View Collect Payment Details");
+                      $("#sendtp").text("Send to Print");
+                      $("#oid").text("Order ID");
+                      $("#tbill").text("Total Bill ");
+                      $("#krishi").text("Krishivalla");
+                      $("#road").text(" 25-283/9, Road No 1.");
+                      $("#add").text("Employees Colony, Nuzvid - 521201");
+                      $("#email").text("Email: info@krishivala.com");
+                      $("#cdetails").text("Customer Details");
+                      $("#caname").text("Customer Name");
+                       $("#cmob").text(" Customer Mobile");
+                       $("#add1").text("Address");
+                      $("#add2").text("Address");
+                      $("#status").text("Status");
+                      $("#odetails").text("Order Details");
+                     $("#ppttype").text("Purchase Type");
+                      $("#ddate").text("Delivery Date");
+                      $("#dtime").text("Delivery Time");
+                      $("#otype").text("Order Type");
+                      $("#rorder").text("Repeat Order");
+                      $("#clname").text("Cluster Name");
+                      $("#otype").text("Order Type");
+                     
+                    
+                      $("#pdetails").text("Product Details");
+                      $("#cname").text("Category Name");
+                      $("#scname").text("Subcategory Name");
+                      $("#prdtname").text("Product Name");
+                      $("#psku").text("Product SKU	");
+                      $("#ppqty").text("Product Package& Quantity");
+                      $("#punits").text("Product Units");
+                      $("#pprice").text("Product Price");
+                      $("#ndays").text("No.Days");
+                      $("#bdetails").text("Bill Details");
+                      $("#price").text("Price");
+                      $("#scharge").text("Supply charge	");
+                      $("#pcharge").text("Packing charge	");
+                      $("#bcharge").text("Bank charge	");
+                      $("#dis").text("Discount");
+                      $("#cgst").text("CGST");
+                      $("#sgst").text("SGST");
+                      $("#cess").text("CESS");
+                      $("#otax").text("OtherTAX");
+                      $("#totalbill").text("Total Bill");
+                      
+                      $("#thankyou").text("Thank you for your business");
+                      $("#custname").text("Customer Name");
+                      $("#add3").text("Address");
+                      $("#add4").text("Address");
+                       $("#sstatus").text("Status");
+                      $("#pstatus").text("Payment Status");
+                      $("#continue").text("Continue");
+                      $("#ptype").text("Payment Type");
+                      
+                      
+                      
+                      
+                      
+                  } 
+
+               else if (x == "TN")  
+                  
+                  {
+                    $("#change-pwd").text("పాస్‌వర్డ్ మార్చండి");
+                      $("#lout").text("లాగ్అవుట్");
+                      $("#vcod").text("చెల్లింపు వివరాలను సేకరించండి");
+                      $("#lihome").text("హోమ్");
+                      $("#livcod").text("చెల్లింపు వివరాలను సేకరించండి");
+                       $("#sendtp").text("ప్రింట్‌కి పంపండి");
+                      $("#oid").text("ఆర్డర్ గుర్తింపు సంఖ్యా");
+                      $("#tbill").text("మొత్తం బిల్లు ");
+                      $("#krishi").text("కృషివల్ల");
+                        $("#road").text(" 25-283/9, రోడ్ నెం 1.");
+                      $("#add").text("ఎంప్లాయీస్ కాలనీ, నుజ్వీద్ - 521201");
+                      $("#email").text("ఇమెయిల్: info@krishivala.com");
+                      $("#cdetails").text("వినియోగదారుని వివరాలు");
+                      $("#caname").text("వినియోగదారుని పేరు");
+                       $("#cmob").text("కస్టమర్ మొబైల్");
+                       $("#add1").text("చిరునామా");
+                      $("#add2").text("చిరునామా");
+                      $("#status").text("స్థితి");
+                      $("#odetails").text("ఆర్డర్ వివరాలు");
+                      $("#odate").text("ఆర్డర్ తేదీ");
+                      $("#ddate").text("డెలివరీ తేదీ");
+                      $("#dtime").text("డెలివరీ సమయం");
+                      $("#rorder").text("పునరావృతమయ్యే ఆర్డర్");
+                      $("#clname").text("క్లస్టర్ పేరు");
+                      $("#ppttype").text("కొనుగోలు రకం");
+                      $("#otype").text("ఆర్డర్ రకం");
+                     
+                      $("#pdetails").text("వస్తువు యొక్క వివరాలు");
+                      $("#cname").text("వర్గం పేరు");
+                      $("#scname").text("ఉపవర్గం పేరు");
+                      $("#prdtname").text("ఉత్పత్తి పేరు");
+                      $("#psku").text("ఉత్పత్తి SKU");
+                      $("#ppqty").text("ఉత్పత్తి ప్యాకేజీ & పరిమాణం");
+                      $("#punits").text("ఉత్పత్తి యూనిట్లు");
+                      $("#pprice").text("ఉత్పత్తి ధర");
+                      $("#ndays").text("రోజుల సంఖ్య");
+                      $("#bdetails").text("బిల్లు వివరాలు");
+                      $("#price").text("ధర");
+                      $("#scharge").text("సరఫరా ఛార్జ్	");
+                      $("#pcharge").text("ప్యాకింగ్ ఛార్జ్	");
+                      $("#bcharge").text("బ్యాంకు రుసుము");
+                      $("#dis").text("తగ్గింపు");
+                      $("#cgst").text("CGST");
+                      $("#sgst").text("SGST");
+                      $("#cess").text("CESS");
+                      $("#otax").text("ఇతరటాక్స్");
+                      $("#totalbill").text("మొత్తం బిల్లు");
+                      $("#thankyou").text("మీ వ్యాపారానికి ధన్యవాదాలు");
+                       $("#custname").text("వినియోగదారుని పేరు");
+                      $("#add3").text("చిరునామా");
+                      $("#add4").text("చిరునామా");
+                      $("#sstatus").text("స్థితి");
+                      $("#pstatus").text("చెల్లింపు స్థితి");
+                       $("#continue").text("కొనసాగించు");
+                       $("#ptype").text("చెల్లించు విధానము");
+                      
+                       } 
+});
+              </script>
+   
+            </body>
+          </html>

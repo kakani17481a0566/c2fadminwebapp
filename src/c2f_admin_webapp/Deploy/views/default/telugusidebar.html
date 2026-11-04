@@ -1,0 +1,386 @@
+<!-- Sidebar -->
+<div class="sidebar">
+  <nav class="mt-2">
+    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+      <!-- Add icons to the links using the .nav-icon class
+      with font-awesome or any other icon font library -->
+      <li class="nav-item has-treeview">
+        <a href="/Dashboard" id="dashboard-active" class="nav-link ">
+          <i class="nav-icon fas fa-tachometer-alt"></i>
+          <p>
+            డాష్బోర్డ్
+          </p>
+        </a>
+      </li>
+      <li id="usermanagement-menu" class="nav-item has-treeview ">
+        <a href="#" id="usermanagement-active" class="nav-link">
+          <i class="nav-icon fas fa-user-friends"></i>
+          <p>
+           వాడుకరి నిర్వహణ
+            <i class="right fas fa-angle-left"></i>
+          </p>
+        </a>
+        <ul class="nav nav-treeview">
+          <li class="nav-item">
+            <a href="/SysUser/SearchsysUser" id="searchsysuser-active" class="nav-link">
+              <p><i class="left fas fa-caret-right"></i>శోధన వినియోగదారు</p>
+            </a>
+          </li>
+         
+        </ul>
+      </li>
+      
+      <li id="customermanagement-menu" class="nav-item has-treeview ">
+        <a href="#" id="customermanagement-active" class="nav-link ">
+          <i class="nav-icon fa fa-user-circle"></i>
+          <p>
+            కస్టమర్ మేనేజ్‌మెంట్ 
+            <i class="right fas fa-angle-left"></i>
+          </p>
+        </a>
+        <ul class="nav nav-treeview">
+         <li class="nav-item">
+            <a href="/Customer/SearchCustomer" id="searchcustomer-active" class="nav-link ">
+              <p><i class="left fas fa-caret-right"></i>వినియోగదారుని శోధించండి </p>
+            </a>
+          </li>
+          
+          <li class="nav-item">
+            <a href="/CustomerOder/CreateOrder" id="createorder-active" class="nav-link ">
+              <p><i class="left fas fa-caret-right"></i>ఆర్డర్ ఉంచండి </p>
+            </a>
+          </li>
+          
+        
+          
+         
+        </ul>
+      </li>
+      
+      <li id="producermanagement-menu" class="nav-item has-treeview ">
+        <a href="#" id="producermanagement-active" class="nav-link ">
+          <i class="nav-icon fab fa-product-hunt"></i>
+          <p>
+            నిర్మాత నిర్వహణ
+            <i class="right fas fa-angle-left"></i>
+          </p>
+        </a>
+        <ul class="nav nav-treeview">
+       
+          <li class="nav-item">
+            <a href="/User/SearchUser" id="searchuser-active" class="nav-link">
+              <p><i class="left fas fa-caret-right"></i>నిర్మాతలను శోధించండి</p>
+            </a>
+          </li>
+          
+          <li class="nav-item">
+            <a href="/ProducerSupplyOrder/SearchProducerSupplyOrder" id="searchsupplyorder-active" class="nav-link ">
+              <p><i class="left fas fa-caret-right"></i>శోధన సరఫరా ఆర్డర్ </p>
+            </a>
+          </li>
+          <!--<li class="nav-item">
+            <a href="/BulkCustomer" id="bulkcustomer-active" class="nav-link">
+              <p><i class="left fas fa-caret-right"></i>Bulk Customer Creation</p>
+            </a>
+          </li>-->
+        </ul>
+      </li>
+      
+      <li id="deliveryexecmanagement-menu" class="nav-item has-treeview ">
+        <a href="#" id="deliveryexecmanagement-active" class="nav-link ">
+          <i class="nav-icon fas fa fa-shipping-fast"></i>
+          <p>
+            డెలివరీ ఎగ్జిక్యూటివ్ మేనేజ్‌మెంట్
+            <i class="right fas fa-angle-left"></i>
+          </p>
+        </a>
+        <ul class="nav nav-treeview">
+       
+          <li class="nav-item">
+            <a href="/DeliveryUsers/SearchDeliveryUser" id="searchexec-active" class="nav-link">
+              <p><i class="left fas fa-caret-right"></i>సెర్చ్ ఎగ్జిక్యూటివ్</p>
+            </a>
+          </li>
+          <!--<li class="nav-item">
+            <a href="/BulkCustomer" id="bulkcustomer-active" class="nav-link">
+              <p><i class="left fas fa-caret-right"></i>Bulk Customer Creation</p>
+            </a>
+          </li>-->
+        </ul>
+      </li>
+      
+      
+      <li id="clustermanagement-menu" class="nav-item has-treeview ">
+        <a href="#" id="clustermanagement-active" class="nav-link ">
+          <i class="nav-icon fas fa-project-diagram"></i>
+          <p>
+            క్లస్టర్ నిర్వహణ
+            <i class="right fas fa-angle-left"></i>
+          </p>
+        </a>
+        <ul class="nav nav-treeview">
+          <li class="nav-item">
+            <a href="/Clusters/SearchCluster" id="searchcluster-active" class="nav-link">
+              <p><i class="left fas fa-caret-right"></i>శోధన క్లస్టర్లు</p>
+            </a>
+          </li>
+           <li class="nav-item">
+            <a href="/ClusterUsers/ClusterSearchUser" id="clusteruser-active" class="nav-link">
+              <p><i class="left fas fa-caret-right"></i>క్లస్టర్-యూజర్ మ్యాప్</p>
+            </a>
+          </li>
+           <li class="nav-item">
+            <a href="/ClusterProducts/ClusterSearchProduct" id="searchclusterproducts-active" class="nav-link ">
+              <p><i class="left fas fa-caret-right"></i>క్లస్టర్-ఉత్పత్తి మ్యాప్</p>
+            </a>
+          </li>
+           <li class="nav-item">
+            <a href="/DeliveryOrder/SelectDeliveryOder" id="orderDeliveryMap-active" class="nav-link ">
+              <p><i class="left fas fa-caret-right"></i>ఆర్డర్-డెలివరీ మ్యాప్</p>
+            </a>
+          </li>
+          <!--<li class="nav-item">
+            <a href="/BulkCustomer" id="bulkcustomer-active" class="nav-link">
+              <p><i class="left fas fa-caret-right"></i>Bulk Customer Creation</p>
+            </a>
+          </li>-->
+        </ul>
+      </li>
+      
+      <li id="Productmanagement-menu" class="nav-item has-treeview ">
+        <a href="#" id="Productmanagement-active" class="nav-link ">
+          <i class="nav-icon fas fa fa-seedling"></i>
+          <p>
+            ఉత్పత్తి నిర్వహణ
+            <i class="right fas fa-angle-left"></i>
+          </p>
+        </a>
+        <ul class="nav nav-treeview">
+          <li class="nav-item">
+            <a href="/Products/SearchProduct" id="searchProduct-active" class="nav-link">
+              <p><i class="left fas fa-caret-right"></i>శోధన ఉత్పత్తి</p>
+            </a>
+          </li>
+          <!--<li class="nav-item">
+            <a href="/BulkCustomer" id="bulkcustomer-active" class="nav-link">
+              <p><i class="left fas fa-caret-right"></i>Bulk Customer Creation</p>
+            </a>
+          </li>-->
+        </ul>
+      </li>
+      
+      
+      
+      <li id="systemmanagement-menu" class="nav-item has-treeview ">
+        <a href="#" id="systemmanagement-active" class="nav-link ">
+          <i class="nav-icon fas fa-cogs"></i>
+          <p>
+            సిస్టమ్ కాన్ఫిగరేషన్‌లు
+            <i class="right fas fa-angle-left"></i>
+          </p>
+        </a>
+        <ul class="nav nav-treeview">
+         <li class="nav-item">
+            <a href="/Category/SearchCategory" id="category-active" class="nav-link ">
+              <p><i class="left fas fa-caret-right"></i>వర్గాన్ని సెట్ చేయండి</p>
+            </a>
+          </li>
+          
+            <li class="nav-item">
+            <a href="/SubCategory/SearchSubCategory" id="category-active" class="nav-link ">
+              <p><i class="left fas fa-caret-right"></i>ఉప-వర్గాన్ని సెట్ చేయండి</p>
+            </a>
+          </li>
+         
+          <li class="nav-item">
+            <a href="/Roles/CreateRole" id="roleManagement-active" class="nav-link ">
+              <p><i class="left fas fa-caret-right"></i>పాత్ర నిర్వహణ</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/ProductProducerClusters/ProductProducerClusterSearch" id="productProducerCluster-active" class="nav-link ">
+              <p><i class="left fas fa-caret-right"></i>ఉత్పత్తి-నిర్మాత-క్లస్టర్ మ్యాప్</p>
+            </a>
+          </li>
+          
+          <li class="nav-item">
+            <a href="/Ownerinfo/Ownerinfo" id="Ownerinfo-active" class="nav-link ">
+              <p><i class="left fas fa-caret-right"></i>యజమాని సమాచారం</p>
+            </a>
+          </li>
+        </ul>
+      </li>
+      
+      
+      <li id="supplymanagement-menu" class="nav-item has-treeview ">
+        <a href="#" id="supplymanagement-active" class="nav-link ">
+          <i class="nav-icon fa fa-shopping-cart"></i>
+          <p>
+            సరఫరా నిర్వహణ 
+            <i class="right fas fa-angle-left"></i>
+          </p>
+        </a>
+        <ul class="nav nav-treeview">
+          <li class="nav-item">
+            <a href="/SupplyForcast/SelectSupplyForcast" id="supplyForecast-active" class="nav-link ">
+              <p><i class="left fas fa-caret-right"></i>సరఫరా సూచన</p>
+            </a>
+          </li>
+          
+          <li class="nav-item">
+            <a href="/SupplyOrder/SelectSupplyOrder" id="supplyOrder-active" class="nav-link ">
+              <p><i class="left fas fa-caret-right"></i>సరఫరా ఆర్డర్</p>
+            </a>
+          </li>
+          
+          <li class="nav-item">
+            <a href="/CollectSupplyOrder/SearchCollectSupplyOrder" id="collectSupply-active" class="nav-link ">
+              <p><i class="left fas fa-caret-right"></i>సరఫరా ఆర్డర్‌ని సేకరించండి </p>
+            </a>
+          </li>
+          
+          
+           <li class="nav-item">
+            <a href="/CompleteSupplyOrder/SearchCompleteSupplyOrder" id="completeSupply-active" class="nav-link ">
+              <p><i class="left fas fa-caret-right"></i>పూర్తి సరఫరా ఆర్డర్ </p>
+            </a>
+          </li>
+          
+           
+          
+         
+        </ul>
+      </li>
+      
+      <li id="deliverymanagement-menu" class="nav-item has-treeview ">
+        <a href="#" id="deliverymanagement-active" class="nav-link ">
+          <i class="nav-icon fas fa-cogs"></i>
+          <p>
+            డెలివరీ నిర్వహణ
+            <i class="right fas fa-angle-left"></i>
+          </p>
+        </a>
+        <ul class="nav nav-treeview">
+          <li class="nav-item">
+            <a href="/CompleteDelivery/SearchDeliveryOrder" id="SeacrhDelivery-active" class="nav-link ">
+              <p><i class="left fas fa-caret-right"></i>డెలివరీలను శోధించండి</p>
+            </a>
+          </li>
+        </ul>
+      </li>
+       
+      <li id="Billmanagement-menu" class="nav-item has-treeview ">
+        <a href="#" id="Billmanagement-active" class="nav-link ">
+          <i class="nav-icon fas fa-file-invoice"></i>
+          <p>
+            బిల్లు నిర్వహణ
+            <i class="right fas fa-angle-left"></i>
+          </p>
+        </a>
+        <ul class="nav nav-treeview">
+          <li class="nav-item">
+           <a href="/Bill/SupplyOrderBill" id="ProducerSupplyBill-active" class="nav-link ">
+             
+               <p><i class="left fas fa-caret-right"></i>నిర్మాత సరఫరా బిల్లు</p>
+            </a>
+          </li>
+          <!--<li class="nav-item">
+            <a href="/BulkCustomer" id="bulkcustomer-active" class="nav-link">
+              <p><i class="left fas fa-caret-right"></i>Bulk Customer Creation</p>
+            </a>
+          </li>-->
+        </ul>
+      </li>
+      
+      <!-- <li id="reconciliation-menu" class="nav-item has-treeview ">
+        <a href="#" id="reconciliation-active" class="nav-link">
+          <i class="nav-icon fas fa-tasks"></i>
+          <p>
+            OFFus Txn Settelement *
+            <i class="right fas fa-angle-left"></i>
+          </p>
+        </a>
+      </li> -->
+      <li id="reports-menu" class="nav-item has-treeview ">
+        <a href="#" id="reports-active" class="nav-link">
+          <i class="nav-icon far fa-chart-bar"></i>
+          <p>
+            నివేదికలు
+            <i class="right fas fa-angle-left"></i>
+          </p>
+        </a>
+        <ul class="nav nav-treeview">
+          <li class="nav-item">
+            <a href="/Report/SupplyForcastReport" id="supplyForecastreportmenu-active" class="nav-link ">
+              <p><i class="left fas fa-caret-right"></i>సరఫరా సూచన నివేదిక</p>
+            </a>
+          </li>
+        </ul>
+        <ul class="nav nav-treeview">
+          <li class="nav-item">
+            <a href="/Report/SupplyOrderReport" id="supplyOrderreportmenu-active" class="nav-link ">
+              <p><i class="left fas fa-caret-right"></i>సరఫరా ఆర్డర్ నివేదిక</p>
+            </a>
+          </li>
+        </ul>
+        <ul class="nav nav-treeview">
+          <li class="nav-item">
+            <a href="/Report/InventoryReport" id="inventoryreportmenu-active" class="nav-link ">
+              <p><i class="left fas fa-caret-right"></i>ఇన్వెంటరీ నివేదిక</p>
+            </a>
+          </li>
+        </ul>
+        
+        <ul class="nav nav-treeview">
+          <li class="nav-item">
+            <a href="/Report/CustomerOrderReport" id="customerOrderreportmenu-active" class="nav-link ">
+              <p><i class="left fas fa-caret-right"></i>కస్టమర్ ఆర్డర్ నివేదిక</p>
+            </a>
+          </li>
+        </ul>
+        
+         <ul class="nav nav-treeview">
+          <li class="nav-item">
+            <a href="/Report/DeliveryReport" id="deliveryreportmenu-active" class="nav-link ">
+              <p><i class="left fas fa-caret-right"></i>విడుదల నివేదిక</p>
+            </a>
+          </li>
+        </ul>
+        
+         <ul class="nav nav-treeview">
+          <li class="nav-item">
+            <a href="/Report/AduitReport" id="deliveryreportmenu-active" class="nav-link ">
+              <p><i class="left fas fa-caret-right"></i>ఆర్థిక లెక్కల నివేదిక</p>
+            </a>
+          </li>
+        </ul>
+        
+        
+        
+        <!-- <ul class="nav nav-treeview">
+          <li class="nav-item">
+            <a href="/Report/PositivePay" id="reportpp-active" class="nav-link ">
+              <p><i class="left fas fa-caret-right"></i>PositivePay Report</p>
+            </a>
+          </li>
+        </ul> -->
+        <!-- <ul class="nav nav-treeview">
+          <li class="nav-item">
+            <a href="/Report/SmsReport" id="smsreport-active" class="nav-link ">
+              <p><i class="left fas fa-caret-right"></i>SMS Report</p>
+            </a>
+          </li>
+        </ul> -->
+      </li>
+      <li class="nav-item has-treeview">
+        <a href="/Logout" class="nav-link">
+          <i class="nav-icon fas fa-arrow-alt-circle-left"></i>
+          <p>
+            లాగ్అవుట్
+          </p>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <!-- /.sidebar-menu -->
+</div>

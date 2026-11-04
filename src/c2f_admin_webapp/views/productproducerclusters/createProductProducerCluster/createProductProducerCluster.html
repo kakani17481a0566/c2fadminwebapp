@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>C2F Admin</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="/static/dist/img/logo-s.png" type="image/gif" sizes="16x16">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../static/plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="../../static/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../static/dist/css/adminlte.min.css">
+    <!-- style css -->
+    <link rel="stylesheet" href="../../static/dist/css/style.css">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="../../static/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <link rel="stylesheet" type="text/css" href="../../static/plugins/duDialog-master/duDialog.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="../../static/dist/css/fonts/source-sans-pro.css">
+  <style>
+
+.zoom1 {
+  transition: transform .2s; /* Animation */
+}
+.zoom1:hover {
+  -ms-transform: scale(1.2); /* IE 9 */
+  -webkit-transform: scale(1.2); /* Safari 3-8 */
+  transform: scale(1.2); 
+}
+
+.navbaricon:hover{
+  
+    background-color: #DCDCDC;
+}
+.dropdown-menu{
+    padding:0 0 0 0!important
+    
+}
+  </style>
+ </head>
+  <body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+      <!-- Navbar -->
+      <nav   class="main-header navbar navbar-expand navbar-light navbar-green">        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+          </li>
+        </ul>
+        <!-- Right navbar links -->
+        <ul class="navbar-nav ml-auto logo">
+          <!-- Notifications Dropdown Menu -->
+          <li class="tablogo"><a href="/Dashboard" class="brand-link navbar-light" style="padding-bottom: 35px;">
+          <img src="/static/dist/img/logo.png" alt="AdminLTE Logo" class="brand-image"
+          style="opacity: .8">
+          
+          <!-- <span class="brand-text font-weight-light">Asset Monitoring</span> -->
+        </a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#">
+             <img src="/static/dist/img/user_icon3.png" alt="User Avatar" class="img-size-35 mr-3 img-circle">
+            </a>
+             <div class="dropdown-menu dropdown-menu-right">
+             <div id="namecard" style=" background-color:#355E3B;height: 100px;width: 100%; text-align: center; padding: 20px;">
+              
+           <span style="color:#FFFFFF;font-weight:bold; font-size: 120%;"> {{.fullname1}}</span><br>
+        
+     
+           <span style="color:#FFFFFF;font-weight:500">{{.utype}}</span>
+            </div>
+              <a href="/ChangePassword" class="dropdown-item navbaricon">
+<!--                <i id="change-pwd" class="fas fa-key mr-2"></i> -->
+                <img src="/static/dist/img/change_pwd_icon.png" alt="User Avatar" class="img-size-35 mr-3 img-circle">
+                <span id="change-pwd" style="font-weight:bold"></span>
+              </a>
+<!--                <hr> -->
+<!--              <div class="dropdown-divider"></div>-->
+              <a href="/Logout" class="dropdown-item navbaricon">
+<!--                <i id="lout" class="fas fas fa-arrow-alt-circle-left"></i> -->
+                 <img src="/static/dist/img/logout_icon.png" alt="User Avatar" class="img-size-35 mr-3 img-circle">
+                 <span id="lout" style="font-weight:bold"></span>
+              </a>
+
+            </div>
+          </li>
+        </ul>
+      </nav>
+      <!-- /.navbar -->
+      <!-- Main Sidebar Container -->
+      <aside class="main-sidebar elevation-4 sidebar-light-=green">
+        <!-- Brand Logo -->
+        <a href="/Dashboard" class="brand-link navbar-light" style="padding-bottom: 35px;">
+          <img src="/static/dist/img/logo.png" alt="AdminLTE Logo" class="brand-image"
+          style="opacity: .8">
+          <!--<img src="/static/dist/img/logo-s.png" alt="AdminLTE Logo" class="brand-image-small"
+          style="opacity: .8">-->
+        <!-- <span class="brand-text font-weight-light">Asset Monitoring</span> -->
+        </a>
+        {{if eq .utype "HOADMIN"}} {{template "default/sidebar.html" .}} {{else if eq .utype "USER"}} {{template "default/userSidebar.html" .}} {{else}} {{template "default/reportSidebar.html" .}} {{end}}
+        
+      </aside>
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper content-bg-color">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <div class="col-sm-6">
+                <h1 class="ppcm" class="m-0 text-color-white">Product Producer Cluster Map</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                  <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a id="lihome" href="/Dashboard">Home</a></li>
+                    <li id="lippcm" class="breadcrumb-item active">Product Producer Cluster Map</li>
+                  </ol>
+                  </div><!-- /.col -->
+                  </div><!-- /.row -->
+                  </div><!-- /.container-fluid -->
+                </div>
+                <!-- /.content-header -->
+                <form action="/ProductProducerClusters/ProductProducerClusterCreate" id="addUsersValidate" method="post">
+                  <!-- Main content -->
+                  <section class="content">
+                    <div class="container-fluid">
+                      <!-- Small boxes (Stat box) -->
+                      <div class="row">
+                        <div class="col-12">
+                          <!-- Default box -->
+                          <div class="card card-bg-color">
+                            <div class="card-header">
+                              <h3 id="ppcm" class="card-title text-color-white">Product-Producer-Cluster Map</h3>
+                            </div>
+                            <div class="card-body ">
+                              <div class="row">
+                               <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="pname" class="text-color-white required">Product Name</label>
+                                     <select class="form-control" id="select_product_name" name="select_product_name">
+                                <option class="select" value="">-- select --</option>
+                                {{range $key, $val := .Dis1.Fields1}}
+                                <option value="{{$val.Id}}">{{$val.Name}} - {{$val.ProductpackageQty}}</option>
+                                {{end}}
+                            </select>
+                                  </div>
+                                </div>
+                               <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="pmob" class="text-color-white required">Producer Mobile Number</label>
+                                   <select class="form-control" id="select_producer_name" name="select_producer_name">
+                                <option  class="select" value="">-- select --</option>
+                                {{range $key, $val := .Dis2.Fields2}}
+                                <option value="{{$val.Id}}">{{$val.Mobile}} - {{$val.Name}}</option>
+                                {{end}}
+                            </select>
+                                  </div>
+                                </div>
+                                 <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="clname" class="text-color-white required">Cluster Name</label>
+                                   <select class="form-control" id="select_cluster_name" name="select_cluster_name">
+                                <option  class="select" value="">-- select --</option>
+                                {{range $key, $val := .Dis.Fields}}
+                                <option value="{{$val.Id}}">{{$val.Name}}</option>
+                                {{end}}
+                            </select>
+                                  </div>
+                                </div>
+                                
+                                 <!--div class="col-sm-4">
+                                 
+                                  <div class="form-group">
+                                    <label class="text-color-white required">Producer CGST Charge</label>
+                                    <input type="number" class="form-control text-ph-backgroud-color" placeholder="Enter Producer CGST" name="producer_CGST_charge" id="producer_CGST_charge" />
+                                  </div>
+                                </div>
+                                
+                                 <div class="col-sm-4">
+                                 
+                                  <div class="form-group">
+                                    <label class="text-color-white required">Producer SGST Charge</label>
+                                    <input type="number" class="form-control text-ph-backgroud-color" placeholder="Enter Producer SGST" name="producer_SGST_charge" id="producer_SGST_charge" />
+                                  </div>
+                                </div>-->
+                                
+                                 <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="cess" class="text-color-white required">Producer CESS Charge</label>
+                                    <input type="number" maxlength="10" class="form-control text-ph-backgroud-color" placeholder="Enter Producer CESS" name="producer_CESS_charge" id="producer_CESS_charge" />
+                                  </div>
+                                </div>
+                                
+                                 <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="taxcharge" class="text-color-white required">Producer OtherTAX Charge</label>
+                                    <input type="number" maxlength="10" class="form-control text-ph-backgroud-color" placeholder="Enter Producer Other Charges" name="producer_OtherTAX_charge" id="producer_OtherTAX_charge" />
+                                  </div>
+                                </div>
+                                
+                                  <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="ipsell" class="text-color-white required">Independent Product Sell</label>
+                                    <select class="form-control text-ph-backgroud-color" id="input_sell" name="input_sell" >
+                                      <option class="plsselect" value="">-- Please Select --</option>
+                                        <option id="yes" value="YES">Yes</option>
+                                      <option id="no" value="NO">No</option>
+                                      </select>
+                                  </div>
+                                </div>
+                               
+                                
+                                <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="status" class="text-color-white required"> Status</label>
+                                    <select class="form-control text-ph-backgroud-color" id="input_status" name="input_status" >
+                                      <option class="plsselect" value="">-- Please Select --</option>
+                                        <option id="active" value="ACTIVE">Active</option>
+                                      <option id="inactive" value="INACTIVE">InActive</option>
+                                      </select>
+                                  </div>
+                                </div>
+                                
+                              </div>
+                            </div>
+                            <div class="card-footer" style="text-align: center;">
+                              <button id="submit" type="submit" class="btn">Submit</button>
+                              <a href="/ProductProducerClusters/ProductProducerClusterSearch"><button id="back" type="button" class="btn">Back</button></a>
+                            </div>
+                            <!-- /.card-footer-->
+                            <!-- /.card -->
+                          </div>
+                        </div>
+                        <!-- /.card -->
+                        <!-- /.row -->
+                        <!-- Main row -->
+                        <div class="row">
+                        </div>
+                        <!-- /.row (main row) -->
+                        </div><!-- /.container-fluid -->
+                      </section>
+                    </form>
+                    <!-- /.content -->
+                  </div>
+                  <!-- /.content-wrapper -->
+                  <footer class="main-footer footer-bg-color">
+                    <strong>Copyright &copy; 2021 .</strong>
+                    All rights reserved.
+                  </footer>
+                  <!-- Control Sidebar -->
+                  <aside class="control-sidebar control-sidebar-dark">
+                    <!-- Control sidebar content goes here -->
+                  </aside>
+                  <!-- /.control-sidebar -->
+                </div>
+                <!-- ./wrapper -->
+                <!-- jQuery -->
+                <script src="../../static/plugins/jquery/jquery.min.js"></script>
+                <!-- jQuery UI 1.11.4 -->
+                <script src="../../static/plugins/jquery-ui/jquery-ui.min.js"></script>
+                <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+                <script>
+                $.widget.bridge('uibutton', $.ui.button)
+                </script>
+                <!-- Bootstrap 4 -->
+                <script src="../../static/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+                <script src="../../static/plugins/moment/moment.min.js"></script>
+                <script src="../../static/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+                <script type="text/javascript" src="../../static/plugins/duDialog-master/duDialog.js"></script>
+                <!-- validation -->
+                <script src="../../static/plugins/jquery-validation/jquery.validate.min.js"></script>
+                <script src="../../static/plugins/jquery-validation/additional-methods.min.js"></script>
+                <!-- AdminLTE App -->
+                <script src="../../static/dist/js/adminlte.js"></script>
+                <script>
+                document.getElementById("systemmanagement-menu").className += " menu-open";
+                document.getElementById("systemmanagement-active").className += " active";
+                document.getElementById("productProducerCluster-active").className += " active";
+                </script>
+                <!-- change type -->
+                <script type="text/javascript">
+                var lang = {{.userLang}};
+                $('#input_language').val(lang);
+                </script>
+                <script type="text/javascript">
+                var data = {{.DisplayMessage}};
+                if (data != ""){
+                new duDialog('', data);
+                }
+                </script>
+                <script type="text/javascript">
+                $(document).ready(function () {
+                // alert(language)
+                var validationMsg = {};
+                validationMsg.select_producer_name = "Please select Producer Mobile Number";
+                validationMsg.select_cluster_name = "Please select cluster name";
+                validationMsg.select_product_name = "Please select product name ";
+                validationMsg.input_status="Please select status";
+                validationMsg.input_sell="Please select Independant Product Sell";
+                validationMsg.zipcode = "Please enter zipcode";
+                validationMsg.userType = "Please enter user type";
+                validationMsg.language = "Please select";
+                validationMsg.producer_CGST_charge = "Please Enter CGST";
+                validationMsg.producer_SGST_charge = "Please Enter SGST";
+                validationMsg.producer_CESS_charge = "Please Enter CESS";
+                validationMsg.producer_OtherTAX_charge = "Please Enter Other TAX";
+                
+                $('#addUsersValidate').validate({
+                rules: {
+                select_producer_name: {
+                required: true,
+                maxlength: 30
+                },
+               
+                select_cluster_name: {
+                required: true,
+                maxlength: 30
+                },
+                input_status: {
+                required: true,
+                maxlength: 10,
+                },
+                 input_sell: {
+                required: true,
+                maxlength: 10,
+                },
+                input_mobile: {
+                required: true,
+                maxlength: 10,
+                number:true
+                },
+                 producer_CGST_charge: {
+                required: true,
+                maxlength: 10,
+                number:true
+                },
+                 producer_SGST_charge: {
+                required: true,
+                maxlength: 10,
+                number:true
+                },
+                 producer_CESS_charge: {
+                required: true,
+                maxlength: 10,
+                number:true
+                },
+                 producer_OtherTAX_charge: {
+                required: true,
+                maxlength: 10,
+                number:true
+                },
+                select_role_name: {
+                required: true,
+                maxlength: 10
+                },
+                select_product_name: {
+                required: true,
+                maxlength: 40
+                },
+                input_user_type: {
+                required: true,
+                maxlength: 20
+                },
+                },
+                messages: {
+                select_product_name: {
+                required: validationMsg.select_product_name,
+                },
+                
+                select_producer_name:  {
+                required: validationMsg.select_producer_name,
+                },
+                select_cluster_name: {
+                required: validationMsg.select_cluster_name,
+                },
+                 input_zipcode: {
+                required: validationMsg.zipcode,
+                },
+                 producer_CGST_charge: {
+                required: validationMsg.producer_CGST_charge,
+                },
+                 producer_SGST_charge: {
+                required: validationMsg.producer_SGST_charge,
+                },
+                 producer_CESS_charge: {
+                required: validationMsg.producer_CESS_charge,
+                },
+                 producer_OtherTAX_charge: {
+                required: validationMsg.producer_OtherTAX_charge,
+                },
+                input_status: {
+                required: validationMsg.input_status,
+                },
+                  input_sell: {
+                required: validationMsg.input_sell,
+                },
+                input_user_type: {
+                required: validationMsg.userType,
+                }
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+                },
+                highlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+                }
+                });
+                });
+                </script>
+                <script type="text/javascript"> 
+  
+                $(window).on("load", function() 
+                {
+                      var x = {{.language}};
+                      if (x == "EN") 
+                  {
+                    
+                      $("#change-pwd").text("Change Password");
+                      $("#lout").text("Logout");
+                      $(".ppcm").text("Product Producer Cluster Map");
+                      $("#lihome").text("Home");
+                      $("#lippcm").text("Product Producer Cluster Map");
+                      $("#pname").text("Product Name");
+                      
+                      $("#pmob").text("Producer Mobile Number");
+                       $("#clname").text("cluster Name");
+                      $("#cess").text("Producer CESS Charge");
+                      $("#producer_CESS_charge").attr("placeholder","Enter Producer CESS");
+                      $("#taxcharge").text("Producer OtherTAX Charge");
+                      $("#producer_OtherTAX_charge").attr("placeholder","Enter Producer Other Charges");
+                      $("#status").text("Status");
+                      $("#active").text("Active");
+                      $("#inactive").text("Inactive");
+                      $("#submit").text("Submit");
+                      $("#back").text("Back");
+                      $(".select").text("-- select --");
+                      $(".plsselect").text("-- Please Select --");
+                         $("#ipsell").text("Independant Product Sell");
+                          $("#yes").text("Yes");
+                            $("#no").text("No");
+                    
+                      
+                      
+                  } 
+               else if (x == "TN")  
+                  
+                  {
+                    $("#change-pwd").text("పాస్‌వర్డ్ మార్చండి");
+                      $("#lout").text("లాగ్అవుట్");
+                      $(".ppcm").text("ఉత్పత్తి నిర్మాత క్లస్టర్ మ్యాప్");
+                      $("#lihome").text("హోమ్");
+                      $("#lippcm").text("ఉత్పత్తి నిర్మాత క్లస్టర్ మ్యాప్");
+                      $("#pname").text("ఉత్పత్తి పేరు");
+                      $("#input_product_name").attr("placeholder","ఉత్పత్తి పేరును నమోదు చేయండి");
+                      $("#pmob").text("నిర్మాత మొబైల్ నంబర్");
+                       $("#clname").text("క్లస్టర్ పేరు");
+                      $("#cess").text("నిర్మాత సెస్ ఛార్జ్");
+                      $("#producer_CESS_charge").attr("placeholder","నిర్మాత CESSని నమోదు చేయండి");
+                      $("#taxcharge").text("నిర్మాత ఇతరటాక్స్ ఛార్జ్");
+                      $("#producer_OtherTAX_charge").attr("placeholder","నిర్మాత ఇతర ఛార్జీలను నమోదు చేయండి");
+                      $("#status").text("స్థితి");
+                      $("#active").text("చురుకుగా");
+                      $("#inactive").text("క్రియారహితం");
+                      $("#submit").text("సమర్పించండి");
+                      $("#back").text("వెనుకకు");
+                      $(".select").text("-- ఎంచుకోండి --");
+                      $(".plsselect").text("--దయచేసి ఎంచుకోండి--");
+                        $("#ipsell").text("స్వతంత్ర ఉత్పత్తి అమ్మకం");
+                              $("#yes").text("అవును");
+                            $("#no").text("కాదు");
+                       } 
+});
+              </script>
+              </body>
+            </html>

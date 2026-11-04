@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>C2F Admin</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="/static/dist/img/logo-s.png" type="image/gif" sizes="16x16">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../static/plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="../../static/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../static/dist/css/adminlte.min.css">
+    <!-- style css -->
+    <link rel="stylesheet" href="../../static/dist/css/style.css">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="../../static/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <link rel="stylesheet" type="text/css" href="../../static/plugins/duDialog-master/duDialog.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="../../static/dist/css/fonts/source-sans-pro.css">
+    <style>
+    .hidden{
+      display:none;
+    }
+    .navbaricon:hover{
+  
+    background-color: #DCDCDC;
+}
+    
+    
+    #bulkkg2{
+      display:none;
+    }
+    .address-section label {
+  font-size: 14px;
+}
+
+.custom-control-label {
+  font-size: 14px;
+}
+
+#change_address_list .custom-control {
+  padding-left: 1.8rem;
+}
+
+#main_address_card.selected,
+#change_address_list .selected {
+  border: 2px solid #28a745 !important;
+  background: #eaffea !important;
+}
+    </style>
+    
+  </head>
+  <body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+      <!-- Navbar -->
+      <nav   class="main-header navbar navbar-expand navbar-light navbar-green">        <!-- Left navbar links -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+      </ul>
+      <!-- Right navbar links -->
+      <ul class="navbar-nav ml-auto">
+        <!-- Notifications Dropdown Menu -->
+        <li class="nav-item dropdown">
+          <a class="nav-link" data-toggle="dropdown" href="#">
+            <img src="/static/dist/img/user_icon3.png" alt="User Avatar" class="img-size-35 mr-3 img-circle">
+          </a>
+             <div class="dropdown-menu dropdown-menu-right" style="padding:0 0 0 0!important;">
+            <div id="namecard" style=" background-color:#355E3B;height: 100px;width: 100%; text-align: center; padding: 20px;">
+              
+           <span style="color:#FFFFFF;font-weight:bold; font-size: 120%;"> {{.fullname1}}</span><br>
+          <span style="color:#FFFFFF;font-weight:600">{{.utype}}</span><br>
+          <span style="color:#FFFFFF;font-weight:500">{{.clustername}}</span>
+            </div>
+              <a href="/ChangePassword" class="dropdown-item navbaricon">
+<!--                <i id="change-pwd" class="fas fa-key mr-2"></i> -->
+                <img src="/static/dist/img/change_pwd_icon.png" alt="User Avatar" class="img-size-35 mr-3 img-circle">
+                <span id="change-pwd" style="font-weight:bold"></span>
+              </a>
+<!--                <hr> -->
+<!--              <div class="dropdown-divider"></div>-->
+              <a href="/Logout" class="dropdown-item navbaricon">
+<!--                <i id="lout" class="fas fas fa-arrow-alt-circle-left"></i> -->
+                 <img src="/static/dist/img/logout_icon.png" alt="User Avatar" class="img-size-35 mr-3 img-circle">
+                 <span id="lout" style="font-weight:bold"></span>
+              </a>
+          </div>
+        </li>
+      </ul>
+    </nav>
+    <!-- /.navbar -->
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar elevation-4 sidebar-light-green">
+      <!-- Brand Logo -->
+      <a href="/Dashboard" class="brand-link navbar-light" style="padding-bottom: 35px;">
+        <img src="/static/dist/img/logo.png" alt="AdminLTE Logo" class="brand-image"
+          style="opacity: .8">
+          <!--<img src="/static/dist/img/logo-s.png" alt="AdminLTE Logo" class="brand-image-small"
+          style="opacity: .8">-->
+        <!-- <span class="brand-text font-weight-light">Asset Monitoring</span> -->
+      </a>
+        {{if eq .utype "HOADMIN"}} {{template "default/sidebar.html" .}} {{else if eq .utype "USER"}} {{template "default/userSidebar.html" .}} {{else if eq .utype "CLUSTERMANAGER"}} {{template "default/clusteradminSidebar.html" .}} {{else if eq .utype "CLUSTEREXECUTIVE"}} {{template "default/clusterexecutiveSidebar.html" .}} {{else}} {{template "default/reportSidebar.html" .}} {{end}}
+      
+    </aside>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper content-bg-color">
+      <!-- Content Header (Page header) -->
+      <div class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1 id="placeorder" class="m-0 text-color-white">Place Order</h1>
+              </div><!-- /.col -->
+              <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                  <li class="breadcrumb-item"><a id="lihome" href="/Dashboard">Home</a></li>
+                  <li id="liplaceorder" class="breadcrumb-item active">Place Order</li>
+                </ol>
+                </div><!-- /.col -->
+                </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+              </div>
+              <!-- /.content-header -->
+              <form action="/CustomerOder/PlaceOrder" id="addUsersValidate" method="post">
+                <!-- Main content -->
+                <section class="content">
+                  <div class="container-fluid">
+                    <!-- Small boxes (Stat box) -->
+                    <div class="row">
+                      <div class="col-12">
+                        <!-- Default box -->
+                        <div class="card card-bg-color">
+                          <div class="card-header">
+                            <h3 class="card-title text-color-white"> Place Order</h3>
+                          </div>
+                          <div class="card-body ">
+                            <div class="row">
+                            
+                             <!-- <div class="col-sm-4"> -->
+                                  <!-- text input -->
+                                  <!-- <div class="form-group">
+                                    <label id="selectcstmr" class="text-color-white required">Select Customer </label>
+                                   <select class="form-control" id="select_Customer" name="select_Customer">
+                                 <option id="select" value="">-- select --</option>
+                                {{range $key, $val := .Dis2.Fields2}}
+                                <option value="{{$val.Id}}|{{$val.Mobile}}">{{$val.Mobile}} - {{$val.Name}} -  {{$val.Cluster}}</option>
+                                {{end}}
+                                  <input type="hidden" id="input_customer_id" name="customer_id">
+<input type="hidden" id="input_mobile" name="mobile">
+                            </select>
+                                  </div>
+                                </div> -->
+
+                                <div class="col-sm-4">
+  <div class="form-group">
+    <label id="selectcstmr" class="text-color-white required">Select Customer </label>
+    <select class="form-control" id="select_Customer" name="select_Customer">
+      <option id="select" value="">-- select --</option>
+      {{range $key, $val := .Dis2.Fields2}}
+        <option value="{{$val.Mobile}}"
+                data-customerid="{{$val.Id}}"
+                data-name="{{$val.Name}}"
+                data-cluster="{{$val.Cluster}}"
+
+                data-address1="{{$val.Address1}}"
+                data-address2="{{$val.Address2}}"
+                data-city="{{$val.City}}"
+                data-state="{{$val.State}}"
+                data-zipcode="{{$val.Zipcode}}">
+          {{$val.Mobile}} - {{$val.Name}} - {{$val.Cluster}}
+        </option>
+      {{end}}
+    </select>
+  </div>
+</div>
+
+
+<!-- Delivery Address Section -->
+<div class="col-sm-12 mt-3">
+  <div class="card border-success shadow-sm">
+    <div class="card-header bg-success text-white py-2">
+      <strong><i class="fas fa-map-marker-alt"></i> Delivery Address</strong>
+    </div>
+
+    <div class="card-body" style="background:#f8f9fa;">
+      
+      <!-- Selected Delivery Address (Preview) -->
+      <label class="font-weight-bold text-dark">Selected Delivery Address</label>
+      <textarea id="delivery_to" 
+                name="delivery_to"
+                class="form-control mb-3" 
+                rows="2" 
+                readonly
+                placeholder="Select a customer to load addresses..."></textarea>
+
+      <!-- Hidden input to send selected address ID -->
+      <input type="hidden" id="selected_address_id" name="select_Address">
+
+      <!-- MAIN ADDRESS -->
+      <!-- <div class="address-section mb-2">
+        <label class="text-primary font-weight-bold">
+          <i class="fas fa-home"></i> Main Address
+        </label>
+        <div id="main_address_card" class="border p-2 rounded bg-white">
+          <p class="text-muted mb-0">No customer selected.</p>
+        </div>
+      </div> -->
+
+      <!-- Additional Addresses -->
+      <div class="address-section mt-3">
+        <label class="text-primary font-weight-bold">
+          <i class="fas fa-map"></i> Additional Addresses
+        </label>
+        <div id="change_address_list" 
+             class="border rounded p-2 bg-white" 
+             style="max-height:180px; overflow-y:auto;">
+          <p class="text-muted mb-0">Select a customer to load addresses.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+                            
+
+                                <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label class="ot text-color-white required">Select Order Type </label>
+                                    <select id="ordertype" class="form-control " id="input_order_type" name="input_order_type" >
+                                      <option class="plsselect" value="">-- Please Select --</option>
+                                      <option  class="s" value="SUBSCRIPTION">SUBSCRIPTION</option>
+                                      <option class="o" value="ONETIME">ONETIME</option>
+                                     
+                                    </select>
+                                  </div>
+                                </div>
+<!--                               <div id="nonbulkkg" class="col-sm-4">-->
+                                  <!-- text input -->
+                                  <!--<div class="form-group">
+                                    <label id="many" class="text-color-white required">Select How Many Packets</label>
+                                    <select class="form-control " id="input_howmany_packets" name="input_howmany_packets" >
+                                      <option class="plsselect" value="">-- Please Select --</option>
+                                      <option id="1" value="1">1</option>
+                                      <option id="2" value="2">2</option>
+                                      <option id="3" value="3">3</option>
+                                      <option id="4" value="4">4</option>
+                                      <option id="5" value="5">5</option>
+                                     
+                                    </select>
+                                  </div>-->
+<!--                                  </div>-->
+                                  <div id="nonbulkkg" class="col-sm-4">
+                                  <div class="form-group">
+                                    <label id="many" class="text-color-white required">Enter How Many Packets</label>         
+                                  <input type="number" onKeyPress="if(this.value.length==3) return false;" title="Maximum 3 digits allowed" class="form-control text-ph-backgroud-color" placeholder="Enter How Many Packets" name="input_howmany_packets" id="input_howmany_packets" />
+                                  </div>
+                                </div>
+                                
+                                <div class="bulkkg" class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="quantityminimum" class="text-color-white required">Quantity (Minimum Quantity is 10 KG)</label>
+                                    <input type="number"  class="form-control text-ph-backgroud-color" placeholder="Enter Quantity" name="input_qty" id="input_qty" />
+                                  </div>
+                                </div>
+                              
+                               <div class="col-sm-4 SUBSCRIPTION hidden">
+                                <!-- text input -->
+                                <div class="form-group">
+                                  <label id="deliveryfromdate" class="text-color-white required">Delivery From Date</label>
+                                 <input type="date" class="form-control" placeholder="Enter Delivery Dates" name="input_deliveryfrom_date" id="txtDate" />
+                                 <!-- <input type="date" id="txtDate" />-->
+
+                                </div>
+                              </div>
+                              <div class="col-sm-4 SUBSCRIPTION hidden">
+                                <!-- text input -->
+                                <div class="form-group">
+                                  <label id="deliverytodate" class="text-color-white required">Delivery To Date</label>
+                                  <input type="date" class="form-control" placeholder="Enter Delivery Dates" name="input_deliveryto_date" id="txtDate1" />
+                                <!--  <input type="date" id="txtDate" />-->
+
+                                </div>
+                              </div>
+                               <div class="col-sm-4 SUBSCRIPTION hidden">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="repeat" class="text-color-white required">Repeat Order</label>
+                                    <select class="form-control " id="input_repeat_order" name="input_repeat_order" >
+                                      <option class="plsselect" value="">-- Please Select --</option>
+                                      <option id="yes" value="YES">Yes</option>
+                                      <option id="no" value="NO">No</option>
+                                     
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="deliverytime" class="text-color-white required">Select Delivery Timings</label>
+                                    <select class="form-control " id="input_Delivery_Time" name="input_Delivery_Time" >
+                                      <option class="plsselect" value="">-- Please Select --</option>
+                                      <option id="t1" value="6AM-8AM">6AM-8AM</option>
+<!--                                      <option id="t2" value="8AM-10AM">8AM-10AM</option>-->
+                                      <option id="t3" value="6PM-8PM">6PM-8PM</option>
+<!--                                      <option id="t4" value="8PM-10PM">8PM-10PM</option>-->
+                                     
+                                     
+                                    </select>
+                                  </div>
+                                </div>
+                               <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="purchase" class="text-color-white required">Select Purchase Type</label>
+                                    <select class="form-control " id="input_purchage_type" name="input_purchage_type" >
+                                      <option class="plsselect" value="">-- Please Select --</option>
+                                      <option id="krishivala" value="KRISHIVALA">Krishivala</option>
+                                    </select>
+                                   
+                                  </div>
+                                </div>
+                                 <!--<div class="col-sm-4">-->
+                                  <!-- text input -->
+                                  <!--<div class="form-group">
+                                    <label id="pstatus" class="text-color-white required">Payment Status</label>
+                                  <select class="form-control " id="input_payment_status" name="input_payment_status">
+                                      <option class="plsselect" value="">-- Please Select --</option>
+                                      <option id="paymentpen" value="PENDING">PAYMENT PENDING</option>
+                                    </select>
+                                   
+                                  </div>
+                                </div>-->
+                                 <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="ptype" class="text-color-white required">Payment Type</label>
+                                  <select class="form-control " id="input_payment_type" name="input_payment_type">
+                                      <option class="plsselect" value="">-- Please Select --</option>
+                                      <option id="cash" value="CASH">CASH ON DELIVERY</option>
+<!--                                      <option id="online" value="ONLINE">ONLINE</option>-->
+                                    </select>
+                                   
+                                  </div>
+                                </div>
+                                
+                                
+                                  
+                                 <!-- <div class="col-sm-12">  </div>-->
+                                <hr style="width:95%;text-align:left;margin-left:0;background-color:black">
+                                <button  type="button" class="show_hide btn" id="btn_verify_mobile">+</button>
+                                </hr>
+                              
+                              
+                              
+                                
+                                <!-- <div class="slidingDiv">-->
+                               <div  class="slidingDiv col-sm-4">
+                                <!-- text input -->
+                                <div class="form-group">
+                                 <label id="catname" class="text-color-white">Category Name</label>
+                                  <input type="text" class="form-control text-ph-backgroud-color" placeholder="Enter Category Name" name="input_category_name" id="input_category_name" value="{{.CategoryName}}" readonly />
+                                </div>
+                              </div>
+                              <div  class="slidingDiv col-sm-4">
+                                <!-- text input -->
+                                <div class="form-group">
+                                  <label id="subcatname" class="text-color-white">Sub Category Name</label>
+                                  <input type="text" class="form-control text-ph-backgroud-color" placeholder="Enter Sub Category Name" name="input_subcategory_name" id="input_subcategory_name" value="{{.SubCategoryName}}" readonly />
+                                </div>
+                              </div>
+                              
+                               <div class="slidingDiv col-sm-4">
+                                 
+                                  <div class="form-group">
+                                    <label id="pdctsku" class="text-color-white required">Product SKU</label>
+                                    <input type="text" class="form-control text-ph-backgroud-color" placeholder="Enter Product Image URL" name="input_product_sku" id="input_product_sku"  value="{{.ProductSKU}}" readonly/>
+                                  </div>
+                                </div>
+                                
+                                <div class="slidingDiv col-sm-4">
+                                 
+                                  <div class="form-group">
+                                    <label id="pdctid" class="text-color-white required">Product ID</label>
+                                    <input type="number" class="form-control text-ph-backgroud-color" placeholder="Enter Product Image URL" name="input_product_id" id="input_product_id"  value="{{.ProductID}}" readonly/>
+                                  </div>
+                                </div>
+                                
+                                <div class="slidingDiv col-sm-4">
+                                 
+                                  <div class="form-group">
+                                    <label id="clstrid" class="text-color-white required">Cluster ID</label>
+                                    <input type="number" class="form-control text-ph-backgroud-color" placeholder="Enter Product Image URL" name="input_cluster_id" id="input_cluster_id"  value="{{.ClusterID}}" readonly/>
+                                  </div>
+                                </div>
+                              
+                              <div class="slidingDiv col-sm-4">
+                                <!-- text input -->
+                                <div class="form-group">
+                                  <label id="pdctname" class="text-color-white">Product Name</label>
+                                  <input type="text" class="form-control text-ph-backgroud-color" placeholder="Enter Product Name" name="input_product_name" id="input_product_name" value="{{.ProductName}}" readonly />
+                                </div>
+                              </div>
+                              
+                              
+                                
+                                <div class="slidingDiv col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="qtype" class="text-color-white required">Quality Type</label>
+                                    <input type="text" class="form-control text-ph-backgroud-color" placeholder="Enter Product Name" name="input_QualityType" id="input_QualityType" value="{{.ProductQualityType}}" readonly/>
+                                   
+                                  </div>
+                                </div>
+                               
+                                
+                                <div  class="slidingDiv col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="qmes" class="text-color-white required">Quality Measure</label>
+                                      <input type="text" class="form-control text-ph-backgroud-color" placeholder="Enter Product Name" name="input_QualityMeasure" id="input_QualityMeasure" value="{{.Product_QualityMeasure}}" readonly/>
+                                       </div>
+                                </div>
+                               
+                                <div class="slidingDiv col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="shelf" class="text-color-white required">Shel Life(in Days)</label>
+                                    <input type="text" class="form-control text-ph-backgroud-color" placeholder="Enter Shel Life(In Minutes)" name="input_ShelLife" id="input_ShelLife" value="{{.ShelLife}}" readonly />
+                                  </div>
+                                </div>
+                                <div class="slidingDiv col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="pkcgtype" class="text-color-white required">Package Type</label>
+                                    
+                                      <input type="text" class="form-control text-ph-backgroud-color" placeholder="Enter Shel Life(In Minutes)" name="input_PackageType" id="input_PackageType" value="{{.PackageType}}" readonly />
+                                
+                                  </div>
+                                </div>
+                                
+                               
+                                
+                                <div class="slidingDiv col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="pkcgqty" class="text-color-white required">PackageQty (of units)</label>
+                                    <input type="text" class="form-control text-ph-backgroud-color" placeholder="Enter PackageQty (of units)" name="input_PackageQty" id="input_PackageQty" value="{{.PackageQty}}" readonly />
+                                  </div>
+                                </div>
+                                
+                                  <div class="slidingDiv col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="pdctqty" class="text-color-white required">Product Quantity</label>
+                                    <input type="text" class="form-control text-ph-backgroud-color" placeholder="Enter Product Name" name="input_product_qty" id="input_product_qty" value="{{.ProductQty}}" readonly/>
+                                    
+                                  </div>
+                                </div>
+                                <!--<div class="col-sm-4">
+                                 
+                                  <div class="form-group">
+                                    <label class="text-color-white required">Product Origin</label>
+                                    <input type="text" pattern="[a-zA-Z]+" class="form-control text-ph-backgroud-color" placeholder="Enter Product Origin" name="input_ProductOrigin" id="input_ProductOrigin" />
+                                  </div>
+                                </div>
+                                
+                                <div class="col-sm-4">
+                              
+                                  <div class="form-group">
+                                    <label class="text-color-white required">Product Description</label>
+                                    <input type="text"  class="form-control text-ph-backgroud-color" placeholder="Enter Product Description" name="input_product_desc" id="input_product_desc" />
+                                  </div>
+                                </div>-->
+                                <!-- <div class="col-sm-4">
+                                 
+                                  <div class="form-group">
+                                    <label class="text-color-white required">Krishivala Selling Price</label>
+                                    <input type="number" class="form-control text-ph-backgroud-color" placeholder="Enter Krishivala Selling Price" name="input_krishivala_selling_price" id="input_krishivala_selling_price" />
+                                  </div>
+                                </div>-->
+                                <div class="slidingDiv col-sm-4">
+                                  
+                                  <div class="form-group">
+                                    <label id="kbp" class="text-color-white required">Krishivala Buying Price</label>
+                                    <input type="number" class="form-control text-ph-backgroud-color" placeholder="Enter Krishivala Buying Price" name="input_krishivala_buying_price" id="input_krishivala_buying_price"  value ="{{.Krishivala_BuyingPrice}}" readonly/>
+                                  </div>
+                                </div>
+                                
+                                 
+                                <div class="slidingDiv col-sm-4">
+                                  
+                                  <div class="form-group">
+                                    <label id="clstrname" class="text-color-white required">Cluster Name </label>
+                                    <input type="text" class="form-control text-ph-backgroud-color" placeholder="Enter Cluster Name" name="input_cluster_name" id="input_cluster_name" value="{{.Cluster_Name}}" readonly />
+                                  </div>
+                                </div>
+                               
+                             
+                                
+                                
+                                 <div class="slidingDiv col-sm-4">
+                                  
+                                  <div class="form-group">
+                                    <label id="clstrsp" class="text-color-white required">Cluster Selling Price</label>
+                                    <input type="number" class="form-control text-ph-backgroud-color" placeholder="Enter Krishivala Buying Price" name="input_cluster_selling_price" id="input_cluster_selling_price"  value ="{{.Cluster_SellingPrice}}" readonly/>
+                                  </div>
+                                </div>
+                                
+                                 <div class="slidingDiv col-sm-4">
+                                <!-- text input -->
+                                <div class="form-group">
+                                  <label id="clstrsuppcrg" class="text-color-white required">Cluster Supply Charge</label>
+                                  <input  class="form-control text-ph-backgroud-color" placeholder="Enter Last Name" name="cluster_supply_charge" id="cluster_supply_charge" value="{{.ClusterSupplyCharge}}" readonly />
+                                </div>
+                              </div>
+                              
+                              <div class="slidingDiv col-sm-4">
+                                <!-- text input -->
+                                <div class="form-group">
+                                  <label id="clstrpkcgcrg" class="text-color-white required">Cluster Packaging Charge</label>
+                                  <input  class="form-control text-ph-backgroud-color" placeholder="Enter Last Name" name="cluster_packaging_charge" id="cluster_packaging_charge" value="{{.ClusterPackagingCharge}}" readonly />
+                                </div>
+                              </div>
+                              
+                              <div class="slidingDiv col-sm-4">
+                                <!-- text input -->
+                                <div class="form-group">
+                                  <label id="clstrbkcrg" class="text-color-white required">Cluster Bank Charge</label>
+                                  <input  class="form-control text-ph-backgroud-color" placeholder="Enter Last Name" name="cluster_bank_charge" id="cluster_bank_charge" value="{{.ClusterBankCharge}}" readonly />
+                                </div>
+                              </div>
+                              
+                               <div class="slidingDiv col-sm-4">
+                                <!-- text input -->
+                                <div class="form-group">
+                                  <label id="clstrdisc" class="text-color-white required">Cluster Discount</label>
+                                  <input  class="form-control text-ph-backgroud-color" placeholder="Enter Last Name" name="cluster_discount" id="cluster_discount" value="{{.ClusterDiscount}}" readonly />
+                                </div>
+                              </div>
+                              
+                             
+                              
+                               <div id="bulkkg2" class="slidingDiv col-sm-4">
+                                <!-- text input -->
+                                <div class="form-group">
+                                  <label id="deliverydisc" class="text-color-white required">Delivery Discount</label>
+                                  <input  class="form-control text-ph-backgroud-color" placeholder="Enter Delivery Discount" name="delivery_discount" id="delivery_discount" value="{{.DeliveryDiscount}}" readonly />
+                                </div>
+                              </div>
+                              
+                            
+                              
+                                <div class="slidingDiv col-sm-4">
+                                <!-- text input -->
+                                <div class="form-group">
+                                  <label id="cgst" class="text-color-white required">krishivala CGST Charge</label>
+                                  <input  class="form-control text-ph-backgroud-color" placeholder="Enter Last Name" name="krishivala_CGST_charge" id="krishivala_CGST_charge" value="{{.krishivala_CGST_charge}}" readonly />
+                                </div>
+                              </div>
+                              
+                              <div class="slidingDiv col-sm-4">
+                                <!-- text input -->
+                                <div class="form-group">
+                                  <label id="sgst" class="text-color-white required">krishivala SGST Charge</label>
+                                  <input  class="form-control text-ph-backgroud-color" placeholder="Enter Last Name" name="krishivala_SGST_charge" id="krishivala_SGST_charge" value="{{.krishivala_SGST_charge}}" readonly />
+                                </div>
+                              </div>
+                              
+                              <div class="slidingDiv col-sm-4">
+                                <!-- text input -->
+                                <div class="form-group">
+                                  <label id="cess" class="text-color-white required">krishivala CESS Charge</label>
+                                  <input  class="form-control text-ph-backgroud-color" placeholder="Enter Last Name" name="krishivala_CESS_charge" id="krishivala_CESS_charge" value="{{.krishivala_CESS_charge}}" readonly />
+                                </div>
+                              </div>
+                              
+                               <div class="slidingDiv col-sm-4">
+                                <!-- text input -->
+                                <div class="form-group">
+                                  <label id="othertax" class="text-color-white required">krishivala OtherTAX Charge</label>
+                                  <input  class="form-control text-ph-backgroud-color" placeholder="Enter Last Name" name="krishivala_OtherTAX_charge" id="krishivala_OtherTAX_charge" value="{{.krishivala_OtherTAX_charge}}" readonly />
+                                </div>
+                              </div>
+                             
+                              
+                            
+                            </div>
+                          </div>
+                          <div class="card-footer" style="text-align: center;">
+                            <button id="submit" type="submit" class="btn">Submit</button>
+                            <a href="/CustomerOder/CreateOrder"><button id="back" type="button" class="btn">Back</button></a>
+                          </div>
+                          
+                          
+                          <!-- /.card-footer-->
+                          <!-- /.card -->
+                        </div>
+                      </div>
+                      <!-- /.card -->
+                      <!-- /.row -->
+                      <!-- Main row -->
+                      <div class="row">
+                      </div>
+                      <!-- /.row (main row) -->
+                      </div><!-- /.container-fluid -->
+                    </section>
+                  </form>
+                  <!-- /.content -->
+                </div>
+                <!-- /.content-wrapper -->
+                <footer class="main-footer footer-bg-color">
+                  <strong>Copyright &copy; 2021.</strong>
+                  All rights reserved.
+                </footer>
+                <!-- Control Sidebar -->
+                <aside class="control-sidebar control-sidebar-dark">
+                  <!-- Control sidebar content goes here -->
+                </aside>
+                <!-- /.control-sidebar -->
+              </div>
+              <!-- ./wrapper -->
+              <!-- jQuery -->
+              <script src="../../static/plugins/jquery/jquery.min.js"></script>
+              <!-- jQuery UI 1.11.4 -->
+              <script src="../../static/plugins/jquery-ui/jquery-ui.min.js"></script>
+              <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+              <script>
+              $.widget.bridge('uibutton', $.ui.button)
+              </script>
+              <!-- Bootstrap 4 -->
+              <script src="../../static/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+              <script src="../../static/plugins/moment/moment.min.js"></script>
+              <script src="../../static/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+              <script type="text/javascript" src="../../static/plugins/duDialog-master/duDialog.js"></script>
+              <!-- validation -->
+              <script src="../../static/plugins/jquery-validation/jquery.validate.min.js"></script>
+              <script src="../../static/plugins/jquery-validation/additional-methods.min.js"></script>
+              <!-- AdminLTE App -->
+              <script src="../../static/dist/js/adminlte.js"></script>
+         
+              <script>
+              document.getElementById("customermanagement-menu").className += " menu-open";
+              document.getElementById("customermanagement-active").className += " active";
+              document.getElementById("createorder-active").className += " active";
+              </script>
+              <!-- change type -->
+              <script type="text/javascript">
+              var data = {{.DisplayMessage}};
+                if (data !== "") {
+                    new duDialog('', data, {
+                        okText: 'OK',
+                        callbacks: {
+                            okClick: function(){
+                                // Redirect to page after OK click
+                                window.location.href = "/CustomerOder/CreateOrder"; 
+                            }
+                        }
+                    });
+                }
+              </script>
+                        <script type="text/javascript">
+              $(function(){
+    var dtToday = new Date();
+    
+    var month = dtToday.getMonth() + 1;
+    var day = dtToday.getDate();
+    var year = dtToday.getFullYear();
+    if(month < 10)
+        month = '0' + month.toString();
+    if(day < 10)
+        day = '0' + day.toString();
+    
+    var minDate= year + '-' + month + '-' + day;
+   // var maxDate = year + '-' + month + '-' + day;
+    
+    $('#txtDate').attr('min', minDate);
+});
+</script>
+ 
+<script type="text/javascript">
+              $(function(){
+    var dtToday = new Date();
+    
+    var month = dtToday.getMonth() + 1;
+    var day = dtToday.getDate();
+    var year = dtToday.getFullYear();
+    if(month < 10)
+        month = '0' + month.toString();
+    if(day < 10)
+        day = '0' + day.toString();
+    
+    var minDate= year + '-' + month + '-' + day;
+   // var maxDate = year + '-' + month + '-' + day;
+    
+    $('#txtDate1').attr('min', minDate);
+});
+</script>
+              <script type="text/javascript">
+
+                $(document).ready(function() {
+                  
+                 var ProductQty= {{.ProductQty}};
+                if (ProductQty == "kg-bulk"){
+                  
+                  
+                   $(".s").hide();
+                  $("#nonbulkkg").hide();
+                  $(".bulkkg").show();
+                $("#bulkkg2").show();
+                  
+                  }else{
+                    
+                    $("#nonbulkkg").show();
+                  $(".bulkkg").hide();
+                     $("#bulkkg2").hide();
+                  }
+                  
+  $(".slidingDiv").hide();
+
+  $('.show_hide').click(function(e) {
+    $(".slidingDiv").slideToggle("fast");
+    var val = $(this).text() == "-" ? "+" : "-";
+    $(this).hide().text(val).fadeIn("fast");
+    e.preventDefault();
+  });
+});
+                  
+                $(document).ready(function () {
+                // alert(language)
+                var validationMsg = {};
+                validationMsg.select_Customer="Please select Customer";
+                validationMsg.input_howmany_packets="Please enter how many packets";
+                validationMsg.input_Delivery_Time = "Please Select Delivery Time";
+                validationMsg.input_deliveryfrom_date = "Please select delivery from date";
+                validationMsg.input_deliveryto_date = "Please select delivery to date"
+                validationMsg.input_repeat_order = "Please select repeat order";
+                validationMsg.input_purchage_type = "Please select purchase type";
+                 validationMsg.input_payment_type = "Please select Payment type";
+                 validationMsg.input_order_type = "Please select Order type";
+                $('#addUsersValidate').validate({
+                rules: {
+                select_Customer: {
+                required: true,
+                maxlength: 10
+                },
+                input_howmany_packets: {
+                required: true,
+                maxlength: 3
+                },
+                input_Delivery_Time: {
+                required: true,
+                maxlength: 10
+                },
+                input_deliveryfrom_date: {
+                //required: true,
+                maxlength: 10
+                },
+                input_deliveryto_date: {
+                //required: true,
+                maxlength: 10
+                },
+                input_repeat_order: {
+                //required: true,
+                maxlength: 10
+                },
+                input_purchage_type: {
+                required: true,
+                maxlength: 10
+                },
+                 input_payment_type: {
+                required: true
+             
+                },
+                 input_order_type: {
+                required: true
+              
+                },
+                },
+                messages: {
+                select_Customer: {
+                required: validationMsg.select_Customer,
+                },
+                input_howmany_packets: {
+                required: validationMsg.input_howmany_packets,
+                },
+                input_Delivery_Time: {
+                required: validationMsg.input_Delivery_Time,
+                },
+                input_deliveryfrom_date: {
+                required: validationMsg.input_deliveryfrom_date,
+                },
+                input_deliveryto_date: {
+                required: validationMsg.input_deliveryto_date,
+                },
+                input_repeat_order: {
+                required: validationMsg.input_repeat_order,
+                },
+                input_purchage_type: {
+                required: validationMsg.input_purchage_type,
+                },  
+                 input_payment_type: {
+                required: validationMsg.input_payment_type,
+                },   
+                 input_order_type: {
+                required: validationMsg.input_order_type,
+                },                 
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+                },
+                highlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+                }
+                });
+                });
+                </script>
+                
+         </script>
+                <script type="text/javascript"> 
+
+  
+                $(window).on("load", function() 
+                {
+                      var x = {{.language}};
+                      if (x == "EN") 
+                {
+                    $("#change-pwd").text(" Change Password");
+                    $("#lout").text(" Logout");
+                    $("#placeorder").text("Place Order");
+                    $("#lihome").text("Home");
+                    $("#liplaceorder").text("Place Order");
+                    $("#catname").text("Category Name");
+                    $("#input_category_name").attr("placeholder","Enter Category Name");
+                    $("#subcatname").text("Sub Category Name");
+                    $("#input_subcategory_name").attr("placeholder","Enter Sub Category Name");
+                    $("#pdctsku").text("Product SKU");
+                    $("#input_product_sku").attr("placeholder","Enter Product SKU");
+                    $("#pdctid").text("Product ID");
+                    $("#input_product_id").attr("placeholder","Enter Product ID");
+                    $("#clstrid").text("Cluster ID");
+                    $("#input_cluster_id").attr("placeholder","Enter Cluster ID");
+                    $("#pdctname").text("Product Name");
+                    $("#input_product_name").attr("placeholder","Enter Product Name");
+                    $("#qmes").text("Quality Measure");
+                    $("#input_QualityMeasure").attr("placeholder","Enter Quality Measure");
+                    $("#clstrsuppcrg").text("Cluster Supply Charge");
+                    $("#shelf").text("Shel Life(in Days)");
+                    $("#input_ShelLife").attr("placeholder","Enter Shel Life(In Days)");
+                    $("#pkcgtype").text("Package Type");
+                    $("#input_ShelLife").attr("placeholder","Enter Package type");
+                    $("#pkcgqty").text("PackageQty (of units)");
+                    $("#input_PackageQty").attr("placeholder","Enter PackageQty (of units)");
+                    $("#pdctqty").text("Product Quantity");
+                    $("#input_product_qty").attr("placeholder","Enter Product Quantity");
+                    $("#kbp").text("Krishivala Buying Price");
+                    $("#input_krishivala_buying_price").attr("placeholder","Enter Krishivala Buying Price");
+                    $("#clstrname").text("Cluster Name");
+                    $("#input_cluster_name").attr("placeholder","Enter Cluster Name");
+                    $("#clstrsp").text("Cluster Selling Price");
+                    $("#qtype").text("Quality Type");
+                    $("#quantityminimum").text("Quantity (Minimum Quantity is 10 KG) ");
+                    $("#input_qty").attr("placeholder","Enter Quantity");
+                    $("#input_cluster_selling_price").attr("placeholder","Enter Cluster Selling Price");
+                    $("#clstrpkcgcrg").text("Cluster Packaging Charge");
+                    $("#cluster_packaging_charge").attr("placeholder","Enter Cluster Packaging Charge");
+                    $("#clstrbkcrg").text("Cluster Bank Charge");
+                    $("#cluster_bank_charge").attr("placeholder","Enter Cluster Bank Charge");
+                    $("#clstrdisc").text("Cluster Discount");
+                    $("#cluster_discount").attr("placeholder","Enter Cluster Discount");
+                    
+                    $("#cgst").text("Krishivala CGST Charge");
+                    $("#krishivala_CGST_charge").attr("placeholder","Enter Krishivala CGST Charge");
+                    $("#sgst").text("Krishivala SGST Charge");
+                    $("#krishivala_SGST_charge").attr("placeholder","Enter Krishivala SGST Charge");
+                    $("#cess").text("Krishivala CESS Charge");
+                    $("#krishivala_CESS_charge").attr("placeholder","Enter Krishivala CESS Charge");
+                    $("#othertax").text("Krishivala OtherTAX Charge");
+                    $("#krishivala_OtherTAX_charge").attr("placeholder","Enter Krishivala OtherTAX Charge");
+                    $("#selectcstmr").text("Select Customer");
+                 
+                    $("#select").text("-- select --");
+                   
+                    $("#many").text("Enter How Many Packets");
+                    $("#input_howmany_packets").attr("placeholder","Enter How Many Packets");
+                    $("#1").text("1");
+                    $("#2").text("2");
+                    $("#3").text("3");
+                    $("#4").text("4");
+                    $("#5").text("5");
+                    $("#deliverytime").text("Select Delivery Timings");
+                    $("#t1").text("6AM-8AM");
+                    $("#t2").text("8AM-10AM");
+                    $("#t3").text("6PM-8PM");
+                    $("#t4").text("8PM-10PM");
+                    $("#deliveryfromdate").text("Delivery From Date");
+                    $("#txtDate").attr("placeholder","Enter Delivery From Date");
+                    $("#deliverytodate").text("Delivery To Date");
+                    $("#txtDate1").attr("placeholder","Enter Delivery To Date");
+                    $("#repeat").text("Repeat Order");
+                    $("#yes").text("Yes");
+                    $("#no").text("No");
+                    $("#purchase").text("Select Purchase Type");
+                    $("#krishivala").text("Krishivala");
+                    $("#submit").text("Submit");
+                    $("#back").text("Back");
+                    $(".plsselect").text("-- Please Select --");
+                     $("#pstatus").text("Payment Status");
+                    $("#paymentpen").text("PAYMENT PENDING");
+                    $("#ptype").text("Payment Type");
+                    $("#cash").text("CASH ON DELIVERY");
+                     $("#online").text("ONLINE");
+                    $(".ot").text("Select Order Type ");
+                    $(".s").text("SUBSCRIPTION");
+                     $(".o").text("ONE-TIME");
+                    $("#deliverydisc").text("Delivery Discount");
+                    $("#delivery_discount").attr("placeholder","Enter Delivery Discount");
+                     
+                    }
+                  
+                  else if (x == "TN")  
+                  
+                  {
+                    $("#change-pwd").text("పాస్‌వర్డ్ మార్చండి");
+                    $("#lout").text("లాగ్అవుట్");
+                    $("#placeorder").text("ఆర్డర్ ఉంచండి");
+                    $("#lihome").text("హోమ్");
+                    $("#liplaceorder").text("ఆర్డర్ ఉంచండి");
+                    $("#catname").text("వర్గం పేరు");
+                    $("#input_category_name").attr("placeholder","వర్గం పేరు నమోదు చేయండి");
+                    $("#subcatname").text("ఉప వర్గం పేరు");
+                    $("#input_subcategory_name").attr("placeholder","ఉప వర్గం పేరును నమోదు చేయండి");
+                    $("#pdctsku").text("స్టాక్ కీపింగ్ యూనిట్ ఉత్పత్తి");
+                    $("#input_product_sku").attr("placeholder","ఉత్పత్తి స్టాక్ కీపింగ్ యూనిట్");
+                    $("#pdctid").text("ఉత్పత్తి ID");
+                    $("#input_product_id").attr("placeholder","ఉత్పత్తి IDని నమోదు చేయండి");
+                    $("#clstrid").text("క్లస్టర్ ID");
+                    $("#input_cluster_id").attr("placeholder","క్లస్టర్ IDని నమోదు చేయండి");
+                    $("#pdctname").text("ఉత్పత్తి పేరు");
+                    $("#input_product_name").attr("placeholder","ఉత్పత్తి పేరును నమోదు చేయండి");
+                    $("#qmes").text("నాణ్యత కొలత");
+                    $("#input_QualityMeasure").attr("placeholder","నాణ్యత కొలత నమోదు చేయండి");
+                    $("#shelf").text("షెల్ లైఫ్ (రోజుల్లో)");
+                    $("#input_ShelLife").attr("placeholder","షెల్ లైఫ్‌ని నమోదు చేయండి(రోజుల్లో)");
+                    $("#pkcgtype").text("ప్యాకేజీ రకం");
+                    $("#input_ShelLife").attr("placeholder","ప్యాకేజీ రకాన్ని నమోదు చేయండి");
+                    $("#pkcgqty").text("ప్యాకేజీ పరిమాణం (యూనిట్లు)");
+                    $("#input_PackageQty").attr("placeholder","ప్యాకేజీ పరిమాణాన్ని నమోదు చేయండి (యూనిట్ల)");
+                    $("#pdctqty").text("ఉత్పత్తి పరిమాణం");
+                    $("#clstrsuppcrg").text("క్లస్టర్ సరఫరా ఛార్జ్");
+                    $("#input_product_qty").attr("placeholder","(ఉత్పత్తి పరిమాణాన్ని నమోదు చేయండి");
+                    $("#kbp").text("కృషివాలా కొనుగోలు ధర");
+                    $("#input_krishivala_buying_price").attr("placeholder","కృషివాలా కొనుగోలు ధరను నమోదు చేయండి");
+                    $("#clstrname").text("క్లస్టర్ పేరు");
+                     $("#qtype").text("నాణ్యత రకం");
+                    $("#quantityminimum").text("పరిమాణం (కనీస పరిమాణం 10 కిలోలు) ");
+                    $("#input_qty").attr("placeholder","పరిమాణాన్ని నమోదు చేయండి");
+                    $("#input_cluster_name").attr("placeholder","క్లస్టర్ పేరును నమోదు చేయండి");
+                    $("#clstrsp").text("క్లస్టర్ విక్రయ ధర");
+                    $("#input_cluster_selling_price").attr("placeholder","క్లస్టర్ విక్రయ ధరను నమోదు చేయండి");
+                    $("#clstrpkcgcrg").text("క్లస్టర్ ప్యాకేజింగ్ ఛార్జ్");
+                    $("#cluster_packaging_charge").attr("placeholder","క్లస్టర్ ప్యాకేజింగ్ ఛార్జీని నమోదు చేయండి");
+                    $("#clstrbkcrg").text("క్లస్టర్ బ్యాంక్ ఛార్జ్");
+                    $("#cluster_bank_charge").attr("placeholder","క్లస్టర్ బ్యాంక్ ఛార్జీని నమోదు చేయండి");
+                    $("#clstrdisc").text("క్లస్టర్ తగ్గింపు");
+                    $("#cluster_discount").attr("placeholder","క్లస్టర్ తగ్గింపును నమోదు చేయండి");
+                    
+                    $("#cgst").text("కృషివాలా CGST ఛార్జ్");
+                    $("#krishivala_CGST_charge").attr("placeholder","కృషివాలా CGST ఛార్జీని నమోదు చేయండి");
+                    $("#sgst").text("కృషివాలా SGST ఛార్జ్");
+                    $("#krishivala_SGST_charge").attr("placeholder","కృషివాలా సెస్ ఛార్జీ");
+                    $("#cess").text("కృషివాలా సెస్ ఛార్జీ");
+                    $("#krishivala_CESS_charge").attr("placeholder","కృషివాలా సెస్ ఛార్జీని నమోదు చేయండి");
+                    $("#othertax").text("కృషివాలా అదర్‌టాక్స్ ఛార్జ్");
+                    $("#krishivala_OtherTAX_charge").attr("placeholder","కృషివాలా అదర్‌టాక్స్ ఛార్జీని నమోదు చేయండి");
+                    $("#selectcstmr").text("కస్టమర్‌ని ఎంచుకోండి");
+                 
+                    $("#select").text("-- ఎంచుకోండి --");
+                   
+                    $("#many").text("ఎన్ని ప్యాకెట్లు ఉన్నాయో నమోదు చేయండి");
+                    $("#input_howmany_packets").attr("placeholder","ఎన్ని ప్యాకెట్లు ఉన్నాయో నమోదు చేయండి");
+                    $("#1").text("1");
+                    $("#2").text("2");
+                    $("#3").text("3");
+                    $("#4").text("4");
+                    $("#5").text("5");
+                    $("#deliverytime").text("డెలివరీ సమయాలను ఎంచుకోండి");
+                    $("#t1").text("6AM-8AM");
+                    $("#t2").text("8AM-10AM");
+                    $("#t3").text("6PM-8PM");
+                    $("#t4").text("8PM-10PM");
+                    $("#deliveryfromdate").text("తేదీ నుండి డెలివరీ");
+                    $("#txtDate").attr("placeholder","తేదీ నుండి డెలివరీని నమోదు చేయండి");
+                    $("#deliverytodate").text("తేదీ వరకు డెలివరీ");
+                    $("#txtDate1").attr("placeholder","తేదీ వరకు డెలివరీని నమోదు చేయండి");
+                    $("#repeat").text("పునరావృతమయ్యే ఆర్డర్");
+                    $("#yes").text("అవును");
+                    $("#no").text("కాదు");
+                    $("#purchase").text("కొనుగోలు రకాన్ని ఎంచుకోండి");
+                    $("#krishivala").text("కృషివాలా");
+                    $("#submit").text("సమర్పించండి");
+                    $("#back").text("వెనుకకు");
+                    $(".plsselect").text("-- దయచేసి ఎంచుకోండి --");
+                      $("#pstatus").text("చెల్లింపు స్థితి");
+                      $("#paymentpen").text("చెల్లింపు పెండింగ్లో ఉంది");
+                      $("#ptype").text("చెల్లించు విధానము");
+                      $("#cash").text("వస్తువులు అందిన తరువాత నగదు చెల్లించడం");
+                      $("#online").text("ఆన్‌లైన్‌లో");
+                       $(".ot").text("ఆర్డర్ రకాన్ని ఎంచుకోండి ");
+                      $(".s").text("సబ్‌స్క్రిప్షన్");
+                       $(".o").text("ఒక్కసారి");
+                      $("#deliverydisc").text("డెలివరీ తగ్గింపు");
+                    $("#delivery_discount").attr("placeholder","డెలివరీ తగ్గింపును నమోదు చేయండి");
+                      
+                    
+                    }
+                    });
+                    
+              </script>
+                           <script type="text/javascript">
+              $(document).ready(function(){
+                $("#ordertype").change(function(){
+                  var name = $("#ordertype").val();
+                  $(".hidden").hide();
+                  $("."+name).show();
+                  
+                })
+              })
+              
+              </script>
+                    
+                <!-- <script type="text/javascript">
+// ------------- Start: Dynamic Delivery Timing Logic -------------------------
+// Dynamically shows delivery slots based on current time & selected order type
+// ---------------------------------------------------------------------------
+
+$(document).ready(function () {
+  // Define all possible delivery time slots with cutoff hours
+  const DELIVERY_SLOTS = {
+    "6AM-8AM": [6, 8],
+    "8AM-10AM": [8, 10],
+    "6PM-8PM": [18, 20],
+    "8PM-10PM": [20, 22]
+  };
+
+  // Function to get valid slots based on selected date
+  function getValidTimeSlots(selectedDate) {
+    const now = new Date();
+    const currentHour = now.getHours();
+    const selected = new Date(selectedDate);
+    const isToday = selected.toDateString() === now.toDateString();
+
+    // If future date → all slots available
+    if (!isToday) {
+      return Object.keys(DELIVERY_SLOTS);
+    }
+
+    // For today → only slots whose end time > current hour
+    const validSlots = Object.entries(DELIVERY_SLOTS)
+      .filter(([_, [start, end]]) => end > currentHour)
+      .map(([slot]) => slot);
+
+    return validSlots;
+  }
+
+  // Function to update dropdown based on valid slots
+  function updateDeliveryTimeOptions(selectedDate, showAlert = false) {
+    const slots = getValidTimeSlots(selectedDate);
+    const select = $("#input_Delivery_Time");
+    select.empty();
+
+    if (slots.length === 0) {
+      select.append('<option value="">No delivery slots available</option>');
+      select.prop("disabled", true);
+      // 🔔 Show alert only when triggered from order type or date selection
+      if (showAlert) {
+        alert("No delivery slots are available for today. Please select a future date.");
+      }
+    } else {
+      select.prop("disabled", false);
+      select.append('<option value="">-- Please Select --</option>');
+      slots.forEach(slot => {
+        select.append(`<option value="${slot}">${slot}</option>`);
+      });
+    }
+  }
+
+  // Event: when order type changes
+  $("#ordertype").on("change", function () {
+    const orderType = $(this).val();
+    const today = new Date().toISOString().split("T")[0];
+
+    if (orderType === "ONETIME") {
+      // For One-Time → set today's date & check slots
+      $("#txtDate").val(today);
+      $("#txtDate1").val(today);
+      updateDeliveryTimeOptions(today, true); // ✅ show alert only now
+    } 
+    else if (orderType === "SUBSCRIPTION") {
+      // For Subscription → check selected date (if any)
+      const selectedDate = $("#txtDate").val();
+      updateDeliveryTimeOptions(selectedDate || today, true);
+    }
+  });
+
+  // Event: when user changes date in subscription
+  $("#txtDate").on("change", function () {
+    const selectedDate = $(this).val();
+    const orderType = $("#ordertype").val();
+    if (orderType === "SUBSCRIPTION") {
+      updateDeliveryTimeOptions(selectedDate, true);
+    }
+  });
+});
+</script>-->
+
+<script>
+$(document).ready(function () {
+
+  // When customer is changed
+  $("#select_Customer").change(function () {
+
+    var $opt       = $(this).find(":selected");
+    var mobile     = $opt.val();
+    var customerID = $opt.data("customerid") || 0;
+
+    // Reset UI
+    $("#delivery_to").val("");
+    $("#selected_address_id").val("");
+    $("#change_address_list").html('<p class="text-muted mb-0">Loading addresses...</p>');
+
+    if (!mobile) {
+      $("#delivery_to").val("");
+      $("#change_address_list").html('<p class="text-muted mb-0">Select customer to load addresses.</p>');
+      return;
+    }
+
+    // Build MAIN fallback from <option>
+    var nameOpt    = $opt.data("name")     || "";
+    var a1Opt      = $opt.data("address1") || "";
+    var a2Opt      = $opt.data("address2") || "";
+    var cityOpt    = $opt.data("city")     || "";
+    var stateOpt   = $opt.data("state")    || "";
+    var pincodeOpt = $opt.data("zipcode")  || "";
+
+    var mainAddrPartsOpt = [];
+    if (nameOpt) mainAddrPartsOpt.push(nameOpt);
+    if (mobile) mainAddrPartsOpt.push(mobile);
+    if (a1Opt) mainAddrPartsOpt.push(a1Opt);
+    if (a2Opt) mainAddrPartsOpt.push(a2Opt);
+    if (cityOpt) mainAddrPartsOpt.push(cityOpt);
+    if (stateOpt) mainAddrPartsOpt.push(stateOpt);
+    if (pincodeOpt) mainAddrPartsOpt.push(pincodeOpt);
+
+    var mainAddrTextFromOption = mainAddrPartsOpt.join(", ");
+
+    // ---------------- AJAX -----------------
+    $.ajax({
+      url: "/CustomerOder/GetCustomerAdditionalAddress",
+      type: "POST",
+      dataType: "json",
+      data: {
+        mobile: mobile,
+        customer_id: customerID
+      },
+
+      success: function (response) {
+        console.log("Address Response:", response);
+
+        // ------------------------------
+        // 1) FIND DEFAULT ADDRESS
+        // ------------------------------
+        let defaultKey = null;
+
+        if (response.main_address && response.main_address.IsDefault == "1") {
+          defaultKey = "MAIN";
+        }
+
+        if (response.additional_list) {
+          response.additional_list.forEach(addr => {
+            if (addr.IsDefault == "1") {
+              defaultKey = addr.AddressID;  // default additional
+            }
+          });
+        }
+
+        // ------------------------------
+        // 2) BUILD MAIN ADDRESS TEXT
+        // ------------------------------
+        let mainAddrText = "";
+        let mainKey = "";
+
+        if (response.main_address) {
+          let m = response.main_address;
+          let parts = [];
+
+          if (m.Name) parts.push(m.Name);
+          if (m.Mobile) parts.push(m.Mobile);
+          if (m.Address1) parts.push(m.Address1);
+          if (m.Address2) parts.push(m.Address2);
+          if (m.City) parts.push(m.City);
+          if (m.State) parts.push(m.State);
+          if (m.Pincode) parts.push(m.Pincode);
+
+          mainAddrText = parts.join(", ");
+          mainKey = `${m.Address1}|${m.Address2}|${m.City}|${m.Pincode}`;
+        }
+
+        // Fallback to option values
+        if (!mainAddrText) {
+          mainAddrText = mainAddrTextFromOption;
+          mainKey = `${a1Opt}|${a2Opt}|${cityOpt}|${pincodeOpt}`;
+        }
+
+        // -------------------------------------------
+        // ⭐ 3) SET SELECTED DELIVERY ADDRESS CORRECTLY
+        // -------------------------------------------
+        let selectedDeliveryText = "";
+
+        // Case 1 → main address is default
+        if (defaultKey === "MAIN") {
+          selectedDeliveryText = mainAddrText;
+          $("#selected_address_id").val("");
+        }
+
+        // Case 2 → additional address is default
+        else if (defaultKey !== null) {
+          let d = response.additional_list?.find(a => a.AddressID == defaultKey);
+          if (d) {
+            let parts = [];
+            parts.push(d.Name);
+            parts.push(d.Mobile);
+            parts.push(d.Line1);
+            parts.push(d.Line2);
+            parts.push(d.City);
+            parts.push(d.State);
+            parts.push(d.Pincode);
+            selectedDeliveryText = parts.join(", ");
+
+            $("#selected_address_id").val(defaultKey);
+          }
+        }
+
+        // Case 3 → no default found → use main address
+        if (!selectedDeliveryText) {
+          selectedDeliveryText = mainAddrText;
+          $("#selected_address_id").val("");
+        }
+
+        // Update textarea
+        $("#delivery_to").val(selectedDeliveryText);
+        $("#delivery_to").data("main-address", mainAddrText);
+
+        // ------------------------------
+        // 4) BUILD RADIO LIST HTML
+        // ------------------------------
+        let html = "";
+
+        // MAIN ADDRESS radio
+        let mainLabel = mainAddrText;
+        if (defaultKey === "MAIN") {
+          mainLabel += " <span class='badge badge-success'>Default</span>";
+        }
+
+        html += `
+          <div class="custom-control custom-radio mb-1">
+            <input type="radio" class="custom-control-input change-address-radio"
+                   name="change_address" id="addr_main" value=""
+                   ${defaultKey === "MAIN" ? "checked" : ""}>
+            <label class="custom-control-label" for="addr_main">${mainLabel}</label>
+          </div>
+        `;
+
+        // ADDITIONAL ADDRESSES
+        if (response.additional_list && response.additional_list.length > 0) {
+
+          response.additional_list.forEach(addr => {
+            if (!addr || addr.Status !== "ACTIVE") return;
+
+            let id = addr.AddressID;
+            let line1 = addr.Line1 || "";
+            let line2 = addr.Line2 || "";
+            let city = addr.City || "";
+            let state = addr.State || "";
+            let pincode = addr.Pincode || "";
+
+            let parts = [];
+            if (addr.Name) parts.push(addr.Name);
+            if (addr.Mobile) parts.push(addr.Mobile);
+            if (line1) parts.push(line1);
+            if (line2) parts.push(line2);
+            if (city) parts.push(city);
+            if (state) parts.push(state);
+            if (pincode) parts.push(pincode);
+
+            let label = parts.join(", ");
+
+            if (defaultKey == id) {
+              label += " <span class='badge badge-success'>Default</span>";
+            }
+
+            html += `
+              <div class="custom-control custom-radio mb-1">
+                <input type="radio" class="custom-control-input change-address-radio"
+                       name="change_address" id="addr_${id}" value="${id}"
+                       ${defaultKey == id ? "checked" : ""}>
+                <label class="custom-control-label" for="addr_${id}">
+                  ${label}
+                </label>
+              </div>
+            `;
+          });
+        }
+
+        $("#change_address_list").html(html);
+      },
+
+      error: function () {
+        $("#change_address_list").html('<p class="text-danger mb-0">Error fetching addresses.</p>');
+      }
+
+    }); // END AJAX
+
+  }); // END change event
+
+  // ---------------------------
+  // RADIO BUTTON CHANGE HANDLER
+  // ---------------------------
+  $(document).on("change", ".change-address-radio", function () {
+
+    var id = $(this).val();
+
+    if (!id) {
+      $("#delivery_to").val($("#delivery_to").data("main-address") || "");
+      $("#selected_address_id").val("");
+    } else {
+      var text = $(this).closest(".custom-control").find("label").text();
+      $("#delivery_to").val($.trim(text));
+      $("#selected_address_id").val(id);
+    }
+  });
+
+}); // END document.ready
+</script>
+
+                    
+              </body>
+          </html>

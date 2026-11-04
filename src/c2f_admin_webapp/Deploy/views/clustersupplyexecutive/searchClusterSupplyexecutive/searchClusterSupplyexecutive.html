@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>C2F Admin</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="/static/dist/img/logo-s.png" type="image/gif" sizes="16x16">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../static/plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="../../static/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="../../static/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="../../static/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../static/dist/css/adminlte.min.css">
+    <!-- style css -->
+    <link rel="stylesheet" href="../../static/dist/css/style.css">
+    <!-- daterange css -->
+    <link rel="stylesheet" href="../../static/plugins/datepicker/daterangepicker.css">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="../../static/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="../../static/dist/css/fonts/source-sans-pro.css">
+   <style>
+
+.navbaricon:hover{
+  
+    background-color: #DCDCDC;
+}
+
+  </style>
+
+  </head>
+  <body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+      <!-- Navbar -->
+      <nav   class="main-header navbar navbar-expand navbar-light navbar-green">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+          </li>
+        </ul>
+        <!-- Right navbar links -->
+        <ul class="navbar-nav ml-auto logo">
+          <!-- Notifications Dropdown Menu -->
+          <li class="tablogo"><a href="/Dashboard" class="brand-link navbar-light" style="padding-bottom: 35px;">
+          <img src="/static/dist/img/logo.png" alt="AdminLTE Logo" class="brand-image"
+          style="opacity: .8">
+          
+          <!-- <span class="brand-text font-weight-light">Asset Monitoring</span> -->
+        </a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#">
+              <img src="/static/dist/img/user_icon3.png" alt="User Avatar" class="img-size-35 mr-3 img-circle">
+            </a>
+             <div class="dropdown-menu dropdown-menu-right" style="padding:0 0 0 0!important;">
+            <div id="namecard" style=" background-color:#355E3B;height: 100px;width: 100%; text-align: center; padding: 20px;">
+              
+           <span style="color:#FFFFFF;font-weight:bold; font-size: 120%;"> {{.fullname1}}</span><br>
+          <span style="color:#FFFFFF;font-weight:600">{{.utype}}</span><br>
+          <span style="color:#FFFFFF;font-weight:500">{{.clustername}}</span>
+            </div>
+              <a href="/ChangePassword" class="dropdown-item navbaricon">
+<!--                <i id="change-pwd" class="fas fa-key mr-2"></i> -->
+                <img src="/static/dist/img/change_pwd_icon.png" alt="User Avatar" class="img-size-35 mr-3 img-circle">
+                <span id="change-pwd" style="font-weight:bold"></span>
+              </a>
+<!--                <hr> -->
+<!--              <div class="dropdown-divider"></div>-->
+              <a href="/Logout" class="dropdown-item navbaricon">
+<!--                <i id="lout" class="fas fas fa-arrow-alt-circle-left"></i> -->
+                 <img src="/static/dist/img/logout_icon.png" alt="User Avatar" class="img-size-35 mr-3 img-circle">
+                 <span id="lout" style="font-weight:bold"></span>
+              </a>
+
+            </div>
+          </li>
+        </ul>
+      </nav>
+      <!-- /.navbar -->
+      <!-- Main Sidebar Container -->
+      <aside class="main-sidebar elevation-4 sidebar-light-green">
+        <!-- Brand Logo -->
+        <a href="/Dashboard" class="brand-link navbar-light" style="padding-bottom: 35px;">
+          <img src="/static/dist/img/logo.png" alt="AdminLTE Logo" class="brand-image"
+          style="opacity: .8">
+          <!--<img src="/static/dist/img/logo-s.png" alt="AdminLTE Logo" class="brand-image-small"
+          style="opacity: .8">-->
+          <!-- <span class="brand-text font-weight-light">Asset Monitoring</span> -->
+        </a>
+        {{if eq .utype "HOADMIN"}} {{template "default/sidebar.html" .}} {{template "default/sidebar.html" .}} {{else if eq .utype "CLUSTERMANAGER"}} {{template "default/clusteradminSidebar.html" .}} {{else if eq .utype "CLUSTEREXECUTIVE"}} {{template "default/clusterexecutiveSidebar.html" .}} {{else}} {{template "default/reportSidebar.html" .}} {{end}}
+        
+      </aside>
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper content-bg-color">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <div class="col-sm-6">
+                <h1 id="scu" class="m-0 text-color-white">Search Cluster SupplyExecutive</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                  <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a id="lihome" href="/Dashboard">Home</a></li>
+                    <li id="liscu" class="breadcrumb-item active">Search Cluster SupplyExecutive</li>
+                  </ol>
+                  </div><!-- /.col -->
+                  </div><!-- /.row -->
+                  </div><!-- /.container-fluid -->
+                </div>
+                <!-- /.content-header -->
+                <form action="/ClusterSupplyexecutive/SearchClusterSupplyexecutive" method="post">
+                  <!-- Main content -->
+                  <section class="content">
+                    <div class="container-fluid">
+                      <!-- Small boxes (Stat box) -->
+                      <div class="row">
+                        <div class="col-12">
+                          <!-- Default box -->
+                          <div class="card card-bg-color">
+                            <div class="card-header">
+                              <!-- <h3 class="card-title text-color-white">Search Filters</h3> -->
+                              <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                                <i class="fas fa-minus"></i></button>
+                                <!-- <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+                                <i class="fas fa-times"></i></button> -->
+                              </div>
+                            </div>
+                            <div class="card-body">
+                              <div class="row">
+                                <div class="col-sm-3">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label class="cname text-color-white">Cluster Name</label>
+                                  <input type="text" onkeypress="return (event.charCode > 64 && 
+event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)" maxlength="15" class="form-control text-ph-backgroud-color" placeholder="Enter Cluster Name" name="input_Clusterscluster_name" id="input_Clusterscluster_name"/>
+                                  </div>
+                                </div>
+                                <div class="col-sm-3">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label class="uname text-color-white">Supply-Executive Email</label>
+                                  <input type="text" maxlength="25" class="form-control text-ph-backgroud-color" placeholder="Enter Supply-Executive Email" name="input_Useremail" id="input_Useremail"/>
+                                  </div>
+                                </div>
+                                <div class="col-sm-3">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label class="mob text-color-white">Mobile Number</label>
+                                  <input type="text" maxlength="25" class="form-control text-ph-backgroud-color" placeholder="Enter Mobile Number" name="input_mobile" id="input_mobile"/>
+                                  </div>
+                                </div>
+                                <div class="col-sm-3">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="range" class="text-color-white">Date Range</label>
+                                    <input type="text" name="daterange" id="daterange" class="form-control simple-date-range-picker">
+                                  </div>
+                                </div>
+                                <div class="col-sm-3">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="sstatus" class="text-color-white">Status</label>
+                                    <select class="form-control text-ph-backgroud-color" id="input_status" name="input_status" >
+                                      <option id="plsselect" value="">-- Please Select --</option>
+                                      <option id="active" value="ACTIVE">Active</option>
+                                      <option id="inactive" value="INACTIVE">Inactive</option>
+                                      
+                                    </select>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="card-footer" style="text-align: center;">
+                              <button id="search" type="search" class="btn" >Search</button>
+                               <a href="/ClusterSupplyexecutive/CreateClusterSupplyexecutive"><button id="create" type="button" class="btn">Create Map</button></a>
+                            </div>
+                            
+                            
+                          </div>
+                          <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                      </div>
+                      <div class="card card-bg-color">
+                        <div class="card-header">
+                          <h3 class="card-title text-color-white">Search Result</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                          <table id="nodeTable" class="table table-bordered table-striped">
+                            <thead class="bg-green">
+                              <tr>
+                              <th id="id">Id</th>
+                                <th id="time">Time Stamp</th>
+                                <th class="cname" >Cluster Name</th>
+                                <th class="uname">Supply-Executive Email</th>
+                                <th class="mob">Mobile Number</th>
+                                <th id="status">Status </th>
+                                
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {{range .CustomerData}}
+                              
+                              <tr>
+                              <td>
+                                <a class="dropdown-item" href="/ClusterSupplyexecutive/ViewClusterSupplyexecutive/{{.Id}}"><h5 class="text-red">{{.Id}}</h5></a>
+                                 <td>{{.Timestamp}}</td>
+                                  <td>{{.ClusterName}}</td>
+                                  <td>{{.UserEmail}}</td>
+                                  <td>{{.Mobile}}</td>
+                                  <td>{{.Status}}</td>
+                                  
+                                  
+                                  
+                                </tr>
+                                {{end}}
+                              </tbody>
+                            </table>
+                          </div>
+                          <!-- /.card-body -->
+                        </div>
+                      </div>
+                      <!-- /.card -->
+                      <!-- /.row -->
+                      <!-- Main row -->
+                      <!-- /.row (main row) -->
+                      </div><!-- /.container-fluid -->
+                      
+                    </form>
+                    <!-- /.content -->
+                  </div>
+                  <!-- /.content-wrapper -->
+                  <footer class="main-footer content-bg-color">
+                    <strong>Copyright &copy; 2021.</strong>
+                    All rights reserved.
+                  </footer>
+                  <!-- Control Sidebar -->
+                  <aside class="control-sidebar control-sidebar-dark">
+                    <!-- Control sidebar content goes here -->
+                  </aside>
+                  <!-- /.control-sidebar -->
+                </div>
+                <!-- ./wrapper -->
+                <!-- jQuery -->
+                <script src="../../static/plugins/jquery/jquery.min.js"></script>
+                <!-- jQuery UI 1.11.4 -->
+                <script src="../../static/plugins/jquery-ui/jquery-ui.min.js"></script>
+                <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+                <script>
+                $.widget.bridge('uibutton', $.ui.button)
+                </script>
+                <!-- Bootstrap 4 -->
+                <script src="../../static/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+                <script src="../../static/plugins/moment/moment.min.js"></script>
+                <script src="../../static/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+                <!-- DataTables -->
+                <script src="../../static/plugins/datatables/jquery.dataTables.min.js"></script>
+                <script src="../../static/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+                <script src="../../static/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+                <script src="../../static/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+                <!-- daterange js -->
+                <script src="../../static/plugins/datepicker/datepicker.js"></script>
+                <script src="../../static/plugins/datepicker/daterangepicker.js"></script>
+                <!-- DataTables  buttons-->
+                <script type="text/javascript" src="../../static/plugins/datatables-buttons/dataTables.buttons.min.js"></script>
+                <script type="text/javascript" src="../../static/plugins/datatables-buttons/jszip.min.js"></script>
+                <script type="text/javascript" src="../../static/plugins/datatables-buttons/pdfmake.min.js"></script>
+                <script type="text/javascript" src="../../static/plugins/datatables-buttons/vfs_fonts.js"></script>
+                <script type="text/javascript" src="../../static/plugins/datatables-buttons/buttons.html5.min.js"></script>
+                <!-- AdminLTE App -->
+                <script src="../../static/dist/js/adminlte.js"></script>
+                <script>
+                document.getElementById("clustermanagement-menu").className += " menu-open";
+                document.getElementById("clustermanagement-active").className += " active";
+                document.getElementById("clustersupplyexecutive-active").className += " active";
+                </script>
+                <script>
+                var data = {{.CustomerData}};
+                $(function () {
+                var now = new Date(Date.now());
+                var jsDate = now.getDate()+'/'+(now.getMonth()+1)+'/'+now.getFullYear();
+                $('#nodeTable').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+                dom: 'Bfrtip',
+                buttons: [
+                {
+                extend: 'copyHtml5',
+                text: '<i id="clip" class="fa fa-copy"></i>'
+                },
+                {
+                extend: 'excelHtml5',
+                filename: 'Cluster SupplyExecutive Report ',
+                text: '<i id="excel" class="fa fa-copy"></i>'
+                },
+                {
+                extend: 'pdfHtml5',
+                filename: 'Cluster SupplyExecutive Report ' + jsDate,
+                title: "List of Cluster SupplyExecutive ",
+                pageSize: 'LEGAL',
+                message: "Date:" + jsDate,
+                text: '<i id="pdf" class="fa fa-copy"></i>',
+                header: true,
+                footer: true,
+                customize: function ( doc ) {
+                var cols = [];
+                cols[0] = {text: '© 2021 | Krishivala ', alignment: 'left', margin:[45] };
+                cols[1] = {text: '- Company Confidential Information -', alignment: 'center'};
+                cols[2] = {text: 'Version 1.0', alignment: 'right', margin:[0,0,45] };
+                var objFooter = {};
+                objFooter['columns'] = cols;
+                doc['footer']=objFooter;
+                var cols = [];
+                cols[0] = {text: 'Cluster SupplyExecutive\'s Report', alignment: 'center', fontSize:[20] };
+                var objHeader = {};
+                objHeader['columns'] = cols;
+                doc['header']=objHeader;
+                }
+                }
+                ]
+                });
+                });
+                </script>
+                <script type="text/javascript"> 
+  
+                $(window).on("load", function() 
+                {
+                      var x = {{.language}};
+                      if (x == "EN") 
+                  {   
+                      $("#change-pwd").text(" Change Password");
+                      $("#lout").text(" Logout");
+                      $("#scu").text("Search Cluster SupplyExecutive");
+                      $("#lihome").text("Home");
+                      $("#liscu").text("Search Cluster SupplyExecutive");
+                      $(".cname").text("Cluster Name");
+                      $("#input_Clusterscluster_name").attr("placeholder","Enter Cluster Name");
+                      $(".uname").text("Supply-Executive Email");
+                      $("#input_Useremail").attr("placeholder","Enter Supply-Executive Email");
+                      $("#input_mobile").attr("placeholder","Enter Mobile Number");
+                      $("#range").text("Date Range");
+                      $("#search").text("Search");
+                      $("#create").text("Create Map");
+                      $("#time").text("Timestamp");
+                       $(".mob").text("Mobile Number");
+                      $("#status").text("Status");
+                      $("#clip").text("Copy to Clipboard");
+                      $("#excel").text("Export to Excel");
+                      $("#pdf").text("Export to PDF");
+                      $("#sstatus").text("Status");
+                          $("#plsselect").text("-- Please Select --");
+                          $("#active").text("Active");
+                      $("#inactive").text("Inactive");
+                      
+                      
+                      } 
+               else if (x == "TN")  
+                  
+                  {
+                    
+                    
+                      $("#change-pwd").text("పాస్‌వర్డ్ మార్చండి");
+                      $("#lout").text("లాగ్అవుట్");
+                      $("#scu").text("శోధన క్లస్టర్ సప్లై ఎగ్జిక్యూటివ్");
+                      $("#lihome").text("హోమ్");
+                      $("#liscu").text("శోధన క్లస్టర్ సప్లై ఎగ్జిక్యూటివ్");
+                      $(".cname").text("క్లస్టర్ పేరు");
+                       $("#input_Clusterscluster_name").attr("placeholder","క్లస్టర్ పేరును నమోదు చేయండి");
+                      $(".uname").text("సరఫరా-ఎగ్జిక్యూటివ్ ఇమెయిల్");
+                      $("#input_Useremail").attr("placeholder","సప్లై-ఎగ్జిక్యూటివ్ ఇమెయిల్‌ని నమోదు చేయండి");
+                       $("#input_mobile").attr("placeholder","మొబైల్ నంబర్‌ని నమోదు చేయండి");
+                      $("#range").text("తేదీ పరిధి");
+                      $("#search").text("వెతకండి");
+                      $("#create").text("మ్యాప్‌ని సృష్టించండి");
+                      $("#time").text("సమయముద్ర");
+                      $(".mob").text("మొబైల్ నంబర్");
+                      $("#status").text("స్థితి");
+                      $("#clip").text("క్లిప్‌బోర్డ్‌కి కాపీ చేయండి");
+                      $("#excel").text("Excelకు ఎగుమతి చేయండి");
+                      $("#pdf").text("PDFకి ఎగుమతి చేయండి");
+                       $("#sstatus").text("స్థితి");
+                      $("#plsselect").text("-- దయచేసి ఎంచుకోండి --");
+                       $("#active").text("చురుకుగా");
+                      $("#inactive").text("క్రియారహితం");
+                      
+                      
+                       } 
+});
+              </script>
+              </body>
+            </html>

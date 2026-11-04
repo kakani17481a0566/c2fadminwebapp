@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>C2F Admin</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="/static/dist/img/logo-s.png" type="image/gif" sizes="16x16">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../static/plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="../../static/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../static/dist/css/adminlte.min.css">
+    <!-- style css -->
+    <link rel="stylesheet" href="../../static/dist/css/style.css">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="../../static/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <link rel="stylesheet" type="text/css" href="../../static/plugins/duDialog-master/duDialog.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="../../static/dist/css/fonts/source-sans-pro.css">
+  <style>
+
+.zoom1 {
+  transition: transform .2s; /* Animation */
+}
+.zoom1:hover {
+  -ms-transform: scale(1.2); /* IE 9 */
+  -webkit-transform: scale(1.2); /* Safari 3-8 */
+  transform: scale(1.2); 
+}
+
+.navbaricon:hover{
+  
+    background-color: #DCDCDC;
+}
+.dropdown-menu{
+    padding:0 0 0 0!important
+    
+}
+#blah{
+  
+   border: 5px solid #555;
+   display: block;
+  margin-left: 30%;
+ 
+  
+}
+  </style>
+ </head>
+  <body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+      <!-- Navbar -->
+      <nav   class="main-header navbar navbar-expand navbar-light navbar-green">        <!-- Left navbar links -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+      </ul>
+      <!-- Right navbar links -->
+      <ul class="navbar-nav ml-auto">
+        <!-- Notifications Dropdown Menu -->
+        <li class="nav-item dropdown">
+          <a class="nav-link" data-toggle="dropdown" href="#">
+           <img src="/static/dist/img/user_icon3.png" alt="User Avatar" class="img-size-35 mr-3 img-circle">
+          </a>
+          <div class="dropdown-menu dropdown-menu-right">
+          <div id="namecard" style=" background-color:#355E3B;height: 100px;width: 100%; text-align: center; padding: 20px;">
+              
+           <span style="color:#FFFFFF;font-weight:bold; font-size: 120%;"> {{.fullname1}}</span><br>
+        
+     
+           <span style="color:#FFFFFF;font-weight:500">{{.utype}}</span>
+            </div>
+              <a href="/ChangePassword" class="dropdown-item navbaricon">
+<!--                <i id="change-pwd" class="fas fa-key mr-2"></i> -->
+                <img src="/static/dist/img/change_pwd_icon.png" alt="User Avatar" class="img-size-35 mr-3 img-circle">
+                <span id="change-pwd" style="font-weight:bold"></span>
+              </a>
+<!--                <hr> -->
+<!--              <div class="dropdown-divider"></div>-->
+              <a href="/Logout" class="dropdown-item navbaricon">
+<!--                <i id="lout" class="fas fas fa-arrow-alt-circle-left"></i> -->
+                 <img src="/static/dist/img/logout_icon.png" alt="User Avatar" class="img-size-35 mr-3 img-circle">
+                 <span id="lout" style="font-weight:bold"></span>
+              </a>
+
+          </div>
+        </li>
+      </ul>
+    </nav>
+    <!-- /.navbar -->
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar elevation-4 sidebar-light-green">
+      <!-- Brand Logo -->
+      <a href="/Dashboard" class="brand-link navbar-light" style="padding-bottom: 35px;">
+        <img src="/static/dist/img/logo.png" alt="AdminLTE Logo" class="brand-image"
+          style="opacity: .8">
+          <!--<img src="/static/dist/img/logo-s.png" alt="AdminLTE Logo" class="brand-image-small"
+          style="opacity: .8">-->
+        <!-- <span class="brand-text font-weight-light">Asset Monitoring</span> -->
+      </a>
+      {{if eq .utype "HOADMIN"}} {{template "default/sidebar.html" .}} {{else if eq .utype "USER"}} {{template "default/userSidebar.html" .}} {{else}} {{template "default/reportSidebar.html" .}} {{end}}
+      
+    </aside>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper content-bg-color">
+      <!-- Content Header (Page header) -->
+      <div class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1 id="usc" class="m-0 text-color-white">Update SubCategory</h1>
+              </div><!-- /.col -->
+              <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                  <li class="breadcrumb-item"><a id="lihome" href="/Dashboard">Home</a></li>
+                  <li id="liusc" class="breadcrumb-item active">Update Subcategory</li>
+                </ol>
+                </div><!-- /.col -->
+                </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+              </div>
+              <!-- /.content-header -->
+              <form enctype="multipart/form-data" action="/SubCategory/UpdateSubCategory/{{.Id}}" id="addUsersValidate" method="post">
+                <!-- Main content -->
+                <section class="content">
+                  <div class="container-fluid">
+                    <!-- Small boxes (Stat box) -->
+                    <div class="row">
+                      <div class="col-12">
+                        <!-- Default box -->
+                        <div class="card card-bg-color">
+                          <div class="card-header">
+                            <h3 class="card-title text-color-white">Update Subcategory</h3>
+                          </div>
+                          <div class="card-body ">
+                            <div class="row">
+                              <div class="col-sm-4">
+                                <!-- text input -->
+                                <div class="form-group">
+                                  <label id="scname" class="text-color-white required">Subcategory Name</label>
+                                  <input type="text" onkeypress="return (event.charCode > 64 && 
+event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)" maxlength="15" class="form-control text-ph-backgroud-color" placeholder="Enter Category Name" name="input_subcategory_name" id="input_subcategory_name" value="{{.SubcategoryName}}" />
+                                </div>
+                              </div>
+                              <div class="col-sm-4">
+                                <!-- text input -->
+                                <div class="form-group">
+                                  <label id="status" class="text-color-white required">SubCategory Status</label>
+                                  <select class="form-control text-ph-backgroud-color" id="input_subcategory_status" name="input_subcategory_status" >
+                                    <option id="plsselect" value="">-- Please Select --</option>
+                                    <option id="active" value="ACTIVE">ACTIVE</option>
+                                    <option id="inactive" value="INACTIVE">INACTIVE</option>
+                                  </select>
+                                </div>
+                              </div>
+                                <div class="col-sm-12">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label  id="subcategoryimage" class="text-color-white required">Sub-Category Image</label><br>
+                                     <input accept="image/*" id="imgInp" type="file" name="myFile" />
+                                    
+                                  </div>
+                                                      <img id="blah" src="{{.Image}}" alt="Sub-Category Image" width="300" height="300"/>
+                                </div>
+                            </div>
+                          </div>
+                          <div class="card-footer" style="text-align: center;">
+                            <button id="submit" type="submit" class="btn">Submit</button>
+                            <a href="/SubCategory/SearchSubCategory"><button id="back" type="button" class="btn">Back</button></a>
+                          </div>
+                          <!-- /.card-footer-->
+                          <!-- /.card -->
+                        </div>
+                      </div>
+                      <!-- /.card -->
+                      <!-- /.row -->
+                      <!-- Main row -->
+                      <div class="row">
+                      </div>
+                      <!-- /.row (main row) -->
+                      </div><!-- /.container-fluid -->
+                    </section>
+                  </form>
+                  <!-- /.content -->
+                </div>
+                <!-- /.content-wrapper -->
+                <footer class="main-footer footer-bg-color">
+                  <strong>Copyright &copy; 2021.</strong>
+                  All rights reserved.
+                </footer>
+                <!-- Control Sidebar -->
+                <aside class="control-sidebar control-sidebar-dark">
+                  <!-- Control sidebar content goes here -->
+                </aside>
+                <!-- /.control-sidebar -->
+              </div>
+              <!-- ./wrapper -->
+              <!-- jQuery -->
+              <script src="../../static/plugins/jquery/jquery.min.js"></script>
+              <!-- jQuery UI 1.11.4 -->
+              <script src="../../static/plugins/jquery-ui/jquery-ui.min.js"></script>
+              <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+              <script>
+              $.widget.bridge('uibutton', $.ui.button)
+              </script>
+              <!-- Bootstrap 4 -->
+              <script src="../../static/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+              <script src="../../static/plugins/moment/moment.min.js"></script>
+              <script src="../../static/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+              <script type="text/javascript" src="../../static/plugins/duDialog-master/duDialog.js"></script>
+              <!-- validation -->
+              <script src="../../static/plugins/jquery-validation/jquery.validate.min.js"></script>
+              <script src="../../static/plugins/jquery-validation/additional-methods.min.js"></script>
+              <!-- AdminLTE App -->
+              <script src="../../static/dist/js/adminlte.js"></script>
+              <script>
+                document.getElementById("systemmanagement-menu").className += " menu-open";
+                document.getElementById("systemmanagement-active").className += " active";
+                document.getElementById("subcategory-active").className += " active";
+                </script>
+              <!-- change type -->
+              <script type="text/javascript">
+              var utype = {{.UserType}};
+              $('#input_user_type').val(utype);
+              </script>
+              <script type="text/javascript">
+              var ustatus = {{.UStatus}};
+              $('#input_user_status').val(ustatus);
+              </script>
+              <script type="text/javascript">
+              var data = {{.DisplayMessage}};
+              if (data != ""){
+              new duDialog('', data);
+              }
+              </script>
+              <script type="text/javascript">
+              
+                    imgInp.onchange = evt => {
+                const [file] = imgInp.files
+                if (file) {
+                  blah.src = URL.createObjectURL(file)
+                        }
+                    }
+                    
+              $(document).ready(function () {
+              // alert(language)
+              var validationMsg = {};
+              validationMsg.input_subcategory_name = "Please enter subcategory name";
+              validationMsg.input_subcategory_status = "Please enter status";
+              $('#addUsersValidate').validate({
+              rules: {
+              input_subcategory_name: {
+              required: true,
+              maxlength: 30
+              },
+              input_subcategory_status: {
+              required: true,
+              maxlength: 10,
+             //number:true
+              },
+              },
+              messages: {
+              input_subcategory_name: {
+              required: validationMsg.input_subcategory_name,
+              },
+              input_subcategory_status:  {
+              required: validationMsg.input_subcategory_status,
+              },
+              },
+             errorElement: 'span',
+              errorPlacement: function (error, element) {
+              error.addClass('invalid-feedback');
+              element.closest('.form-group').append(error);
+              },
+              highlight: function (element, errorClass, validClass) {
+              $(element).addClass('is-invalid');
+              },
+              unhighlight: function (element, errorClass, validClass) {
+              $(element).removeClass('is-invalid');
+              }
+              });
+              });
+              </script>
+              <script type="text/javascript"> 
+                 $(window).on("load", function() 
+                {
+                      var x = {{.language}};
+                      if (x == "EN") 
+                  {   
+                      $("#change-pwd").text(" Change Password");
+                      $("#lout").text(" Logout");   
+                      $("#usc").text("Update SubCategory");
+                      $("#lihome").text("Home");
+                      $("#liusc").text("Update SubCategory");
+                      $("#scname").text("SubCategory Name");
+                      $("#input_subcategory_name").attr("placeholder","Enter SubCategory Name")
+                      $("#status").text("Sub Category Status");
+                      $("#plsselect").text("-- Please Select --");
+                      $("#active").text("Active");
+                      $("#inactive").text("Inactive");
+                      $("#submit").text("Submit");
+                      $("#back").text("Back");
+                      $("#subcategoryimage").text("Sub-Category Image");
+                          
+                   } 
+               else if (x == "TN")  
+                  
+                  {
+                    
+                      $("#change-pwd").text("పాస్‌వర్డ్ మార్చండి");
+                      $("#lout").text("లాగ్అవుట్");   
+                      $("#usc").text("ఉపవర్గాన్ని నవీకరించండి");
+                      $("#lihome").text("హోమ్");
+                      $("#liusc").text("ఉపవర్గాన్ని నవీకరించండి");
+                      $("#scname").text("వర్గం పేరు");
+                      $("#input_subcategory_name").attr("placeholder","ఉపవర్గం పేరును నమోదు చేయండి")
+                      $("#status").text("ఉప వర్గం స్థితి");
+                      $("#plsselect").text("-- దయచేసి ఎంచుకోండి --");
+                      $("#active").text("చురుకుగా");
+                      $("#inactive").text("క్రియారహితం");
+                      $("#submit").text("సమర్పించండిt");
+                      $("#back").text("వెనుకకు");
+                      $("#subcategoryimage").text("ఉప-వర్గం చిత్రం");
+                  } 
+});        
+              </script>
+            </body>
+          </html>

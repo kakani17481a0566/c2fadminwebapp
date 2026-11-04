@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>C2F Admin</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="/static/dist/img/logo-s.png" type="image/gif" sizes="16x16">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../static/plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="../../static/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../static/dist/css/adminlte.min.css">
+    <!-- style css -->
+    <link rel="stylesheet" href="../../static/dist/css/style.css">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="../../static/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <link rel="stylesheet" type="text/css" href="../../static/plugins/duDialog-master/duDialog.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="desciption" content="Mapmyindia Place Picker Plugin">
+    <script src="https://apis.mapmyindia.com/advancedmaps/v1/{{.maptoken}}/map_load?v=1.5"></script>
+    <script src="https://apis.mapmyindia.com/advancedmaps/api/{{.maptoken}}/map_sdk_plugins"></script>
+    <style>
+     .hidden{
+      display:none;
+    }
+        body{margin: 0}
+        #map{
+            width: 100%; height: 80vh;margin:0;padding: 0;
+        }
+        
+        .navbaricon:hover{
+  
+    background-color: #DCDCDC;
+}
+       
+    </style>
+  </head>
+  <body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+      <!-- Navbar -->
+      <nav   class="main-header navbar navbar-expand navbar-light navbar-green">        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+          </li>
+        </ul>
+        <!-- Right navbar links -->
+        <ul class="navbar-nav ml-auto">
+          <!-- Notifications Dropdown Menu -->
+          <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#">
+              <img src="/static/dist/img/user_icon3.png" alt="User Avatar" class="img-size-35 mr-3 img-circle">
+            </a>
+             
+            <div class="dropdown-menu dropdown-menu-right" style="padding:0 0 0 0!important;">
+            <div id="namecard" style=" background-color:#355E3B;height: 100px;width: 100%; text-align: center; padding: 20px;">
+              
+           <span style="color:#FFFFFF;font-weight:bold; font-size: 120%;"> {{.fullname1}}</span><br>
+          <span style="color:#FFFFFF;font-weight:600">{{.utype}}</span><br>
+          <span style="color:#FFFFFF;font-weight:500">{{.clustername}}</span>
+            </div>
+              <a href="/ChangePassword" class="dropdown-item navbaricon">
+<!--                <i id="change-pwd" class="fas fa-key mr-2"></i> -->
+                <img src="/static/dist/img/change_pwd_icon.png" alt="User Avatar" class="img-size-35 mr-3 img-circle">
+                <span id="change-pwd" style="font-weight:bold"></span>
+              </a>
+<!--                <hr> -->
+<!--              <div class="dropdown-divider"></div>-->
+              <a href="/Logout" class="dropdown-item navbaricon">
+<!--                <i id="lout" class="fas fas fa-arrow-alt-circle-left"></i> -->
+                 <img src="/static/dist/img/logout_icon.png" alt="User Avatar" class="img-size-35 mr-3 img-circle">
+                 <span id="lout" style="font-weight:bold"></span>
+              </a>
+
+            </div>
+          </li>
+        </ul>
+      </nav>
+      <!-- /.navbar -->
+      <!-- Main Sidebar Container -->
+      <aside class="main-sidebar elevation-4 sidebar-light-=green">
+        <!-- Brand Logo -->
+        <a href="/Dashboard" class="brand-link navbar-light" style="padding-bottom: 35px;">
+          <img src="/static/dist/img/logo.png" alt="AdminLTE Logo" class="brand-image"
+          style="opacity: .8">
+          <!--<img src="/static/dist/img/logo-s.png" alt="AdminLTE Logo" class="brand-image-small"
+          style="opacity: .8">-->
+          <!-- <span class="brand-text font-weight-light">Asset Monitoring</span> -->
+        </a>
+        {{if eq .utype "HOADMIN"}} {{template "default/sidebar.html" .}} {{else if eq .utype "USER"}} {{template "default/userSidebar.html" .}} {{else if eq .utype "CLUSTERMANAGER"}} {{template "default/clusteradminSidebar.html" .}} {{else if eq .utype "CLUSTEREXECUTIVE"}} {{template "default/clusterexecutiveSidebar.html" .}} {{else}} {{template "default/reportSidebar.html" .}} {{end}}
+
+        
+      </aside>
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper content-bg-color">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <div class="col-sm-6">
+                <h1 id="createcustomer" class="m-0 text-color-white">Create Customer</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                  <ol class="breadcrumb float-sm-right">
+                    <li  class="breadcrumb-item"><a id="lihome" href="/Dashboard">Home</a></li>
+                    <li id="licreatecust" class="breadcrumb-item active">Create Customer</li>
+                  </ol>
+                  </div><!-- /.col -->
+                  </div><!-- /.row -->
+                  </div><!-- /.container-fluid -->
+                </div>
+                <!-- /.content-header -->
+                <form action="/Customer/CreateCustomer" id="addUsersValidate" method="post">
+                  <!-- Main content -->
+                  <section class="content">
+                    <div class="container-fluid">
+                      <!-- Small boxes (Stat box) -->
+                      <div class="row">
+                        <div class="col-12">
+                          <!-- Default box -->
+                          <div class="card card-bg-color">
+                            <div class="card-header">
+                              <h3 class="card-title text-color-white">Create Customer</h3>
+                            </div>
+                            <div class="card-body ">
+                              <div class="row">
+                                <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="firstname" class="text-color-white required">First Name</label>
+                                    <input type="text" onkeypress="return (event.charCode > 64 && 
+event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)" maxlength="15" class="form-control text-ph-backgroud-color" placeholder="Enter First Name" name="input_first_name" id="input_first_name"/>
+                                  </div>
+                                </div>
+                                <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="middlename" class="text-color-white ">Middle Name</label>
+                                    <input type="text" onkeypress="return (event.charCode > 64 && 
+event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)" maxlength="15" class="form-control text-ph-backgroud-color" placeholder="Enter Middle Name" name="input_middle_name" id="input_middle_name" />
+                                  </div>
+                                </div>
+                                
+                                <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="lastname" class="text-color-white ">Last Name</label>
+                                    <input type="text" onkeypress="return (event.charCode > 64 && 
+event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)" maxlength="15" class="form-control text-ph-backgroud-color" placeholder="Enter Last Name" name="input_last_name" id="input_last_name" />
+                                  </div>
+                                </div>
+                               <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="email" class="text-color-white required">Email</label>
+                                    <input type="email" maxlength="100" class="form-control text-ph-backgroud-color" title="Please enter email" placeholder="Enter Email" name="input_email" id="input_email" />
+                                  </div>
+                                </div>
+                                <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="mobilenum" class="text-color-white required">Mobile Number</label>         
+                                  <input type="number" pattern="^\d{10}$" title="Please enter 10 digit number" onKeyPress="if(this.value.length==10) return false;" class="form-control text-ph-backgroud-color" placeholder="Enter Mobile Number" name="input_mobile" id="input_mobile" />
+                                  </div>
+                                </div>
+                               <!-- <div class="col-sm-4">
+                                 
+                                  <div class="form-group">
+                                    <label class="text-color-white required">Customer Type</label>
+                                    <select class="form-control text-ph-backgroud-color" id="input_customer_type" name="input_customer_type" >
+                                      <option value="">-- Please Select --</option>
+                                      <option value="RETAILCUSTOMER">Retail Customer</option>
+                                      <option value="RETAILSHOP">Retail Shop</option>
+                                      <option value="FOODPROCESSOR">Food Processor</option>
+                                      
+                                    </select>
+                                  </div>
+                                </div>-->
+                               <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="add1" class="text-color-white required">Address line1</label>
+                                    <input type="text" maxlength="25" pattern="[ A-Za-z0-9_$&+,:;=?@-#|~`'<>.^*(){}/\''%!]*$" class="form-control text-ph-backgroud-color" placeholder="Enter Address 1" name="input_address1" id="input_address1" />
+                                  </div>
+                                </div>
+                                <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="add2" class="text-color-white required">Address line 2</label>
+                                    <input type="text" maxlength="25" pattern="[ A-Za-z0-9_$&+,:;=?@-#|~`'<>.^*(){}/\''%!]*$" class="form-control text-ph-backgroud-color" placeholder="Enter Address 2" name="input_address2" id="input_address2" />
+                                  </div>
+                                </div>
+                                <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="village" class="text-color-white required">Village/Tq/District/Town</label>
+                                    <input type="text" maxlength="10" onkeypress="return (event.charCode > 64 && 
+event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)" class="form-control text-ph-backgroud-color" placeholder="Enter Village/Tq/District/Town" name="input_town" id="input_town" />
+                                  </div>
+                                </div>
+                                
+                                <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="city" class="text-color-white required">City</label>
+                                    <input type="text" maxlength="10" onkeypress="return (event.charCode > 64 && 
+event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)" class="form-control text-ph-backgroud-color" placeholder="Enter City" name="input_city" id="input_city" />
+                                  </div>
+                                </div>
+                                  <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="pin" class="text-color-white required">Pin Code</label>
+                                    <input type="number" pattern="/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/" title="Please enter 6 digit number" onKeyPress="if(this.value.length==6) return false;" class="form-control text-ph-backgroud-color" placeholder="Enter Pin code" name="input_zipcode" id="input_zipcode" />
+                                  </div>
+                                </div>
+                                <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="state" class="text-color-white required ">State</label>
+                                    <input type="text" maxlength="20" onkeypress="return (event.charCode > 64 && 
+event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)" class="form-control text-ph-backgroud-color" placeholder="Enter State" name="input_state" id="input_state" />
+                                  </div>
+                                </div>
+                                
+                                 <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="loc" class="text-color-white required">Location Type</label>
+                                    <select class="form-control text-ph-backgroud-color" title="Please select location type" id="input_location_type" name="input_location_type" >
+                                      <option class="plsselect" value="">-- Please Select --</option>
+                                     <!-- <option id="gmap" value="GmapURL">Gmap URL</option>
+                                      <option id="geo" value="GeoCoordinates">Geo Co ordinates</option>-->
+                                      <option id="mapmyindiacode" value="MapMyIndia">MapMyIndia Code</option>
+                                    </select>
+                                  </div>
+<!--                                 button To get mapmyindia Coordinates-->
+                                   <div>
+                                 <button id="getmapmyindiacoordinates" onclick="myFunction()" type="button" class="btn">Get MapMyIndia Coordinates</button>
+                                  </div>
+                                </div>
+                                <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="locinfo" class="text-color-white required">Location Info</label>
+                                    <input type="text" class="form-control text-ph-backgroud-color" placeholder="Enter Location Info" name="input_location_info" id="input_location_info" />
+                                  </div>
+                                </div>
+                                
+                                
+                                <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="paymentcoll" class="text-color-white required">Payment Category</label>
+                                    <select class="form-control text-ph-backgroud-color" title="Please select bill collection duration" id="input_bill_collection" name="input_bill_collection" >
+                                      <option class="plsselect" value="">-- Please Select --</option>
+                                       <option id="instant" value="INSTANT">Instant</option>
+                                       <option id="daily" value="DAILY">Daily</option>
+                                       <option id="weekly" value="WEEKLY">Weekly</option>
+                                       <option id="biweekly" value="BIWEEKLY">Bi-Weekly</option>
+                                       <option id="monthly" value="MONTHLY">Monthly</option>
+                                     
+                                      
+                                      
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="payment" class="text-color-white required">Payment Mode</label>
+                                    <select class="form-control text-ph-backgroud-color" title="Please select payment mode" id="input_collection_mode" name="input_collection_mode" >
+                                      <option class="plsselect" value="">-- Please Select --</option>
+                                      <option id="cash" value="CASH">Cash</option>
+                                      <option id="online" value="ONLINE">Online</option>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="paytype" class="text-color-white required">Payment Type</label>
+                                    <select class="form-control text-ph-backgroud-color" title="Please select bill type" id="input_bill_type" name="input_bill_type" >
+                                      <option class="plsselect" value="">-- Please Select --</option>
+                                      <option id="pre" value="PREPIAD">Pre-Paid</option>
+                                       <option id="post" value="POSTPIAD">Post-Paid</option>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="lang" class="text-color-white required">Language</label>
+                                    <select class="form-control text-ph-backgroud-color" id="input_language" name="input_language" >
+                                      <option class="plsselect" value="">-- Please Select --</option>
+                                      <option id="eng" value="EN">English</option>
+                                       <option id="tel" value="TU">Telugu</option>
+                                      
+                                      
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="clustername" class="text-color-white required">Cluster Name</label>
+                                   <select class="form-control" id="select_cluster_name" name="select_cluster_name">
+                                <option id="select" value="">-- select --</option>
+                                {{range $key, $val := .Dis.Fields}}
+                                <option value="{{$val.Name}}">{{$val.Name}}</option>
+                                {{end}}
+                            </select>
+                                  </div>
+                                </div>
+                                <div class="col-sm-4">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label id="status" class="text-color-white required">Status</label>
+                                    <select class="form-control text-ph-backgroud-color" id="input_status" name="input_status" >
+                                      <option class="plsselect" value="">-- Please Select --</option>
+                                      <option id="active" value="ACTIVE">Active</option>
+                                      <option id="inactive" value="INACTIVE">Inactive</option>
+                                      
+                                    </select>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="card-footer" style="text-align: center;">
+                              <button id="submit" type="submit" class="btn">Submit</button>
+                              <a href="/Customer/SearchCustomer"><button id="back" type="button" class="btn">Back</button></a>
+                            </div>
+                            <!-- /.card-footer-->
+                            <!-- /.card -->
+                          </div>
+                        </div>
+                        <!-- /.card -->
+                        <!-- /.row -->
+                        <!-- Main row -->
+                        <div class="row">
+                        </div>
+                        <!-- /.row (main row) -->
+                        </div><!-- /.container-fluid -->
+                      </section>
+                    </form>
+                    <!--div To show map -->
+                   <div id="map"></div> 
+                    <!-- /.content -->
+                  </div>
+                  <!-- /.content-wrapper -->
+                  <footer class="main-footer footer-bg-color">
+                    <strong>Copyright &copy; 2021 .</strong>
+                    All rights reserved.
+                  </footer>
+                  <!-- Control Sidebar -->
+                  <aside class="control-sidebar control-sidebar-dark">
+                    <!-- Control sidebar content goes here -->
+                  </aside>
+                  <!-- /.control-sidebar -->
+                </div>
+                <!-- ./wrapper -->
+                <!-- jQuery -->
+                <script src="../../static/plugins/jquery/jquery.min.js"></script>
+                <!-- jQuery UI 1.11.4 -->
+                <script src="../../static/plugins/jquery-ui/jquery-ui.min.js"></script>
+                <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+                <script>
+                $.widget.bridge('uibutton', $.ui.button)
+                </script>
+                <!-- Bootstrap 4 -->
+                <script src="../../static/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+                <script src="../../static/plugins/moment/moment.min.js"></script>
+                <script src="../../static/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+                <script type="text/javascript" src="../../static/plugins/duDialog-master/duDialog.js"></script>
+                <!-- validation -->
+                <script src="../../static/plugins/jquery-validation/jquery.validate.min.js"></script>
+                <script src="../../static/plugins/jquery-validation/additional-methods.min.js"></script>
+                <!-- AdminLTE App -->
+                <script src="../../static/dist/js/adminlte.js"></script>
+                <script>
+                document.getElementById("customermanagement-menu").className += " menu-open";
+                document.getElementById("customermanagement-active").className += " active";
+                document.getElementById("searchcustomer-active").className += " active";
+                </script>
+                <!-- change type -->
+                <script type="text/javascript">
+                var lang = {{.userLang}};
+                $('#input_language').val(lang);
+                </script>
+                <script type="text/javascript">
+                var data = {{.DisplayMessage}};
+                if (data != ""){
+                new duDialog('', data);
+                }
+                </script>
+                <script type="text/javascript">
+                $(document).ready(function () {
+                // alert(language)
+                var validationMsg = {};
+                validationMsg.firstName = "Please enter first name";
+                validationMsg.mobile = "Please enter mobile number";
+                validationMsg.rolename = "Please enter Role Name ";
+                validationMsg.email = "Please enter email ";
+                validationMsg.status="Please select status";
+                validationMsg.zipcode = "Please enter pincode";
+                validationMsg.userType = "Please enter cluster name";
+                validationMsg.language = "Please select language";
+                validationMsg.address1 = "Please enter Address 1";
+                validationMsg.address2 = "Please enter Address 2";
+                validationMsg.city = "Please enter City";
+                validationMsg.bill_collection = "Please select payment category";
+                validationMsg.town = "Please enter alphabets ";
+                validationMsg.state = "Please enter state";
+                validationMsg.bill_type = "Please select payment type ";
+                validationMsg.location_type = "Please select location type ";
+                validationMsg.location_info = "Please select location information ";
+                validationMsg.collection_mode = "Please select payment mode";
+                validationMsg.select_cluster_name = "Please select cluster name";
+                $('#addUsersValidate').validate({
+                rules: {
+                input_first_name: {
+                required: true,
+                maxlength: 30
+                },
+               
+                input_zipcode: {
+                required: true,
+                  minlength: 6,
+                maxlength: 6,
+                number:true
+                },
+                input_status: {
+                required: true,
+                maxlength: 10,
+                },
+                input_bill_type: {
+                required: true,
+                maxlength: 10,
+                },
+                input_state: {
+                required: true,
+                maxlength: 20,
+                },
+                input_collection_mode: {
+                required: true,
+                maxlength: 10,
+                },
+                input_mobile: {
+                required: true,
+                  minlength: 10,
+                maxlength: 10,
+                number:true
+                },
+                select_role_name: {
+                required: true,
+                maxlength: 10
+                },
+                input_address1: {
+                required: true,
+                maxlength: 30
+                },
+                input_address2: {
+                required: true,
+                maxlength: 30
+                },
+                input_email: {
+                required: true,
+                maxlength: 30
+                },
+                input_city: {
+                required: true,
+                maxlength: 30
+                },
+                input_language: {
+                required: true,
+                maxlength: 20
+                },
+                input_user_type: {
+                required: true,
+                maxlength: 20
+                },
+                input_location_info: {
+                required: true,
+                maxlength: 75
+                },
+                input_location_type: {
+                required: true,
+                maxlength: 20
+                },
+                input_town: {
+                required: true,
+                maxlength: 20
+                },
+                input_bill_collection: {
+                required: true,
+                maxlength: 20
+                },
+                select_cluster_name: {
+                required: true,
+                maxlength: 20
+                },
+                },
+                messages: {
+                input_first_name: {
+                required: validationMsg.firstName,
+                },
+                input_mobile:  {
+                required: validationMsg.mobile,
+                },
+                input_state:  {
+                required: validationMsg.state,
+                },
+                input_bill_type:  {
+                required: validationMsg.bill_type,
+                },
+                select_role_name: {
+                required: validationMsg.rolename,
+                },
+                select_collection_mode: {
+                required: validationMsg.collection_mode,
+                },
+                input_address1: {
+                required: validationMsg.address1,
+                },
+                input_address2: {
+                required: validationMsg.address2,
+                },
+                input_city: {
+                required: validationMsg.city,
+                },
+                input_town: {
+                required: validationMsg.town,
+                },
+                input_language: {
+                required: validationMsg.language,
+                },
+                input_email: {
+                required: validationMsg.email,
+                },
+                input_location_type: {
+                required: validationMsg.locationType,
+                },
+                input_location_info: {
+                required: validationMsg.locationInfo,
+                },
+                 input_zipcode: {
+                required: validationMsg.zipcode,
+                },
+                 input_status: {
+                required: validationMsg.status,
+                },
+                input_bill_collection: {
+                required: validationMsg.bill_collection,
+                },
+                input_user_type: {
+                required: validationMsg.userType,
+                },
+                select_cluster_name: {
+                required: validationMsg.userType,
+                }
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+                },
+                highlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+                }
+                });
+                // ---------------Start Show validation error messages immediately when user types or leaves field-------
+$("input, select").on("blur keyup change", function () {
+    $(this).valid();
+});
+// ---------------End Show validation error messages immediately when user types or leaves field-------
+
+                });
+                </script>
+                
+                <!--<script>
+$(document).ready(function() {
+    // Function to validate inputs and toggle submit button
+    function validateInputs() {
+        var pincode = $('#input_zipcode').val();
+        var mobile = $('#input_mobile').val();
+        var email = $('#input_email').val();
+
+        // Improved regular expression for email validation
+        var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+        // Validate each field
+        var isPincodeValid = pincode.length === 6;
+        var isMobileValid = mobile.length === 10;
+        var isEmailValid = emailPattern.test(email);
+
+        // Debugging logs
+        console.log('Pincode:', pincode, 'Valid:', isPincodeValid);
+        console.log('Mobile:', mobile, 'Valid:', isMobileValid);
+        console.log('Email:', email, 'Valid:', isEmailValid);
+
+        // Enable or disable the submit button
+        if (isPincodeValid && isMobileValid && isEmailValid) {
+            $('#submit').prop('disabled', false); // Enable Submit button
+        } else {
+            $('#submit').prop('disabled', true); // Disable Submit button
+        }
+    }
+
+    // Initial check
+    validateInputs();
+
+    // Bind events to inputs to validate on change
+    $('#input_zipcode, #input_mobile, #input_email').on('input', function() {
+        validateInputs();
+    });
+
+    // Existing validation and other JavaScript code
+});
+</script>-->
+
+                <script type="text/javascript"> 
+
+  
+                $(window).on("load", function() 
+                {
+                      var x = {{.language}};
+                      if (x == "EN") 
+                { 
+                    $("#change-pwd").text(" Change Password");
+                    $("#lout").text(" Logout");
+                    $("#createcustomer").text("Create Customer");
+                    $("#lihome").text("Home");
+                    $("#licreatecust").text("Create Customer");
+                    $("#firstname").text("First Name");
+                    $("#input_first_name").attr("placeholder","Enter First Name");
+                    $("#middlename").text("Middle Name");
+                    $("#input_middle_name").attr("placeholder","Enter Middle Name");
+                    $("#lastname").text("Last Name");
+                    $("#input_last_name").attr("placeholder","Enter Last Name");
+                    $("#email").text("Email");
+                    $("#input_email").attr("placeholder","Enter Email");
+                    $("#mobilenum").text("Mobile Number");
+                    $("#input_mobile").attr("placeholder","Enter Mobile Number");
+                    $("#role").text("Role Name");
+                    $("#select").text("-- select --");
+                    $("#add1").text("Address Line 1");
+                    $("#input_address1").attr("placeholder","Enter Address 1");
+                    $("#add2").text("Address Line 2");
+                    $("#input_address2").attr("placeholder","Enter Address 2");
+                    $("#village").text("Village/Tq/District/Town");
+                    $("#input_town").attr("placeholder","Enter Village/Tq/District/Town");
+                    $("#city").text("City");
+                    $("#input_city").attr("placeholder","Enter City");
+                    $("#pin").text("Pin Code");
+                    $("#input_zipcode").attr("placeholder","Enter Pin Code");
+                    $("#state").text("State");
+                    $("#input_state").attr("placeholder","Enter State");
+                    $("#lang").text("Language");
+                    $(".plsselect").text("-- Please Select --");
+                    $("#eng").text("English");
+                    $("#tel").text("Telugu");
+                    $("#loc").text("Location Type");
+                    
+                    $("#gmap").text("Gmap URL");
+                    $("#geo").text("Geo Co ordinates");
+                    $("#getmapmyindiacoordinates").text("Get MapMyIndia Coordinates");
+                    $("#mapmyindiacode").text("MapMyIndia Code");
+                    $("#locinfo").text("Location Info");
+                    $("#input_location_info").attr("placeholder","Enter Location Info");
+                    $("#paymentcoll").text("Payment Category");
+                    $("#instant").text("Instant");
+                    $("#daily").text("Daily");
+                    $("#weekly").text("Weekly");
+                    $("#biweekly").text("Bi-Weekly");
+                    $("#monthly").text("Monthly");
+                    $("#payment").text("Payment Mode");
+                    $("#cash").text("Cash");
+                    $("#online").text("Online");
+                    $("#paytype").text("Payment Type");
+                    $("#pre").text("Pre-Paid");
+                    $("#post").text("Post-Paid");
+                    $("#status").text("Status");
+                   
+                    $("#active").text("Active");
+                    $("#inactive").text("InActive");
+                    $("#submit").text("Submit");
+                    $("#back").text("Back");
+                    $("#clustername").text("Cluster Name");
+                    
+                  }
+                  
+                  else if (x == "TN")  
+                  
+                  {
+                    
+                    $("#change-pwd").text("పాస్‌వర్డ్ మార్చండి");
+                    $("#lout").text("లాగ్అవుట్");
+                   $("#createcustomer").text("కస్టమర్‌ని సృష్టించండి");
+                    $("#lihome").text("హోమ్");
+                    $("#licreatecust").text("కస్టమర్‌ని సృష్టించండి");
+                    $("#firstname").text("మొదటి పేరు");
+                    $("#input_first_name").attr("placeholder","మొదటి పేరును నమోదు చేయండి");
+                    $("#middlename").text("మధ్య పేరు");
+                    $("#input_middle_name").attr("placeholder","మధ్య పేరు నమోదు చేయండి");
+                    $("#lastname").text("చివరి పేరు");
+                    $("#input_last_name").attr("placeholder","చివరి పేరును నమోదు చేయండి");
+                    $("#email").text("ఇమెయిల్");
+                    $("#input_email").attr("placeholder","ఇమెయిల్ నమోదు చేయండి");
+                    $("#mobilenum").text("మొబైల్ నంబర్");
+                    $("#input_mobile").attr("placeholder","మొబైల్ నంబర్‌ నమోదు చేయండి");
+                    $("#role").text("పాత్ర పేరు");
+                    $("#select").text("-- ఎంచుకోండి --");
+                    $("#add1").text("చిరునామా లైన్ 1");
+                    $("#input_address1").attr("placeholder","చిరునామా 1 నమోదు చేయండి");
+                    $("#add2").text("చిరునామా లైన్ 2");
+                    $("#input_address2").attr("placeholder","చిరునామా 2 నమోదు చేయండి");
+                    $("#village").text("గ్రామం/తాలూకు/జిల్లా/పట్టణం");
+                    $("#input_town").attr("placeholder","గ్రామం/తాలూకు/జిల్లా/పట్టణం నమోదు చేయండి");
+                    $("#city").text("నగరం");
+                    $("#input_city").attr("placeholder","నగరాన్ని నమోదు చేయండి");
+                    $("#pin").text("పిన్ కోడ్");
+                    $("#input_zipcode").attr("placeholder","పిన్ కోడ్‌ని నమోదు చేయండి");
+                    $("#state").text("రాష్ట్రం");
+                    $("#input_state").attr("placeholder","రాష్ట్రాన్ని నమోదు చేయండిe");
+                    $("#lang").text("భాష");
+                    $(".plsselect").text("-- దయచేసి ఎంచుకోండి --");
+                    $("#eng").text("ఆంగ్ల");
+                    $("#tel").text("తెలుగు");
+                    $("#loc").text("స్థాన రకం");
+                    
+                    $("#gmap").text("G మ్యాప్ URL");
+                    $("#geo").text("జియో కో ఆర్డినేట్స్");
+                    $("#getmapmyindiacoordinates").text("మ్యాప్ మై ఇండియా కోఆర్డినేట్‌లను పొందండి");
+                    $("#mapmyindiacode").text("మ్యాప్ మై ఇండియా కోడ్");
+                    $("#locinfo").text("స్థాన సమాచారం");
+                    $("#input_location_info").attr("placeholder","స్థాన సమాచారాన్ని నమోదు చేయండి");
+                    $("#paymentcoll").text("చెల్లింపు వర్గం");
+                    $("#instant").text("తక్షణ");
+                    $("#daily").text("రోజువారీ");
+                    $("#weekly").text("వారానికోసారి");
+                    $("#biweekly").text("వారం వారం");
+                    $("#monthly").text("నెలవారీ");
+                    $("#payment").text("చెల్లింపు మోడ్");
+                    $("#cash").text("నగదు");
+                    $("#online").text("ఆన్‌లైన్");
+                    $("#paytype").text("చెల్లించు విధానము");
+                    $("#pre").text("ప్రీ-పెయిడ్");
+                    $("#post").text("పోస్ట్-పెయిడ్");
+                    $("#status").text("స్థితి");
+                    
+                    $("#active").text("చురుకుగా");
+                    $("#inactive").text("క్రియారహితం");
+                    $("#submit").text("సమర్పించండి");
+                    $("#back").text("వెనుకకు");
+                    $("#clustername").text("క్లస్టర్ పేరు");
+                    
+                    }
+                    });
+                    
+              </script>
+              
+              
+              <script>
+              function myFunction() {
+                
+                console.log("mapmyindia button clicked");
+                
+                document.getElementById('map').style.display = "block";
+                  /*Map Initialization*/
+          var map = new MapmyIndia.Map('map', {center: [28.62, 77.09], zoom: 15, search: false});
+             
+              /*Place Picker plugin initialization*/
+           var options={
+                map:map,
+                callback:callback_method
+               /*
+                location:{lat:28.8787,lng:77.08888},//to open that location on map on initailization
+                closeBtn:true,
+                closeBtn_callback:closeBtn_callback,
+                search:true,
+                topText:'Location Search',
+                pinImage:'pin.png', //custom pin image
+                pinHeight:40
+                */
+            };
+            var picker= new MapmyIndia.placePicker(options);
+            function callback_method(data) {
+                console.log(data);
+      
+                
+                var locationinfo = data.lat+","+data.lng;
+                console.log("locationinfo is "+locationinfo);
+                document.getElementById("input_location_info").value = locationinfo;
+                 document.getElementById('map').style.display = "none";
+                
+            
+                
+                
+               
+                //history.back()
+                
+             }   
+             /*methods
+              * 
+              picker.remove();
+              picker.getLocation();
+              picker.setLocation({lat:28.8787,lng:77.787877});
+              * 
+              */
+                
+               
+              
+                }
+              </script>  
+              </body>
+            </html>

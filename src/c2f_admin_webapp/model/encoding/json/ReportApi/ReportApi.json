@@ -1,0 +1,26 @@
+{
+	"Version": "1.0",
+	"ReportName": "TRANSACTION_HISTORY",
+	"Parameters": [
+		{
+			"Name": "",
+			"Value": ""
+		}
+	],
+	"User": "nirbhay@teknospire.com",
+	"RequestID": "",
+	"TransactionNumber": "",
+	"TimeStamp": "",
+	"Response":{
+		"Code": "",
+		"Message": ""
+	},
+	"Data": [
+		[
+			{
+				"Name": "",
+				"Value": ""
+			}
+		]
+	]
+}
